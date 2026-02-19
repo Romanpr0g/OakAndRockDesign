@@ -1,0 +1,158 @@
+/* --- 1. ЧЕРНАЯ ЗОНА (между Hero и Карточками) --- */
+.blackSection {
+  position: relative;
+  background-color: #0F0F0F; /* Чистый темный цвет из макета */
+  padding-bottom: 0; /* Убираем лишний отступ, чтобы карточки шли сразу */
+  z-index: 10;
+  margin: 0 auto;
+  max-width: 1390px;
+}
+
+/* Наезжающий полупрозрачный блок */
+.overlapBox {
+  position: relative;
+  z-index: 20;
+  margin: 0 auto;
+  
+  /* Тянем вверх на фото */
+  margin-top: -40px; /* Увеличьте это значение! -40px слишком мало */
+
+  /* max-width: 1390px; */
+  
+  /* ФОН: Делаем его плотным, почти черным */
+  background-color: #0F0F0F;
+  
+  /* Блюр для эффекта стекла */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  /* Граница сверху (тонкая линия, как на премиум сайтах) */
+
+  padding: 50px 77px 60px 88px; /* Чуть уменьшил низ */
+  text-align: center;
+}
+/* Текстовые стили */
+.label {
+  color: var(--accent-gold);
+  font-size: 20px;
+  letter-spacing: 3.6px;
+  font-weight: 800;
+  text-transform: uppercase;
+  display: inline-block;
+  margin-bottom: 40px;
+  border-bottom: 1px solid #ffffff;
+  padding-bottom: 7px;
+  line-height: 16px;
+}
+
+.title {
+  font-size: 36px;
+  line-height: 64px;
+  margin-bottom: 12px;
+  font-weight: 400;
+  color: #fff;
+  vertical-align: middle;
+}
+
+.desc {
+  color: var(--text-muted);
+  font-size: 14px;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* --- 2. СЕРАЯ ЗОНА (Для карточек) --- */
+.graySection {
+  /* Цвет фона должен отличаться от черного верха */
+  background-color: #1A1A1A; 
+  padding: 80px 0;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
+  max-width: 1225px;
+  margin: 0 auto;
+}
+
+/* Карточка */
+.card {
+  /* Фон карточки чуть светлее фона секции */
+  background-color: rgba(43, 43, 43, 0.3);
+  padding: 32px 17px 40px 32px;
+  /* Убираем явную границу, если её нет на макете, или делаем очень тонкой */
+  border-radius: 8px;
+  transition: 0.3s;
+  border-width: 0.67px 0px 0.67px 0px;
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+.card:hover {
+  background: #252525;
+  transform: translateY(-5px);
+  border-color: var(--accent-gold);
+}
+
+.icon {
+  color: var(--accent-gold);
+  font-size: 24px;
+  margin-bottom: 20px;
+  width: 56px;
+  height: 56px;
+  background-color: #0F0F0F;
+  /* border: 1px solid var(--accent-gold); */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon__img {
+  width: 32px;
+  height: 32px;
+}
+
+.card h3 {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 400;
+  margin-bottom: 12px;
+  color: #fff;
+  line-height: 28px;
+  
+}
+
+.card p {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-muted);
+  line-height: 22px;
+}
+
+/* Адаптив */
+@media (max-width: 768px) {
+  .overlapBox {
+    margin-top: -50px;
+    padding: 40px 20px;
+    width: 90%;
+  }
+  .features {
+    grid-template-columns: 1fr;
+  }
+}
+
+.gradient-box {
+  /* Базовый цвет на случай, если градиент не загрузится */
+  background-color: #0F0F0F;
+
+  /* Сам градиент */
+  background: linear-gradient(
+    to bottom,               /* Направление: сверху вниз */
+    #0F0F0F 0%,              /* Начало: сплошной цвет */
+    rgba(15, 15, 15, 0.9) 50%, /* Середина: 90% непрозрачности */
+    #0F0F0F 100%             /* Конец: сплошной цвет */
+  );
+}

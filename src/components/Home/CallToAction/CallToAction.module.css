@@ -1,0 +1,39 @@
+.cta {
+  height: 600px;
+  position: relative;
+  background: url("../../../assets/createProject.jpg")
+    center/cover fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+.content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  margin-top: -80px;
+}
+.cta h2 {
+  font-size: 42px;
+  margin-bottom: 40px;
+}
+.btn {
+  background: var(--accent-gold);
+  color: #fff;
+  border: none;
+  padding: 18px 60px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.btn:hover {
+  background: #b08d4b;
+}

@@ -1,0 +1,138 @@
+/* src/components/Layout/Header.module.css */
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 16px 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+}
+
+.inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  padding: 0 107px;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+  text-decoration: none;
+}
+
+.logoSvg {
+  height: 85px; 
+  width: 70px;
+}
+
+.nav {
+  display: flex;
+  gap: 56px;
+  align-items: center;
+}
+
+/* Стили для обычных ссылок навигации */
+.nav > a {
+  font-family: var(--font-sans);
+  font-size: 20px;
+  text-transform: capitalize;
+  color: #fff; /* Явный белый цвет */
+  letter-spacing: 0%;
+  font-weight: 400;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav > a:hover {
+  color: var(--accent-gold);
+}
+
+/* --- ВЫПАДАЮЩЕЕ МЕНЮ --- */
+
+.dropdownWrapper {
+  position: relative;
+  height: 100%; /* Растягиваем на всю высоту .inner */
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 8px;
+  /* Убрали color: #fff отсюда, чтобы не было конфликтов */
+}
+
+/* Стили для текста "Услуги" и стрелки */
+.navLink, .arrow {
+  font-family: var(--font-sans);
+  font-size: 20px;
+  letter-spacing: 0.5px;
+  color: #fff; /* Исходный белый */
+  transition: color 0.3s ease;
+}
+
+/* РЕШЕНИЕ ПРОБЛЕМЫ С ЦВЕТОМ:
+   При наведении на обертку красим ТОЛЬКО текст "Услуги" и стрелку,
+   но не трогаем само выпадающее меню */
+.dropdownWrapper:hover .navLink,
+.dropdownWrapper:hover .arrow {
+  color: var(--accent-gold);
+}
+
+.dropdown {
+  position: absolute;
+  /* Меню начинается от низа wrapper (который внутри inner высотой 60px) */
+  top: 91%;
+  
+  /* РЕШЕНИЕ ПРОБЛЕМЫ С ЗАКРЫТИЕМ:
+     У нас у хедера padding-bottom: 15px.
+     Мы добавляем padding-top: 15px самому меню, чтобы "удлинить" его невидимую часть вверх.
+     Теперь мышка переходит с текста на меню без разрывов.
+  */
+  padding-top: 60px; 
+  
+  left: 50%; /* Центрируем относительно слова "Услуги" */
+  /* transform: translateX(-50%);  */
+  /* min-width: 240px; */
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  /* padding: 37px 40px; */
+  padding: 72px 40px 37px 40px; 
+  z-index: 1001;
+}
+
+/* Внутренний контейнер для ссылок, чтобы фон был только у него, а не на padding-top */
+.dropdown::before {
+  content: '';
+  position: absolute;
+  top: 35px; /* Начинаем фон там, где кончается наш "безопасный" padding */
+  left: 0;
+  width: 100%;
+  height: calc(100% - 35px);
+  background: rgba(0, 0, 0, 0.5); /* Более плотный фон для читаемости */
+  backdrop-filter: blur(8px);
+  z-index: -1; /* Кладем фон под текст */
+}
+
+.dropdown a {
+  text-transform: none;
+  display: block;
+  text-decoration: none;
+  color: #ffffff; /* Серый цвет по умолчанию */
+  transition: color 0.3s ease, transform 0.3s ease;
+  font-size: 20px;
+  padding: 0;
+  font-family: var(--font-sans);
+  white-space: nowrap;
+}
+
+/* Подсветка пунктов меню только при наведении на них */
+.dropdown a:hover {
+  color: var(--accent-gold);
+  transform: translateX(10px);
+}
