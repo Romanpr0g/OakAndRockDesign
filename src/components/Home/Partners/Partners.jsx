@@ -2,21 +2,20 @@ import React from "react";
 import s from "./Partners.module.css";
 
 const Partners = () => (
-  <section
-    style={{ padding: "100px 0", textAlign: "center", background: "#0f0f0f" }}
-  >
-    <div className="container">
-      <span
-        className="uppercase text-gold"
-        style={{ fontSize: 12, display: "block", marginBottom: 20 }}
-      >
-        ДЛЯ АРХИТЕКТОРОВ И ДИЗАЙНЕРОВ
-      </span>
-      <h2 className="serif" style={{ fontSize: 32, marginBottom: 20 }}>
+  <section className={s.partners}>
+    <div className={s.partners_wrapper}>
+      <div className={s.partners__label}>
+        <span className={s.partners__label__item} >ДЛЯ АРХИТЕКТОРОВ И ДИЗАЙНЕРОВ</span>
+      </div>
+      <h2 className={`${s.partners__title} serif`}>
         Партнёрство, которое усиливает ваш проект
       </h2>
-      <p style={{ color: "#b0b0b0", maxWidth: 700, margin: "0 auto" }}>
-        Мы открыты к сотрудничеству с профессионалами.
+      <p className={s.partners__text}>
+        Мы открыты к сотрудничеству с профессионалами, которые ценят эстетику,
+        точность и индивидуальный подход. Oak & Rock Design предлагает гибкие
+        условия для дизайнеров и архитекторов: от разработки нестандартной
+        мебели по вашим эскизам до комплексного сопровождения интерьеров под
+        ключ.
       </p>
     </div>
   </section>

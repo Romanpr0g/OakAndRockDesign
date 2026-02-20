@@ -22,4 +22,3 @@ const CallToAction = () => {
 };
 
 export default CallToAction;
-ф;
