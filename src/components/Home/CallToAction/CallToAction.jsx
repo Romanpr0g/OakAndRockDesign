@@ -9,7 +9,7 @@ const CallToAction = () => {
           Готов создать проект,
           <br />
           который конкуренты{" "}
-          <span className="text-gold italic" style={{ fontStyle: "italic" }}>
+          <span className="text-gold">
             не осилят?
           </span>
         </h2>

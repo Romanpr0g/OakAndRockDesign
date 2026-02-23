@@ -5,6 +5,7 @@ import Footer from "./components/Layout/Footer/Footer";
 import Home from "./pages/Home";
 import Catalog from "./pages/Catalog";
 import Interiors from "./pages/Interiors";
+import ScrollToTop from "./utils/ScrollToTop";
 
 // Заглушка для страницы интерьеров
 // const InteriorProcess = () => (
@@ -17,6 +18,7 @@ import Interiors from "./pages/Interiors";
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <div className="app-wrapper">
         <Header />
         <main>

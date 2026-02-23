@@ -1,39 +1,66 @@
 .cta {
-  height: 600px;
+  height: 874px;
   position: relative;
-  background: url("../../../assets/createProject.jpg")
-    center/cover fixed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: url("../../../assets/createProject.jpg") center/cover fixed;
+  
+  /* --- ДОБАВЛЕНО --- */
+  display: flex;            /* Включаем флексбокс */
+  flex-direction: column;   /* Элементы друг под другом */
+  justify-content: flex-start; /* Прижимаем контент к верху */
+  align-items: center;      /* Центрируем по горизонтали */
+  
+  padding-top: 97px;        /* Тот самый отступ */
+  box-sizing: border-box;   /* Чтобы padding не увеличивал общую высоту блока (874px) */
 }
 .cta::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
 }
 .content {
   position: relative;
   z-index: 2;
   text-align: center;
-  margin-top: -80px;
 }
-.cta h2 {
-  font-size: 42px;
-  margin-bottom: 40px;
+.content h2 {
+  font-size: 60px;
+  font-weight: 400;
+  line-height: 80px;
+  letter-spacing: 0;
+  margin-bottom: 36px;
 }
 .btn {
+  position: relative;
   background: var(--accent-gold);
   color: #fff;
-  border: none;
-  padding: 18px 60px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-weight: 600;
+  padding: 20px 50px;
+  font-size: 16px;
+  border: 0;
+  letter-spacing: 0;
+  font-weight: 800;
   cursor: pointer;
   transition: 0.3s;
+  border-radius: 2px;
+}
+.btn::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  right: -3px;
+  bottom: -4px;
+  left: -3px;
+
+  border: 1px solid var(--accent-gold);
+  border-radius: 2px;
 }
 .btn:hover {
   background: #b08d4b;
+}
+
+.btn:hover::after {
+  top: -3px;
+  right: -2px;
+  bottom: -3px;
+  left: -2px;
+  border-color: #b08d4b;
 }
