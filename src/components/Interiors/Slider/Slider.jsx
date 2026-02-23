@@ -8,16 +8,34 @@ import { SLIDES } from "../../../utils/constants";
 import s from "./Slider.module.css";
 
 const Slider = () => {
+  // === АВТОМАТИЧЕСКОЕ ДУБЛИРОВАНИЕ ===
+  // Swiper требует минимум 6 слайдов для корректного loop при slidesPerView: 2.5
+  // Мы создаем новый массив, который гарантированно будет длинным
+  
+  let slidesForRender = SLIDES;
+  
+  // Пока слайдов меньше 6, мы дублируем массив сам в себя
+  // Это спасет ситуацию, даже если у вас будет всего 2 картинки
+  while (slidesForRender.length > 0 && slidesForRender.length < 6) {
+    slidesForRender = [...slidesForRender, ...slidesForRender];
+  }
+
   return (
     <section className={s.sliderSection}>
       <div className={s.sliderContainer}>
         <Swiper
           modules={[Navigation, Autoplay]}
           spaceBetween={30}
-          slidesPerView={1.5} /* Показываем 1.5 слайда (центр + края) */
-          centeredSlides={true} /* Активный слайд по центру */
+          slidesPerView={1.5}
+          centeredSlides={true}
           loop={true}
-          autoplay={{ delay: 4000 }}
+          speed={800}
+          
+          // loopAdditionalSlides помогает, но только если исходных данных достаточно.
+          // С нашим дублированием выше, это свойство будет работать корректно.
+          loopAdditionalSlides={3} 
+
+          autoplay={{ delay: 4000, disableOnInteraction: false }}
           navigation={{
             nextEl: ".swiper-button-next-custom",
             prevEl: ".swiper-button-prev-custom",
@@ -28,20 +46,19 @@ const Slider = () => {
           }}
           className={s.swiper}
         >
-          {SLIDES.map((img, i) => (
-            <SwiperSlide key={i} className={s.slide}>
+          {slidesForRender.map((img, i) => (
+            // ВАЖНО: Используем индекс 'i' как часть ключа, 
+            // так как картинки 'img' теперь повторяются
+            <SwiperSlide key={`${i}-${img}`} className={s.slide}>
               {({ isActive }) => (
-                <div
-                  className={`${s.slideContent} ${isActive ? s.active : ""}`}
-                >
-                  <img src="../../assets/home.jpg" alt={`Interior ${i}`} />
+                <div className={`${s.slideContent} ${isActive ? s.active : ""}`}>
+                  <img src={img} alt="Interior" />
                 </div>
               )}
             </SwiperSlide>
           ))}
         </Swiper>
 
-        {/* Кастомные стрелки (вынесены, чтобы стилизовать как на макете) */}
         <div className={`swiper-button-prev-custom ${s.navBtn} ${s.prevBtn}`}>
           ←
         </div>
