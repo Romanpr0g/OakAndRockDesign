@@ -1,0 +1,51 @@
+.introSection {
+  margin-bottom: 60px;
+}
+
+.backLink {
+  display: inline-block;
+  margin-bottom: 40px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+.backLink:hover { transform: translateX(-5px); }
+
+.sectionLabel {
+  display: block;
+  color: var(--accent-gold);
+  font-size: 12px;
+  letter-spacing: 2px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+}
+
+.introGrid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+.introLeft p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #ccc;
+  margin-bottom: 20px;
+}
+
+.quoteBox {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 30px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #fff;
+  font-style: italic;
+  font-family: var(--font-serif);
+}
+
+@media (max-width: 1024px) {
+  .introGrid {
+    grid-template-columns: 1fr;
+  }
+}

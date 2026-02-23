@@ -1,0 +1,88 @@
+.processSection {
+  margin-bottom: 120px;
+  position: relative;
+}
+
+.stepsContainer {
+  position: relative;
+  margin-top: 60px;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Две колонки */
+  column-gap: 150px; /* Большой отступ между колонками */
+  row-gap: 40px;
+}
+
+/* SVG Линия на фоне */
+.snakeSvg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* Карточка шага */
+.stepCard {
+  position: relative;
+  z-index: 1;
+  max-width: 450px;
+}
+
+/* Левая колонка */
+.leftCard {
+  grid-column: 1 / 2;
+  text-align: left;
+}
+
+/* Правая колонка - сдвигаем вниз */
+.rightCard {
+  grid-column: 2 / 3;
+  text-align: left;
+  margin-top: 150px; /* Эффект шахматного порядка */
+}
+
+.stepHeader {
+  margin-bottom: 15px;
+}
+
+.stepNum {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 36px;
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+.stepTitle {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 400;
+  color: #fff;
+}
+
+.stepDesc {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+.pinIcon {
+  font-size: 40px;
+  color: var(--accent-gold);
+  margin-top: 20px;
+}
+
+@media (max-width: 1024px) {
+  .stepsContainer {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+
+  .rightCard {
+    grid-column: 1 / 2;
+    margin-top: 0;
+  }
+}

@@ -1,6 +1,6 @@
 .footer {
-  background-color: var(--bg-dark); /* Глубокий черный */
-  padding: 80px 76px 30px 88px; /* Отступы: верх, бока, низ */
+  background-color: var(--bg-dark);
+  padding: 80px 76px 30px 88px; 
   width: 100%;
   position: relative;
   z-index: 20;
@@ -9,24 +9,15 @@
   margin: 0 auto;
 }
 
-.footerOverlay {
-  margin-top: -470px; 
-}
-
-/* --- ВЕРХНЯЯ ЧАСТЬ (Сетка) --- */
 .topRow {
-  display: grid;
-  /* 4 колонки: Лого, Меню, Контакты, Карта. 
-     Карта занимает больше места (1.5fr), лого поменьше (0.8fr) */
-  grid-template-columns: 0.8fr 1fr 1.2fr 1.5fr;
-  gap: 40px;
-  margin-bottom: 80px; /* Большой отступ до нижней строки */
+  display: flex;
+
+  margin-bottom: 45px;
 }
 
-/* Заголовки (МЕНЮ, КОНТАКТЫ) */
 .heading {
   color: #fff;
-  font-family: var(--font-sans); /* Montserrat */
+  font-family: var(--font-sans); 
   font-weight: 800;
   font-size: 14px;
   line-height: 16px;
@@ -35,18 +26,33 @@
   margin-bottom: 24px;
 }
 
-/* Списки и ссылки */
+.colMenu {
+  width: 132px;
+}
+
+.leftCol {
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+  margin-right: 51px;
+}
+
+.centerCol {
+  display: flex;
+  gap: 78px;
+}
+
 .list {
   list-style: none;
   padding: 0;
 }
 
-.list li {
-  margin-bottom: 12px;
+.list li:not(:last-child) {
+  margin-bottom: 8px;
 }
 
 .list a {
-  color: var(--text-muted); /* Серый цвет текста */
+  color: var(--text-muted);
   text-decoration: none;
   font-size: 16px;
   font-weight: 400;
@@ -59,32 +65,26 @@
   color: var(--accent-gold);
 }
 
-/* Блок с логотипом */
 .colLogo {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Лого вверху, инстаграм внизу */
+  justify-content: space-between;
   align-items: flex-start;
-  height: 100%; /* Чтобы растянуть на высоту карты/контактов */
-  min-height: 150px; /* Минимальная высота */
 }
 
 .logoImage {
   width: 70px;
-  height: 85px; /* Размер логотипа как в хедере */
+  height: 85px;
 }
 
 .socialLink img {
-  width: 24px;
-  height: 24px;
-  opacity: 0.7;
-  transition: opacity 0.3s;
+  width: 20px;
+  height: 20px;
 }
 .socialLink:hover img {
   opacity: 1;
 }
 
-/* Контакты */
 .contactsBlock {
   color: var(--text-muted);
   font-size: 16px;
@@ -103,57 +103,52 @@
 
 .linkUnderline {
   color: #8D8D8D;
-  text-decoration: underline; /* Подчеркивание для email */
+  text-decoration: underline;
   text-decoration-color: rgba(141, 141, 141, 0.5);
-  /* margin-bottom: 5px; */
 }
 .linkUnderline:hover {
   color: #fff;
 }
 
-/* Карта */
 .mapPlaceholder {
   width: 100%;
-  height: 180px; /* Высота серого блока */
-  background-color: #D9D9D9; /* Светло-серый цвет как на макете */
-  border-radius: 4px;
+  width: 272px;
+  height: 160px;
+  background-color: #D9D9D9;
+  border-radius: 8px;
 }
 
-/* --- НИЖНЯЯ ЧАСТЬ (Копирайт) --- */
 .bottomRow {
   display: flex;
-  justify-content: space-between; /* Разносим по краям */
+  justify-content: space-between;
   align-items: flex-end;
-  border-top: 1px solid rgba(255, 255, 255, 0.05); /* Еле заметная линия (опционально) */
-  padding-top: 30px;
-  color: #484848; /* Очень темный серый для нижнего текста */
+  border-top: 0.67px solid #FFFFFF0D;
+  padding-top: 32px;
   font-size: 12px;
-}
-
-.copy {
-  line-height: 1.5;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0;
+  color: #4B5563;
 }
 
 .privacy {
-  color: #484848;
   text-decoration: none;
 }
 .privacy:hover {
   color: #8D8D8D;
 }
 
-/* --- АДАПТИВ --- */
 @media (max-width: 1024px) {
-  .topRow {
-    grid-template-columns: 1fr 1fr; /* 2 колонки */
+  /* .topRow {
+    grid-template-columns: 1fr 1fr;
     gap: 50px;
-  }
+  } */
 }
 
 @media (max-width: 600px) {
-  .topRow {
-    grid-template-columns: 1fr; /* 1 колонка */
-  }
+  /* .topRow {
+    grid-template-columns: 1fr;
+  } */
   .bottomRow {
     flex-direction: column;
     gap: 20px;
