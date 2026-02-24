@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from 'react-router-dom';
+import Arrow from "../../../assets/svg/arrow.svg?react"
 import s from './Intro.module.css';
 
 const Intro = () => {
@@ -7,10 +8,7 @@ const Intro = () => {
     <section className={s.introSection}>
         <div className="container">
           <Link to="/" className={s.backLink}>
-             <svg width="40" height="20" viewBox="0 0 40 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10 1L1 10L10 19" stroke="#C6A664" strokeWidth="1.5"/>
-                <path d="M0 10H40" stroke="#C6A664" strokeWidth="1.5"/>
-             </svg>
+            <Arrow />
           </Link>
           
           <span className={s.sectionLabel}>ИНТЕРЬЕРЫ ПОД КЛЮЧ</span>

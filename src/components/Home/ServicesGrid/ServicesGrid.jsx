@@ -3,7 +3,7 @@ import s from "./ServicesGrid.module.css";
 import apartments from "../../../assets/apartments.jpg";
 import horeca from "../../../assets/horeca.jpg";
 import home from "../../../assets/home.jpg";
-import rightArrow1 from "../../../assets/svg/rightArrow1.svg";
+import Arrow from "../../../assets/svg/arrow.svg?react";
 
 const ServicesGrid = () => {
   return (
@@ -11,7 +11,7 @@ const ServicesGrid = () => {
       <div className={s.container}>
         <div className={s.header}>
           <span className={s.label}>ИНТЕРЬЕРЫ ПОД КЛЮЧ</span>
-          <img src={rightArrow1} className={s.arrow} alt="arrow" />
+          <Arrow className={s.arrow}/>
         </div>
 
         <div className={s.grid}>

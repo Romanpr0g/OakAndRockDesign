@@ -7,8 +7,8 @@
   margin-bottom: 40px;
   cursor: pointer;
   transition: transform 0.3s;
+  transform: rotate(180deg);
 }
-.backLink:hover { transform: translateX(-5px); }
 
 .sectionLabel {
   display: block;
