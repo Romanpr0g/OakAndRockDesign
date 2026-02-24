@@ -1,51 +1,68 @@
 .introSection {
-  margin-bottom: 60px;
+  margin-bottom: 36px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.introSection__wrapper {
+  padding: 0 108px;
+}
+
+.introBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .backLink {
   display: inline-block;
-  margin-bottom: 40px;
+  margin-bottom: 52px;
   cursor: pointer;
   transition: transform 0.3s;
   transform: rotate(180deg);
 }
 
 .sectionLabel {
-  display: block;
+  display: inline-block;
   color: var(--accent-gold);
-  font-size: 12px;
-  letter-spacing: 2px;
-  font-weight: bold;
+  font-size: 20px;
+  letter-spacing: 3.6px;
+  line-height: 16px;
+  font-weight: 800;
   text-transform: uppercase;
-  margin-bottom: 30px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #ffffff;
 }
 
 .introGrid {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  gap: 60px;
-  align-items: start;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  margin-top: 48px;
+}
+
+.introLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .introLeft p {
-  font-size: 16px;
-  line-height: 1.6;
-  color: #ccc;
-  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 100%;
+  letter-spacing: 3%;
+  color: #ffffff;
 }
 
 .quoteBox {
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 30px;
-  font-size: 15px;
-  line-height: 1.6;
+  padding: 24px 20px;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 100%;
+  letter-spacing: 3%;
   color: #fff;
-  font-style: italic;
-  font-family: var(--font-serif);
-}
-
-@media (max-width: 1024px) {
-  .introGrid {
-    grid-template-columns: 1fr;
-  }
+  font-family: var(--font-sans);
+  margin: 0 auto;
+  border: 2px solid #1f1f1f;
 }
