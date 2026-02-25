@@ -4,18 +4,14 @@ import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import { SLIDES } from "../../../utils/constants";
+import Arrow from "../../../assets/svg/arrow.svg?react";
 
 import s from "./Slider.module.css";
 
 const Slider = () => {
-  // === АВТОМАТИЧЕСКОЕ ДУБЛИРОВАНИЕ ===
-  // Swiper требует минимум 6 слайдов для корректного loop при slidesPerView: 2.5
-  // Мы создаем новый массив, который гарантированно будет длинным
-  
   let slidesForRender = SLIDES;
-  
-  // Пока слайдов меньше 6, мы дублируем массив сам в себя
-  // Это спасет ситуацию, даже если у вас будет всего 2 картинки
+
+  // Дублируем слайды, если их мало (для плавного loop)
   while (slidesForRender.length > 0 && slidesForRender.length < 6) {
     slidesForRender = [...slidesForRender, ...slidesForRender];
   }
@@ -25,46 +21,56 @@ const Slider = () => {
       <div className={s.sliderContainer}>
         <Swiper
           modules={[Navigation, Autoplay]}
-          spaceBetween={30}
-          slidesPerView={1.5}
+          // Базовые настройки
+          slidesPerView="auto"
           centeredSlides={true}
           loop={true}
-          speed={800}
-          
-          // loopAdditionalSlides помогает, но только если исходных данных достаточно.
-          // С нашим дублированием выше, это свойство будет работать корректно.
-          loopAdditionalSlides={3} 
-
+          speed={800} // Плавная анимация (0.8с)
+          loopAdditionalSlides={3}
           autoplay={{ delay: 4000, disableOnInteraction: false }}
           navigation={{
             nextEl: ".swiper-button-next-custom",
             prevEl: ".swiper-button-prev-custom",
           }}
+          // НАСТРОЙКА ОТСТУПОВ (Брейкпоинты)
           breakpoints={{
-            768: { slidesPerView: 2.2 },
-            1200: { slidesPerView: 2.5 },
+            320: {
+              spaceBetween: 20, // Мобильные
+            },
+            768: {
+              spaceBetween: 40, // Планшеты
+            },
+            1200: {
+              spaceBetween: 96, // Десктоп (КАК В ДИЗАЙНЕ)
+            },
           }}
           className={s.swiper}
         >
           {slidesForRender.map((img, i) => (
-            // ВАЖНО: Используем индекс 'i' как часть ключа, 
-            // так как картинки 'img' теперь повторяются
+            // Ключ должен быть уникальным
             <SwiperSlide key={`${i}-${img}`} className={s.slide}>
               {({ isActive }) => (
-                <div className={`${s.slideContent} ${isActive ? s.active : ""}`}>
+                <div
+                  className={`${s.slideContent} ${isActive ? s.active : ""}`}
+                >
                   <img src={img} alt="Interior" />
+                  {/* Затемнение для неактивных слайдов */}
+                  <div className={s.overlay} />
                 </div>
               )}
             </SwiperSlide>
           ))}
         </Swiper>
 
-        <div className={`swiper-button-prev-custom ${s.navBtn} ${s.prevBtn}`}>
-          ←
-        </div>
-        <div className={`swiper-button-next-custom ${s.navBtn} ${s.nextBtn}`}>
-          →
-        </div>
+        {/* Кнопки навигации */}
+
+        <Arrow
+          className={`swiper-button-prev-custom ${s.navBtn} ${s.prevBtn}`}
+        />
+
+        <Arrow
+          className={`swiper-button-next-custom ${s.navBtn} ${s.nextBtn}`}
+        />
       </div>
     </section>
   );

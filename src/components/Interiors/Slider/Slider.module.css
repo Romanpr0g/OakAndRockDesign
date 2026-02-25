@@ -2,59 +2,89 @@
 .sliderSection {
   margin-bottom: 120px;
   width: 100%;
+  overflow: hidden; /* Чтобы не было горизонтального скролла */
 }
 
 .sliderContainer {
   position: relative;
-  max-width: 1920px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 0 40px; /* Место под стрелки */
+  /* Убираем padding, так как стрелки теперь позиционируются от центра */
+  padding: 0; 
 }
 
-/* Стили слайда */
+/* Стили самого Swiper */
 .swiper {
   width: 100%;
-  padding: 50px 0; /* Отступы сверху/снизу для эффекта скейла */
+  /* Даем отступы сверху/снизу, чтобы тень и scale не обрезались */
+  padding: 60px 0; 
 }
 
 .slide {
-  /* transition: all 0.5s ease; */
+  /* ВАЖНО: Фиксированная ширина картинки из макета */
+  width: 496px; 
+  height: auto;
+  
   display: flex;
   justify-content: center;
+  align-items: center;
+  
+  /* Плавность перехода самого контейнера */
+  transition: transform 0.8s ease; 
 }
 
 .slideContent {
-  width: 100%;
-  height: 500px;
   position: relative;
-  opacity: 0.4; /* Боковые слайды полупрозрачные */
-  transform: scale(0.85); /* Боковые слайды уменьшены */
-  transition: transform 0.6s ease, opacity 0.6s ease;
-  overflow: hidden;
+  width: 496px;
+  height: 496px;
+  
+  /* НЕАКТИВНОЕ СОСТОЯНИЕ (Боковые слайды) */
+  transform: scale(0.85); /* Уменьшаем боковые */
+  opacity: 1; /* Прозрачность регулируем через overlay ниже */
+  
+  transition: transform 0.8s ease, box-shadow 0.8s ease;
+  overflow: hidden; /* Чтобы картинка не вылезала */
 }
 
 .slideContent img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
-/* Состояние активного (центрального) слайда */
+/* Затемнение неактивных слайдов (как на макете) */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background-color: #000;
+  opacity: 0.6; /* Насколько темными будут боковые слайды */
+  transition: opacity 0.8s ease;
+  z-index: 1;
+}
+
+/* АКТИВНОЕ СОСТОЯНИЕ (Центральный слайд) */
 .active {
-  opacity: 1;
-  transform: scale(1);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  transform: scale(1); /* Полный размер */
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); /* Тень */
   z-index: 2;
+}
+
+/* Убираем затемнение у активного слайда */
+.active .overlay {
+  opacity: 0;
 }
 
 /* Кнопки навигации */
 .navBtn {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
+  
+  /* 1. Базовое положение - центр экрана */
+  left: 50%; 
+/*   
   width: 50px;
-  height: 50px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  height: 50px; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -63,20 +93,46 @@
   color: #fff;
   transition: 0.3s;
   font-size: 24px;
+  
+  /* Центрируем саму кнопку относительно своей точки координат */
+  /* transform: translate(-50%, -50%);  */
 }
+
 .navBtn:hover {
   border-color: var(--accent-gold);
   color: var(--accent-gold);
 }
-.prevBtn { left: 40px; }
-.nextBtn { right: 40px; }
+.prevBtn {
+  /* Сдвигаем влево: - (половина картинки 248px + половина отступа 48px) */
+  margin-left: -296px;
+  transform: rotate(180deg);
 
+}
+
+.nextBtn {
+  /* Сдвигаем вправо: + (половина картинки 248px + половина отступа 48px) */
+  margin-left: 296px; 
+}
+
+/* Адаптив */
 @media (max-width: 1024px) {    
-  .slideContent {
+  .slide, .slideContent {
+    width: 350px;
     height: 350px;
   }
   
+  .sliderContainer {
+    padding: 0 20px;
+  }
+
   .navBtn {
-    display: none; /* На планшетах можно скрыть стрелки, свайп работает */
+    display: none; /* Скрываем стрелки на тач-устройствах */
+  }
+}
+
+@media (max-width: 600px) {
+  .slide, .slideContent {
+    width: 280px;
+    height: 280px;
   }
 }
