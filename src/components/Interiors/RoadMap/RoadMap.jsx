@@ -1,6 +1,7 @@
 import React from "react";
 import { STEPS } from "../../../utils/constants";
 import s from "./RoadMap.module.css";
+import PinIcon from "../../../assets/svg/pin.svg?react";
 
 const RoadMap = () => {
   return (
@@ -9,35 +10,57 @@ const RoadMap = () => {
         <span className={s.sectionLabel}>НАШ ПРОЦЕСС</span>
 
         <div className={s.stepsContainer}>
-          {/* Фоновая линия (SVG) - вставьте сюда реальный SVG из фигмы */}
-          <svg
-            className={s.snakeSvg}
-            viewBox="0 0 1000 2000"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            {/* Пример кривой линии, в реале нужно экспортировать из дизайна */}
-            <path
-              d="M100 0 V100 C100 200 900 200 900 300 V500 C900 600 100 600 100 700 V900"
-              stroke="#333"
-              strokeWidth="1"
-              strokeDasharray="5 5"
-            />
-          </svg>
+          {STEPS.map((step, index) => {
+            const isLeftColumn = index % 2 === 0;
+            const isLastStep = index === STEPS.length - 1;
 
-          {STEPS.map((step, index) => (
-            <div
-              key={step.id}
-              className={`${s.stepCard} ${index % 2 !== 0 ? s.rightCard : s.leftCard}`}
-            >
-              <div className={s.stepHeader}>
-                <span className={s.stepNum}>{step.id}.</span>
-                <h3 className={s.stepTitle}>{step.title}</h3>
+            return (
+              <div
+                key={step.id}
+                className={`${s.stepCard} ${
+                  isLeftColumn ? s.leftCard : s.rightCard
+                }`}
+              >
+                <div className={s.stepContent}>
+                  <div className={s.stepHeader}>
+                    <span className={s.stepNum}>{step.id}.</span>
+                    <h3 className={s.stepTitle}>{step.title}</h3>
+                  </div>
+                  <p className={s.stepDesc}>{step.desc}</p>
+                </div>
+
+                {!isLastStep && (
+                  <div className={s.connectorLine}>
+                    {isLeftColumn ? (
+                      // Линия ВПРАВО (Левая колонка -> Правая)
+                      <svg viewBox="0 0 350 200" className={s.svgLine}>
+                        <path
+                          // Начало (0, 40) -> Дуга -> Конец (350, 180)
+                          d="M 0 40 C 150 40, 200 150, 350 180"
+                          vectorEffect="non-scaling-stroke"
+                        />
+                      </svg>
+                    ) : (
+                      // Линия ВЛЕВО (Правая колонка -> Левая)
+                      <svg viewBox="0 0 350 200" className={s.svgLine}>
+                        <path
+                          // Начало (350, 40) -> Дуга -> Конец (0, 180)
+                          d="M 350 40 C 200 40, 150 150, 0 180"
+                          vectorEffect="non-scaling-stroke"
+                        />
+                      </svg>
+                    )}
+                  </div>
+                )}
+
+                {isLastStep && (
+                  <div className={s.pinWrapper}>
+                    <PinIcon className={s.pinIcon} />
+                  </div>
+                )}
               </div>
-              <p className={s.stepDesc}>{step.desc}</p>
-              {step.isLast && <div className={s.pinIcon}>📍</div>}
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

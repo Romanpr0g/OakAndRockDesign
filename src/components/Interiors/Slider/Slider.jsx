@@ -12,7 +12,7 @@ const Slider = () => {
   let slidesForRender = SLIDES;
 
   // Дублируем слайды, если их мало (для плавного loop)
-  while (slidesForRender.length > 0 && slidesForRender.length < 6) {
+  while (slidesForRender.length > 0 && slidesForRender.length < 12) {
     slidesForRender = [...slidesForRender, ...slidesForRender];
   }
 
@@ -26,7 +26,9 @@ const Slider = () => {
           centeredSlides={true}
           loop={true}
           speed={800} // Плавная анимация (0.8с)
-          loopAdditionalSlides={3}
+          watchSlidesProgress={true}
+          loopAdditionalSlides={5}
+          loopedSlides={5}
           autoplay={{ delay: 4000, disableOnInteraction: false }}
           navigation={{
             nextEl: ".swiper-button-next-custom",
@@ -41,7 +43,7 @@ const Slider = () => {
               spaceBetween: 40, // Планшеты
             },
             1200: {
-              spaceBetween: 96, // Десктоп (КАК В ДИЗАЙНЕ)
+              spaceBetween: 59, // Десктоп (КАК В ДИЗАЙНЕ)
             },
           }}
           className={s.swiper}

@@ -10,39 +10,39 @@
   max-width: 1440px;
   margin: 0 auto;
   /* Убираем padding, так как стрелки теперь позиционируются от центра */
-  padding: 0; 
+  padding: 0;
 }
 
 /* Стили самого Swiper */
 .swiper {
   width: 100%;
   /* Даем отступы сверху/снизу, чтобы тень и scale не обрезались */
-  padding: 60px 0; 
+  padding: 60px 0;
 }
 
 .slide {
   /* ВАЖНО: Фиксированная ширина картинки из макета */
-  width: 496px; 
+  width: 496px;
   height: auto;
-  
+
   display: flex;
   justify-content: center;
   align-items: center;
-  
-  /* Плавность перехода самого контейнера */
-  transition: transform 0.8s ease; 
 }
 
 .slideContent {
   position: relative;
   width: 496px;
   height: 496px;
-  
+
   /* НЕАКТИВНОЕ СОСТОЯНИЕ (Боковые слайды) */
   transform: scale(0.85); /* Уменьшаем боковые */
   opacity: 1; /* Прозрачность регулируем через overlay ниже */
-  
-  transition: transform 0.8s ease, box-shadow 0.8s ease;
+
+  transition:
+    transform 0.8s ease,
+    opacity 0.8s ease,
+    box-shadow 0.8s ease;
   overflow: hidden; /* Чтобы картинка не вылезала */
 }
 
@@ -79,48 +79,41 @@
 .navBtn {
   position: absolute;
   top: 50%;
-  
-  /* 1. Базовое положение - центр экрана */
-  left: 50%; 
-/*   
-  width: 50px;
-  height: 50px; */
+  left: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   z-index: 10;
   color: #fff;
-  transition: 0.3s;
   font-size: 24px;
-  
-  /* Центрируем саму кнопку относительно своей точки координат */
-  /* transform: translate(-50%, -50%);  */
+  transform: translate(-50%, -50%);
+  transition: color 0.3s;
 }
 
-.navBtn:hover {
-  border-color: var(--accent-gold);
-  color: var(--accent-gold);
+.navBtn path {
+  stroke-width: 4px;
 }
+
 .prevBtn {
   /* Сдвигаем влево: - (половина картинки 248px + половина отступа 48px) */
   margin-left: -296px;
-  transform: rotate(180deg);
-
+  transform: translate(-50%, -50%) rotate(180deg);
 }
 
 .nextBtn {
   /* Сдвигаем вправо: + (половина картинки 248px + половина отступа 48px) */
-  margin-left: 296px; 
+  margin-left: 296px;
 }
 
 /* Адаптив */
-@media (max-width: 1024px) {    
-  .slide, .slideContent {
+@media (max-width: 1024px) {
+  .slide,
+  .slideContent {
     width: 350px;
     height: 350px;
   }
-  
+
   .sliderContainer {
     padding: 0 20px;
   }
@@ -131,7 +124,8 @@
 }
 
 @media (max-width: 600px) {
-  .slide, .slideContent {
+  .slide,
+  .slideContent {
     width: 280px;
     height: 280px;
   }

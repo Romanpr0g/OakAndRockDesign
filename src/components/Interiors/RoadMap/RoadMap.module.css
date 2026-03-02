@@ -1,88 +1,182 @@
 .processSection {
   margin-bottom: 120px;
   position: relative;
+  overflow-x: clip;
+}
+
+.sectionLabel {
+  display: block;
+  color: var(--accent-gold);
+  font-size: 12px;
+  letter-spacing: 2px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 60px;
 }
 
 .stepsContainer {
   position: relative;
-  margin-top: 60px;
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Две колонки */
-  column-gap: 150px; /* Большой отступ между колонками */
-  row-gap: 40px;
+  grid-template-columns: 1fr 1fr;
+  
+  /* 1. Увеличиваем отступ, чтобы раздвинуть блоки */
+  column-gap: 200px; 
+  row-gap: 0;
+  
+  /* 2. Фиксируем ширину блока как вы просили и центрируем его */
+  max-width: 1286px;
+  margin: 0 auto;
 }
 
-/* SVG Линия на фоне */
-.snakeSvg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  opacity: 0.3;
-  pointer-events: none;
-}
-
-/* Карточка шага */
+/* --- Карточки --- */
 .stepCard {
   position: relative;
-  z-index: 1;
-  max-width: 450px;
+  /* Убираем жесткий max-width или делаем его плавающим, 
+     чтобы заполнить пространство колонок */
+  width: 100%; 
 }
 
 /* Левая колонка */
 .leftCard {
   grid-column: 1 / 2;
   text-align: left;
+  /* Текст прижат к правому краю своей колонки (ближе к центру) */
+  margin-left: auto; 
+  margin-right: 0;
+  max-width: 420px; /* Ограничиваем ширину текста */
 }
 
-/* Правая колонка - сдвигаем вниз */
+/* Правая колонка */
 .rightCard {
   grid-column: 2 / 3;
   text-align: left;
-  margin-top: 150px; /* Эффект шахматного порядка */
+  /* Текст прижат к левому краю своей колонки (ближе к центру) */
+  margin-left: 0;
+  margin-right: auto;
+  max-width: 420px; /* Ограничиваем ширину текста */
+  
+  margin-top: 160px; /* Сдвиг для шахматки */
 }
 
+/* --- Контент --- */
 .stepHeader {
   margin-bottom: 15px;
 }
 
 .stepNum {
-  display: block;
   font-family: var(--font-serif);
-  font-size: 36px;
+  font-size: 48px;
   color: #fff;
-  margin-bottom: 5px;
+  line-height: 1;
+  display: block;
+  margin-bottom: 10px;
 }
 
 .stepTitle {
   font-family: var(--font-serif);
-  font-size: 24px;
+  font-size: 32px;
   font-weight: 400;
   color: #fff;
+  line-height: 1.2;
 }
 
 .stepDesc {
-  font-size: 14px;
-  line-height: 1.7;
-  color: var(--text-muted);
+  font-size: 16px;
+  line-height: 1.6;
+  color: #b0b0b0;
+}
+
+/* --- ЛИНИИ (Исправлено наложение) --- */
+.connectorLine {
+  position: absolute;
+  z-index: 0;
+  
+  /* Увеличиваем размер области линии, чтобы дуга была плавной */
+  width: 350px; 
+  height: 200px;
+  
+  /* Опускаем ниже, чтобы линия выходила из-под текста, а не поверх него */
+  top: 80px; 
+  
+  pointer-events: none;
+}
+
+/* 
+   ЛЕВАЯ КАРТОЧКА:
+   Сдвигаем линию сильно вправо (-260px), чтобы она была в gap
+   и не перекрывала текст правой карточки.
+*/
+.leftCard .connectorLine {
+  right: -260px; 
+}
+
+/* 
+   ПРАВАЯ КАРТОЧКА:
+   Сдвигаем линию сильно влево (-260px).
+*/
+.rightCard .connectorLine {
+  left: -260px; 
+}
+
+.svgLine {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.svgLine path {
+  stroke: #333; 
+  stroke-width: 1px;
+  fill: none;
+  opacity: 0.6;
+}
+
+/* --- Пин (Исправлено положение) --- */
+.pinWrapper {
+  margin-top: 40px;
+  display: flex;
+  /* Выравниваем влево, чтобы было под текстом */
+  justify-content: flex-start; 
+  /* Если нужно чуть сдвинуть, можно добавить padding-left */
+  /* padding-left: 5px; */
 }
 
 .pinIcon {
-  font-size: 40px;
-  color: var(--accent-gold);
-  margin-top: 20px;
+  /* Убедимся, что иконка не огромная */
+  width: 25px; 
+  height: 34px;
 }
 
-@media (max-width: 1024px) {
+/* АДАПТИВ */
+@media (max-width: 1366px) {
+  .stepsContainer {
+    column-gap: 100px; /* Уменьшаем гап на ноутбуках */
+    max-width: 100%;
+    padding: 0 20px;
+  }
+  
+  .connectorLine {
+    width: 250px; /* Уменьшаем длину линий */
+  }
+  
+  .leftCard .connectorLine { right: -160px; }
+  .rightCard .connectorLine { left: -160px; }
+}
+
+@media (max-width: 768px) {
   .stepsContainer {
     grid-template-columns: 1fr;
-    gap: 50px;
+    gap: 40px;
   }
 
-  .rightCard {
+  .leftCard, .rightCard {
     grid-column: 1 / 2;
+    margin: 0;
+    max-width: 100%;
     margin-top: 0;
+  }
+
+  .connectorLine {
+    display: none;
   }
 }
