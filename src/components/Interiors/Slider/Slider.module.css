@@ -10,14 +10,15 @@
   max-width: 1440px;
   margin: 0 auto;
   /* Убираем padding, так как стрелки теперь позиционируются от центра */
-  padding: 0;
+  padding: 60px 36px;
 }
 
 /* Стили самого Swiper */
 .swiper {
   width: 100%;
   /* Даем отступы сверху/снизу, чтобы тень и scale не обрезались */
-  padding: 60px 0;
+
+  overflow: hidden;
 }
 
 .slide {

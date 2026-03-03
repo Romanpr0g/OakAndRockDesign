@@ -1,182 +1,178 @@
 .processSection {
   margin-bottom: 120px;
   position: relative;
-  overflow-x: clip;
+  overflow-x: clip; /* Обрезает линии, если они улетают за экран */
+  color: #fff;
+}
+
+.roadMapContainer {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 36px 46px 0 108px;
 }
 
 .sectionLabel {
-  display: block;
-  color: var(--accent-gold);
-  font-size: 12px;
-  letter-spacing: 2px;
-  font-weight: bold;
-  text-transform: uppercase;
-  margin-bottom: 60px;
+  margin-bottom: 52px;
 }
 
+/* СЕТКА */
 .stepsContainer {
   position: relative;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  
-  /* 1. Увеличиваем отступ, чтобы раздвинуть блоки */
-  column-gap: 200px; 
+  grid-template-columns: 45% 55%; /* Две колонки */
   row-gap: 0;
-  
-  /* 2. Фиксируем ширину блока как вы просили и центрируем его */
-  max-width: 1286px;
-  margin: 0 auto;
+  width: 100%;
+  /* margin: 0 auto; */
 }
 
-/* --- Карточки --- */
-.stepCard {
+/* КАРТОЧКА ШАГА */
+.stepItem {
   position: relative;
-  /* Убираем жесткий max-width или делаем его плавающим, 
-     чтобы заполнить пространство колонок */
-  width: 100%; 
+  width: 100%;
+  max-width: 560px;
+  /* Границ нет, но позиционирование relative важно для линий */
 }
 
 /* Левая колонка */
-.leftCard {
+.leftCol {
   grid-column: 1 / 2;
   text-align: left;
-  /* Текст прижат к правому краю своей колонки (ближе к центру) */
-  margin-left: auto; 
-  margin-right: 0;
-  max-width: 420px; /* Ограничиваем ширину текста */
+  /* Прижимаем контент к центру (к правому краю левой колонки) */
+  display: flex;
+  flex-direction: column;
+}
+
+.leftContent {
+  max-width: 560px; /* Ограничиваем ширину текста */
+  width: 100%;
+  text-align: left;
+  position: relative; /* Чтобы линии позиционировались от текста */
 }
 
 /* Правая колонка */
-.rightCard {
+.rightCol {
   grid-column: 2 / 3;
   text-align: left;
-  /* Текст прижат к левому краю своей колонки (ближе к центру) */
-  margin-left: 0;
-  margin-right: auto;
-  max-width: 420px; /* Ограничиваем ширину текста */
-  
-  margin-top: 160px; /* Сдвиг для шахматки */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* Сдвиг вниз для шахматки */
+  margin-top: 148px; 
 }
 
-/* --- Контент --- */
-.stepHeader {
-  margin-bottom: 15px;
-}
-
-.stepNum {
-  font-family: var(--font-serif);
-  font-size: 48px;
-  color: #fff;
-  line-height: 1;
-  display: block;
-  margin-bottom: 10px;
+.rightContent {
+  width: 100%;
+  text-align: left;
+  position: relative; /* Чтобы линии позиционировались от текста */
 }
 
 .stepTitle {
   font-family: var(--font-serif);
-  font-size: 32px;
+  font-size: 36px;
   font-weight: 400;
   color: #fff;
-  line-height: 1.2;
+  line-height: 100%;
+  letter-spacing: 0%;
+  margin-bottom: 12px;
 }
 
 .stepDesc {
-  font-size: 16px;
-  line-height: 1.6;
-  color: #b0b0b0;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 100%;
+  letter-spacing: 3%;
+  color: #fff;
+  white-space: pre-line;
 }
 
-/* --- ЛИНИИ (Исправлено наложение) --- */
-.connectorLine {
+/* КОНТЕЙНЕР ДЛЯ ЛИНИИ */
+.svgContainer {
   position: absolute;
   z-index: 0;
-  
-  /* Увеличиваем размер области линии, чтобы дуга была плавной */
-  width: 350px; 
-  height: 200px;
-  
-  /* Опускаем ниже, чтобы линия выходила из-под текста, а не поверх него */
-  top: 80px; 
-  
   pointer-events: none;
-}
-
-/* 
-   ЛЕВАЯ КАРТОЧКА:
-   Сдвигаем линию сильно вправо (-260px), чтобы она была в gap
-   и не перекрывала текст правой карточки.
-*/
-.leftCard .connectorLine {
-  right: -260px; 
-}
-
-/* 
-   ПРАВАЯ КАРТОЧКА:
-   Сдвигаем линию сильно влево (-260px).
-*/
-.rightCard .connectorLine {
-  left: -260px; 
+  /* Размеры и отступы зададим инлайново в JS для каждой линии */
 }
 
 .svgLine {
   width: 100%;
   height: 100%;
-  overflow: visible;
+  display: block;
+  overflow: visible; /* Чтобы хвосты не обрезались */
 }
 
 .svgLine path {
-  stroke: #333; 
-  stroke-width: 1px;
-  fill: none;
-  opacity: 0.6;
+  /* Если цвета нет в самом SVG, раскомментируй это: */
+  /* stroke: #444; */
+  /* opacity: 0.5; */
 }
 
-/* --- Пин (Исправлено положение) --- */
+/* ПИН */
 .pinWrapper {
   margin-top: 40px;
-  display: flex;
-  /* Выравниваем влево, чтобы было под текстом */
-  justify-content: flex-start; 
-  /* Если нужно чуть сдвинуть, можно добавить padding-left */
-  /* padding-left: 5px; */
+  padding-left: 5px;
 }
 
 .pinIcon {
-  /* Убедимся, что иконка не огромная */
-  width: 25px; 
+  width: 25px;
   height: 34px;
 }
 
-/* АДАПТИВ */
-@media (max-width: 1366px) {
-  .stepsContainer {
-    column-gap: 100px; /* Уменьшаем гап на ноутбуках */
-    max-width: 100%;
-    padding: 0 20px;
-  }
-  
-  .connectorLine {
-    width: 250px; /* Уменьшаем длину линий */
-  }
-  
-  .leftCard .connectorLine { right: -160px; }
-  .rightCard .connectorLine { left: -160px; }
+.step_2 {
+  left: 86px;
+}
+.step_3 {
+  left: 35px;
+}
+.step_4 {
+  left: 86px;
+}
+.step_6 {
+  margin-top: 172px;
+  left: 51px;
+}
+.step_7 {
+  max-width: 540px;
+  left: 105px;
+}
+.step_8 {
+  max-width: 576px;
+  left: 70px;
+}
+.step_10 {
+  max-width: 704px;
+  left: -58px;
 }
 
-@media (max-width: 768px) {
+/* АДАПТИВ */
+@media (max-width: 1300px) {
+  .stepsContainer {
+    column-gap: 80px;
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 900px) {
   .stepsContainer {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 50px;
   }
 
-  .leftCard, .rightCard {
+  .leftCol, .rightCol {
     grid-column: 1 / 2;
-    margin: 0;
-    max-width: 100%;
+    align-items: flex-start;
     margin-top: 0;
   }
 
-  .connectorLine {
+  .step_6 {
+  margin-top: 0;
+}
+  
+  .leftContent, .rightContent {
+    max-width: 100%;
+  }
+
+  /* Скрываем линии на мобильных, так как структура меняется */
+  .svgContainer {
     display: none;
   }
 }
