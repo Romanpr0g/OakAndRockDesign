@@ -90,30 +90,55 @@ const linesConfig = {
       lineIndex: 0,
       top: "7px",
       left: "344px",
-      width: "139px",
+      width: "140px",
       height: "6px",
     },
     {
       lineIndex: 1,
-      top: "600",
+      top: "6px",
       left: "542px",
       width: "175px",
       height: "22px",
     },
     {
       lineIndex: 2,
-      top: "600",
-      left: "542px",
-      width: "175px",
-      height: "22px",
+      top: "35px",
+      left: "773px",
+      width: "140px",
+      height: "52px",
+    },
+    {
+      lineIndex: 3,
+      top: "106px",
+      left: "932px",
+      width: "42px",
+      height: "62px",
     },
   ],
 
-  // // ШАГ 2 (Правая колонка) -> Линии идут влево
-  // 1: [
-  //   { lineIndex: 3, top: "50px", left: "-280px" },
-  //   { lineIndex: 4, top: "80px", left: "-320px" },
-  // ],
+  1: [
+    {
+      lineIndex: 4,
+      top: "104px",
+      left: "-121px",
+      width: "107px",
+      height: "3px",
+    },
+    {
+      lineIndex: 5,
+      top: "109px",
+      left: "-290px",
+      width: "113px",
+      height: "4px",
+    },
+    {
+      lineIndex: 6,
+      top: "123px",
+      left: "-428px",
+      width: "86px",
+      height: "25px",
+    },
+  ],
 
   // ШАГ 3 (Левая колонка) -> Линии идут вправо
   // 2: [
