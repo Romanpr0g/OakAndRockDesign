@@ -32,7 +32,9 @@ function App() {
             />
           </Routes>
         </main>
-        <Footer />
+        <div id="footer">
+          <Footer />
+        </div>
       </div>
     </Router>
   );

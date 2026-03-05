@@ -79,7 +79,6 @@
 .stepDesc {
   font-size: 20px;
   font-weight: 300;
-  line-height: 100%;
   letter-spacing: 3%;
   color: #fff;
   white-space: pre-line;
@@ -108,13 +107,16 @@
 
 /* ПИН */
 .pinWrapper {
-  margin-top: 40px;
-  padding-left: 5px;
+
 }
 
 .pinIcon {
-  width: 25px;
-  height: 34px;
+  position: absolute;
+  top: 0;
+  left: -52px;
+  width: 44px;
+  height: 60px;
+  z-index: 1000;
 }
 
 .step_2 {

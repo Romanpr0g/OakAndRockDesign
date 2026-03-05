@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { HashLink } from "react-router-hash-link";
 import { Link } from "react-router-dom";
 import logo from "../../../assets/svg/logo.svg";
 import HeaderArrow from "../../../assets/svg/headerArrow.svg?react";
@@ -6,7 +7,7 @@ import s from "./Header.module.css";
 
 const Header = () => {
   const [isMenuOpen, setMenuOpen] = useState(false);
-
+  
   return (
     <header className={s.header}>
       <div className={`container ${s.inner}`}>
@@ -27,13 +28,15 @@ const Header = () => {
             {isMenuOpen && (
               <div className={s.dropdown}>
                 <Link to="/services/interiors">Интерьеры под ключ</Link>
-                <Link to="/services/designers">Для дизайнеров и архитекторов</Link>
+                <Link to="/services/designers">
+                  Для дизайнеров и архитекторов
+                </Link>
               </div>
             )}
           </div>
 
           <Link to="/portfolio">Портфолио</Link>
-          <Link to="/about">О нас</Link>
+          <HashLink smooth to="/#about">О нас</HashLink>
           <Link to="/contacts">Контакты</Link>
         </nav>
       </div>

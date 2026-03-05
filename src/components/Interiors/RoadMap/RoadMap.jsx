@@ -140,55 +140,150 @@ const linesConfig = {
     },
   ],
 
-  // ШАГ 3 (Левая колонка) -> Линии идут вправо
-  // 2: [
-  //   { lineIndex: 5, top: "60px", right: "-260px" },
-  //   { lineIndex: 6, top: "90px", right: "-310px" },
-  //   { lineIndex: 7, top: "40px", right: "-220px" },
-  // ],
+  2: [
+    {
+      lineIndex: 7,
+      top: "141px",
+      right: "-60px",
+      width: "105px",
+      height: "20px",
+    },
+  ],
 
-  // // ШАГ 4 (Правая колонка) -> Влево
-  // 3: [
-  //   { lineIndex: 8, top: "40px", left: "-250px" },
-  //   { lineIndex: 9, top: "70px", left: "-300px" },
-  // ],
+  3: [
+    {
+      lineIndex: 8,
+      top: "144px",
+      left: "-76px",
+      width: "66px",
+      height: "2px",
+    },
+    {
+      lineIndex: 9,
+      top: "152px",
+      left: "-227px",
+      width: "109px",
+      height: "11px",
+    },
+  ],
 
-  // // ШАГ 5 (Левая) -> Вправо
-  // 4: [
-  //   { lineIndex: 10, top: "50px", right: "-270px" },
-  //   { lineIndex: 11, top: "80px", right: "-320px" },
-  // ],
+  4: [
+    {
+      lineIndex: 10,
+      top: "185px",
+      left: "62px",
+      width: "103px",
+      height: "41px",
+    },
+    {
+      lineIndex: 11,
+      top: "218px",
+      left: "238px",
+      width: "169px",
+      height: "11px",
+    },
+    {
+      lineIndex: 12,
+      top: "203px",
+      left: "503px",
+      width: "108px",
+      height: "11px",
+    },
+  ],
 
-  // // ШАГ 6 (Правая) -> Влево
-  // 5: [
-  //   { lineIndex: 12, top: "30px", left: "-240px" },
-  //   { lineIndex: 13, top: "60px", left: "-290px" },
-  // ],
+  5: [
+    {
+      lineIndex: 13,
+      top: "36px",
+      right: "-88px",
+      width: "64px",
+      height: "36px",
+    },
+    {
+      lineIndex: 14,
+      top: "89px",
+      right: "-92px",
+      width: "68px",
+      height: "38px",
+    },
+    {
+      lineIndex: 15,
+      top: "146px",
+      left: "-142px",
+      width: "114px",
+      height: "22px",
+    },
+  ],
 
-  // // ШАГ 7 (Левая) -> Вправо
-  // 6: [
-  //   { lineIndex: 14, top: "40px", right: "-280px" },
-  //   { lineIndex: 15, top: "70px", right: "-330px" },
-  //   { lineIndex: 16, top: "100px", right: "-200px" },
-  // ],
+  6: [
+    {
+      lineIndex: 16,
+      top: "55px",
+      left: "-100px",
+      width: "50px",
+      height: "47px",
+    },
+    {
+      lineIndex: 17,
+      top: "137px",
+      left: "-104px",
+      width: "104px",
+      height: "75px",
+    },
+    {
+      lineIndex: 18,
+      top: "206px",
+      left: "86px",
+      width: "175px",
+      height: "7px",
+    },
+    {
+      lineIndex: 19,
+      top: "161px",
+      left: "344px",
+      width: "181px",
+      height: "46px",
+    },
+  ],
 
-  // // ШАГ 8 (Правая) -> Влево
-  // 7: [
-  //   { lineIndex: 17, top: "50px", left: "-260px" },
-  //   { lineIndex: 18, top: "80px", left: "-310px" },
-  // ],
+  7: [
+    {
+      lineIndex: 20,
+      top: "40px",
+      right: "-61px",
+      width: "225px",
+      height: "160px",
+    },
+    {
+      lineIndex: 21,
+      top: "187px",
+      left: "133px",
+      width: "172px",
+      height: "12px",
+    },
+    {
+      lineIndex: 22,
+      top: "194px",
+      left: "-93px",
+      width: "151px",
+      height: "11px",
+    },
+  ],
 
-  // // ШАГ 9 (Левая) -> Вправо (К последнему шагу)
-  // 8: [
-  //   { lineIndex: 19, top: "40px", right: "-250px" },
-  //   { lineIndex: 20, top: "-90px", right: "-600px" },
-  //   { lineIndex: 21, top: "20px", right: "-180px" },
-  //   // Остаток линий, если есть
-  //   { lineIndex: 22, top: "90px", right: "-220px" },
-  //   { lineIndex: 23, top: "110px", right: "-240px" },
-  //   { lineIndex: 24, top: "120px", right: "-260px" },
-  // ],
-
-  // // ШАГ 10 - линий нет, там Пин
-  // 9: [],
+  8: [
+    {
+      lineIndex: 23,
+      top: "163px",
+      left: "176px",
+      width: "94px",
+      height: "29px",
+    },
+    {
+      lineIndex: 24,
+      top: "184px",
+      left: "357px",
+      width: "134px",
+      height: "26px",
+    },
+  ],
 };

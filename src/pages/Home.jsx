@@ -11,7 +11,9 @@ const Home = () => {
     <>
       <Hero />
       <About />
-      <ServicesGrid />
+      <div id="about">
+        <ServicesGrid id="about"/>
+      </div>
       <Partners />
       <PortfolioPreview />
       <CallToAction />
