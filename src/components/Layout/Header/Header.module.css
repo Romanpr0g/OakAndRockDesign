@@ -1,4 +1,6 @@
-/* src/components/Layout/Header.module.css */
+/* =========================================
+   ВАШИ СТАРЫЕ СТИЛИ (БЕЗ ИЗМЕНЕНИЙ)
+   ========================================= */
 
 .header {
   position: fixed;
@@ -9,6 +11,7 @@
   z-index: 1000;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .inner {
@@ -16,7 +19,7 @@
   justify-content: space-between;
   align-items: center;
   height: 60px;
-  padding: 0 107px;
+  padding: 0 107px; /* Ваши отступы сохранены */
 }
 
 .logo {
@@ -25,10 +28,11 @@
   align-items: center;
   color: #fff;
   text-decoration: none;
+  z-index: 1002; /* Чтобы лого было над меню */
 }
 
 .logoSvg {
-  height: 85px; 
+  height: 85px;
   width: 70px;
 }
 
@@ -38,12 +42,11 @@
   align-items: center;
 }
 
-/* Стили для обычных ссылок навигации */
 .nav > a {
   font-family: var(--font-sans);
   font-size: 20px;
   text-transform: capitalize;
-  color: #fff; /* Явный белый цвет */
+  color: #fff;
   letter-spacing: 0%;
   font-weight: 400;
   text-decoration: none;
@@ -54,76 +57,63 @@
   color: var(--accent-gold);
 }
 
-/* --- ВЫПАДАЮЩЕЕ МЕНЮ --- */
+/* --- ВЫПАДАЮЩЕЕ МЕНЮ (ДЕСКТОП) --- */
 
 .dropdownWrapper {
   position: relative;
-  height: 100%; /* Растягиваем на всю высоту .inner */
+  height: 100%;
   display: flex;
   align-items: center;
   cursor: pointer;
   gap: 8px;
-  /* Убрали color: #fff отсюда, чтобы не было конфликтов */
 }
 
-/* Стили для текста "Услуги" и стрелки */
-.navLink, .arrow {
+.navLink,
+.arrow {
   font-family: var(--font-sans);
   font-size: 20px;
   letter-spacing: 0.5px;
-  color: #fff; /* Исходный белый */
+  color: #fff;
   transition: color 0.3s ease;
 }
 
-/* РЕШЕНИЕ ПРОБЛЕМЫ С ЦВЕТОМ:
-   При наведении на обертку красим ТОЛЬКО текст "Услуги" и стрелку,
-   но не трогаем само выпадающее меню */
 .dropdownWrapper:hover .navLink,
 .dropdownWrapper:hover .arrow {
   color: var(--accent-gold);
 }
 
-.dropdown {
+/* Стили именно для десктопного выпадающего окна */
+.desktopDropdown {
   position: absolute;
-  /* Меню начинается от низа wrapper (который внутри inner высотой 60px) */
   top: 91%;
-  
-  /* РЕШЕНИЕ ПРОБЛЕМЫ С ЗАКРЫТИЕМ:
-     У нас у хедера padding-bottom: 15px.
-     Мы добавляем padding-top: 15px самому меню, чтобы "удлинить" его невидимую часть вверх.
-     Теперь мышка переходит с текста на меню без разрывов.
-  */
-  padding-top: 60px; 
-  
-  left: 50%; /* Центрируем относительно слова "Услуги" */
-  /* transform: translateX(-50%);  */
-  /* min-width: 240px; */
+  padding-top: 60px;
+  left: 50%;
+  /* transform: translateX(-50%); */ /* У вас было закомментировано */
   display: flex;
   flex-direction: column;
   gap: 24px;
-  /* padding: 37px 40px; */
-  padding: 72px 40px 37px 40px; 
+  padding: 72px 40px 37px 40px;
   z-index: 1001;
 }
 
-/* Внутренний контейнер для ссылок, чтобы фон был только у него, а не на padding-top */
-.dropdown::before {
-  content: '';
+.desktopDropdown::before {
+  content: "";
   position: absolute;
-  top: 35px; /* Начинаем фон там, где кончается наш "безопасный" padding */
+  top: 35px;
   left: 0;
   width: 100%;
   height: calc(100% - 35px);
-  background: rgba(0, 0, 0, 0.5); /* Более плотный фон для читаемости */
+  background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(8px);
-  z-index: -1; /* Кладем фон под текст */
+  -webkit-backdrop-filter: blur(8px);
+  z-index: -1;
 }
 
-.dropdown a {
+.desktopDropdown a {
   text-transform: none;
   display: block;
   text-decoration: none;
-  color: #ffffff; /* Серый цвет по умолчанию */
+  color: #ffffff;
   transition: color 0.3s ease, transform 0.3s ease;
   font-size: 20px;
   padding: 0;
@@ -131,8 +121,144 @@
   white-space: nowrap;
 }
 
-/* Подсветка пунктов меню только при наведении на них */
-.dropdown a:hover {
+.desktopDropdown a:hover {
   color: var(--accent-gold);
   transform: translateX(10px);
+}
+
+/* Скрываем мобильное подменю на десктопе */
+.mobileDropdown {
+  display: none;
+}
+
+.servicesLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Бургер скрыт по умолчанию */
+.burgerBtn {
+  display: none;
+}
+
+
+/* =========================================
+   АДАПТИВНОСТЬ (МОБИЛЬНАЯ ВЕРСИЯ)
+   ========================================= */
+
+@media (max-width: 1024px) {
+  .inner {
+    padding: 0 20px; /* Уменьшаем боковые отступы контейнера на мобильных */
+  }
+
+  /* Показываем кнопку бургера */
+  .burgerBtn {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1002;
+    padding: 0;
+  }
+
+  .burgerBtn span {
+    width: 100%;
+    height: 2px;
+    background-color: #fff;
+    transition: all 0.3s ease;
+  }
+
+  /* Анимация крестика */
+  .burgerBtn.active span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+  }
+  .burgerBtn.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .burgerBtn.active span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+  }
+
+  /* Мобильное меню (выезжает или появляется) */
+  .nav {
+    position: fixed;
+    top: 0;
+    right: -100%; /* Спрятано справа */
+    width: 100%;
+    height: 100vh;
+    background-color: #0F0F0F; /* Плотный фон */
+    
+    flex-direction: column;
+    justify-content: center;
+    gap: 40px;
+    padding: 80px 20px;
+    
+    transition: right 0.4s ease;
+    overflow-y: auto;
+  }
+
+  /* Класс для открытия меню */
+  .nav.navMobileActive {
+    right: 0;
+  }
+
+  /* Ссылки в мобильном меню крупнее */
+  .nav > a, .navLink {
+    font-size: 24px;
+  }
+
+  /* --- Логика Услуг на мобильном --- */
+  .dropdownWrapper {
+    flex-direction: column;
+    height: auto;
+    align-items: center;
+    width: 100%;
+  }
+
+  /* Отключаем десктопный дропдаун на мобильных, чтобы не мешал */
+  .desktopDropdown {
+    display: none !important;
+  }
+
+  /* Включаем мобильный дропдаун (аккордеон) */
+  .mobileDropdown {
+    display: none; /* Скрыт пока не кликнули */
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05); /* Легкая подложка */
+    padding: 20px;
+    border-radius: 8px;
+  }
+
+  .mobileDropdown a {
+    color: #b0b0b0;
+    font-size: 18px;
+    text-decoration: none;
+    font-family: var(--font-sans);
+    text-align: center;
+  }
+
+  /* Когда кликнули на Услуги - показываем список */
+  .dropdownWrapper.mobileSubmenuOpen .mobileDropdown {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+  }
+  
+  .dropdownWrapper.mobileSubmenuOpen .arrow {
+    transform: rotate(180deg);
+    color: var(--accent-gold);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

@@ -1,6 +1,10 @@
+/* =========================================
+   СТИЛИ ДЛЯ ДЕСКТОПА (БЕЗ ИЗМЕНЕНИЙ)
+   ========================================= */
+
 .footer {
   background-color: var(--bg-dark);
-  padding: 80px 76px 30px 88px; 
+  padding: 80px 76px 30px 88px;
   width: 100%;
   position: relative;
   z-index: 20;
@@ -9,15 +13,19 @@
   margin: 0 auto;
 }
 
+.footerOverlay {
+  /* Тень для главной страницы, чтобы отделить от картинки */
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+}
+
 .topRow {
   display: flex;
-
   margin-bottom: 45px;
 }
 
 .heading {
   color: #fff;
-  font-family: var(--font-sans); 
+  font-family: var(--font-sans);
   font-weight: 800;
   font-size: 14px;
   line-height: 16px;
@@ -110,8 +118,12 @@
   color: #fff;
 }
 
+.colMap {
+  /* Чтобы карта не сжималась на десктопе */
+  flex-shrink: 0;
+}
+
 .mapPlaceholder {
-  width: 100%;
   width: 272px;
   height: 160px;
   background-color: #D9D9D9;
@@ -133,31 +145,135 @@
 
 .privacy {
   text-decoration: none;
+  color: #4B5563; /* Добавил цвет, чтобы ссылка была видна */
 }
 .privacy:hover {
   color: #8D8D8D;
 }
 
+
+/* =========================================
+   АДАПТИВНОСТЬ
+   ========================================= */
+
+/* Планшеты (до 1024px) */
 @media (max-width: 1024px) {
-  /* .topRow {
-    grid-template-columns: 1fr 1fr;
-    gap: 50px;
-  } */
+  .footer {
+    padding: 60px 40px 30px;
+    width: 95%;
+  }
+
+  .topRow {
+    flex-wrap: wrap;
+    gap: 40px;
+  }
+
+  .leftCol {
+    margin-right: 0;
+    flex-wrap: wrap;
+    gap: 40px;
+  }
+  
+  .colMap {
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .mapPlaceholder {
+    width: 100%;
+    max-width: 100%;
+  }
 }
 
-@media (max-width: 600px) {
-  /* .topRow {
-    grid-template-columns: 1fr;
-  } */
-  .bottomRow {
+/* Мобильные телефоны (до 768px) */
+@media (max-width: 768px) {
+  .footer {
+    padding: 40px 20px 20px;
+    width: 100%;
+    
+    /* Отключаем наезд на картинку на мобильных */
+    margin-top: 0 !important; 
+  }
+
+  .topRow {
     flex-direction: column;
+    align-items: center; /* Центрируем колонки */
+    gap: 50px;
+    margin-bottom: 30px;
+  }
+
+  .leftCol {
+    flex-direction: column;
+    align-items: center; /* Центрируем содержимое левой колонки */
+    gap: 50px;
+    width: 100%;
+    margin-right: 0;
+  }
+
+  /* Логотип и соцсеть */
+  .colLogo {
+    flex-direction: column;
+    align-items: center; /* Центрируем лого и иконку */
     gap: 20px;
+    width: 100%;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .centerCol {
+    flex-direction: column;
+    align-items: center; /* Центрируем меню и контакты */
+    gap: 50px;
+    width: 100%;
+  }
+
+  /* Меню */
+  .colMenu {
+    width: 100%;
+    text-align: center; /* Центрируем текст ссылок */
+  }
+
+  /* Блок контактов */
+  .col {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
     align-items: center;
+  }
+
+  .contactsBlock {
+    align-items: center; /* Центрируем телефоны и адреса (так как display: flex) */
+    text-align: center;
+    width: 100%;
+  }
+
+  .emails {
+    align-items: center; /* Центрируем почты */
+  }
+
+  /* Заголовки разделов */
+  .heading {
     text-align: center;
   }
-  .colLogo {
-    min-height: auto;
-    gap: 20px;
+
+  /* Нижняя строка (Копирайт) */
+  .bottomRow {
+    flex-direction: column-reverse;
     align-items: center;
+    gap: 20px;
+    text-align: center;
+    padding-top: 20px;
+  }
+  
+  /* Карта */
+  .colMap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .mapPlaceholder {
+    height: 200px;
+    width: 100%;
   }
 }
