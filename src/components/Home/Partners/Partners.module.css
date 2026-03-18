@@ -6,7 +6,7 @@
 
 .partners_wrapper {
   margin: 0 auto;
-  padding: 50px 187px 66px;
+  padding: 50px clamp(15px, 8vw, 187px) 66px;
   max-width: 1390px;
 }
 
@@ -15,20 +15,20 @@
 }
 
 .partners__label__item {
-  font-size: 20px;
+  font-size: clamp(12px, 2vw, 20px);
   text-transform: uppercase;
   color: var(--accent-gold);
   font-weight: 800;
   letter-spacing: 3.6px;
   border-bottom: 1px solid #ffffff;
   padding-bottom: 8px;
-  line-height: 16px;
+  line-height: 1.25;
 }
 
 .partners__title {
-  font-size: 36px;
+  font-size: clamp(24px, 4vw, 36px);
   font-weight: 400;
-  line-height: 64px;
+  line-height: 1.7;
   letter-spacing: 0;
   margin-bottom: 12px;
   color: #fff;
@@ -36,9 +36,16 @@
 
 .partners__text {
   color: var(--text-muted);
-  font-size: 20px;
+  font-size: clamp(14px, 2vw, 20px);
   font-weight: 300;
   margin: 0 auto;
-  line-height: 28px;
+  line-height: 1.4;
   letter-spacing: 0;
+}
+
+@media (max-width: 768px) {
+  .partners_wrapper {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
 }

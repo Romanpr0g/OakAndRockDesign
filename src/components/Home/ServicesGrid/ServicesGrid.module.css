@@ -4,7 +4,8 @@
 }
 
 .container {
-  max-width: 1225px;
+  max-width: 1440px;
+  padding: 0 108px;
   margin: 0 auto;
 }
 
@@ -168,33 +169,107 @@
 }
 
 /* Адаптив (на мобильных убираем свисание и выстраиваем в колонку) */
-@media (max-width: 1170px) {
+@media (max-width: 1300px) {
+  .container {
+    padding: 0 40px; /* Уменьшаем боковые отступы */
+  }
+
   .grid {
-    flex-direction: column;
+    min-height: auto;
+    gap: 30px; /* Расстояние между верхним и нижним рядом */
   }
-  .horeca {
+
+  /* Оставляем блоки в строку, добавляем равный отступ между двумя карточками */
+  .upBlock,
+  .bottomBlock {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+  }
+
+  /* Сбрасываем жесткие размеры и "лесенку" */
+  .apartments,
+  .horeca,
+  .homes,
+  .restoration {
+    flex: 1; /* Карточки делят ширину поровну (по 50% минус gap) */
+    width: auto;
+    height: 350px; /* Единая высота для всех карточек в сетке */
+    position: relative;
+    top: auto;
+    right: auto;
+    left: auto;
     margin-top: 0;
-    height: 300px;
   }
-  .bottomRow {
-    flex-direction: column;
-    height: auto;
-  }
-  .half {
-    height: 300px;
-  }
+
   .card {
-    overflow: hidden; /* На мобильных лучше спрятать вылеты */
+    overflow: hidden; /* Обрезаем картинки и прячем вылетающие за края плашки */
   }
-  .cardLabel {
-    /* Возвращаем стандартное положение на мобильных */
+
+  /* Ставим плашки аккуратно вниз по центру каждой карточки */
+  .apartments .cardLabel,
+  .horeca .cardLabel,
+  .homes .cardLabel,
+  .restoration .cardLabel {
     position: absolute;
     bottom: 0;
     left: 0;
-    right: auto;
+    right: 0;
     top: auto;
-    transform: none;
     width: 100%;
+    padding: 15px;
     text-align: center;
+    font-size: 24px;
+    line-height: normal;
+    background-color: rgba(31, 31, 31, 0.9);
+    box-sizing: border-box; /* Чтобы padding не ломал ширину 100% */
+  }
+}
+
+/* --- Адаптив для телефонов (до 768px): В один столбик --- */
+@media (max-width: 768px) {
+  .section {
+    padding: 60px 0 30px;
+  }
+
+  .container {
+    padding: 0 20px;
+  }
+
+  .header {
+    margin-bottom: 24px;
+  }
+
+  .label {
+    font-size: 16px;
+  }
+
+  .arrow {
+    width: 30px;
+    height: 28px;
+  }
+
+  /* Вот здесь перестраиваем ряды в колонки (1 карточка в ряд) */
+  .upBlock,
+  .bottomBlock {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* Уменьшаем высоту карточек для мобильных экранов */
+  .apartments,
+  .horeca,
+  .homes,
+  .restoration {
+    height: 250px;
+  }
+
+  /* Немного уменьшаем шрифт на плашках */
+  .apartments .cardLabel,
+  .horeca .cardLabel,
+  .homes .cardLabel,
+  .restoration .cardLabel {
+    font-size: 20px;
+    padding: 12px;
   }
 }

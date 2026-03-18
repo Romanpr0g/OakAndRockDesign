@@ -11,7 +11,7 @@ const Hero = () => {
         </h1>
         <p>— мы творим чудеса.</p>
       </div>
-      <img src={heroArrow} className={s.scroll} alt="arrow" />
+      {/* <img src={heroArrow} className={s.scroll} alt="arrow" /> */}
     </section>
   );
 };

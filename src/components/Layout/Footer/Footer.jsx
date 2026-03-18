@@ -122,8 +122,18 @@ const Footer = () => {
 
           {/* 4. Колонка: Карта */}
           <div className={s.colMap}>
-            {/* Серый блок-заглушка или iframe карты */}
-            <div className={s.mapPlaceholder}></div>
+            <iframe
+              title="Карта: г. Минск, ул. Киселёва 20"
+              // ll - центрирует карту по координатам (долгота, широта)
+              // z=17 - масштаб (приближение)
+              // pt - ставит красную метку (pm2rdm) точно на здание
+              src="https://yandex.ru/map-widget/v1/?ll=27.565963,53.914080&z=17&pt=27.565963,53.914080,pm2rdm"
+              width="100%"
+              height="100%"
+              frameBorder="0"
+              allowFullScreen={true}
+              className={s.mapPlaceholder}
+            ></iframe>
           </div>
         </div>
 
