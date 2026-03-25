@@ -1,72 +1,114 @@
-import React from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { STEPS, LINES } from "../../../utils/constants";
 import s from "./RoadMap.module.css";
 import PinIcon from "../../../assets/svg/pin.svg?react";
 
 const RoadMap = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const drumRef = useRef(null);
+  const stepRefs = useRef([]);
+
+  useEffect(() => {
+    // Включаем слежку за скроллом только на мобильных устройствах
+    if (window.innerWidth > 900) return;
+
+    // Настраиваем Observer (сработает, когда элемент попадет ровно в центр барабана)
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = Number(entry.target.getAttribute("data-index"));
+            setActiveIndex(index);
+          }
+        });
+      },
+      {
+        root: drumRef.current,
+        // Оставляем узкую "рамку" срабатывания ровно по центру высоты контейнера
+        rootMargin: "-40% 0px -40% 0px",
+        threshold: 0,
+      },
+    );
+
+    stepRefs.current.forEach((el) => {
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
   return (
     <section className={s.processSection}>
       <div className={s.roadMapContainer}>
         <span className={`header ${s.sectionLabel}`}>НАШ ПРОЦЕСС</span>
+        <div className={s.drumContainer} ref={drumRef}>
+          <div className={s.stepsContainer}>
+            {STEPS.map((step, index) => {
+              const isLeft = index % 2 === 0;
+              const isLast = index === STEPS.length - 1;
 
-        <div className={s.stepsContainer}>
-          {STEPS.map((step, index) => {
-            const isLeft = index % 2 === 0;
-            const isLast = index === STEPS.length - 1;
+              // Получаем конфиг для текущего шага
+              const currentConfig = linesConfig[index] || [];
 
-            // Получаем конфиг для текущего шага
-            const currentConfig = linesConfig[index] || [];
+              let mobilePositionClass = "";
+              if (index === activeIndex) mobilePositionClass = s.activeStep;
+              else if (index < activeIndex) mobilePositionClass = s.prevStep;
+              else if (index > activeIndex) mobilePositionClass = s.nextStep;
 
-            return (
-              <div
-                key={step.id}
-                className={`${s.stepItem} ${isLeft ? s.leftCol : s.rightCol} ${s[`step_${step.id}`]}`}
-              >
-                <div className={isLeft ? s.leftContent : s.rightContent}>
-                  {/* КОНТЕНТ */}
-                  <h3 className={s.stepTitle}>
-                    <span className={s.stepNum}>{step.id}. </span>
-                    {step.title}
-                  </h3>
-                  <p className={s.stepDesc}>{step.desc}</p>
+              return (
+                <div
+                  key={step.id}
+                  data-index={index}
+                  ref={(el) => (stepRefs.current[index] = el)}
+                  className={`${s.stepItem} ${
+                    isLeft ? s.leftCol : s.rightCol
+                  } ${s[`step_${step.id}`]} ${mobilePositionClass}`}
+                >
+                  <div className={isLeft ? s.leftContent : s.rightContent}>
+                    {/* КОНТЕНТ */}
+                    <h3 className={s.stepTitle}>
+                      <span className={s.stepNum}>{step.id}. </span>
+                      {step.title}
+                    </h3>
+                    <p className={s.stepDesc}>{step.desc}</p>
 
-                  {/* ОТРИСОВКА ЛИНИЙ */}
-                  {/* Линии привязаны к контенту (relative), поэтому они будут двигаться вместе с текстом */}
-                  {currentConfig.map((cfg, i) => {
-                    // Берем нужную линию из массива LINES по индексу
-                    const LineComponent = LINES[cfg.lineIndex];
+                    {/* ОТРИСОВКА ЛИНИЙ */}
+                    {/* Линии привязаны к контенту (relative), поэтому они будут двигаться вместе с текстом */}
+                    {currentConfig.map((cfg, i) => {
+                      // Берем нужную линию из массива LINES по индексу
+                      const LineComponent = LINES[cfg.lineIndex];
 
-                    if (!LineComponent) return null;
+                      if (!LineComponent) return null;
 
-                    return (
-                      <div
-                        key={i}
-                        className={s.svgContainer}
-                        style={{
-                          // Применяем индивидуальные стили из конфига
-                          top: cfg.top,
-                          left: cfg.left,
-                          right: cfg.right,
-                          width: cfg.width || "300px", // Дефолтная ширина
-                          height: cfg.height || "auto",
-                          opacity: cfg.opacity || 1,
-                        }}
-                      >
-                        <LineComponent className={s.svgLine} />
+                      return (
+                        <div
+                          key={i}
+                          className={s.svgContainer}
+                          style={{
+                            // Применяем индивидуальные стили из конфига
+                            top: cfg.top,
+                            left: cfg.left,
+                            right: cfg.right,
+                            width: cfg.width || "300px", // Дефолтная ширина
+                            height: cfg.height || "auto",
+                            opacity: cfg.opacity || 1,
+                          }}
+                        >
+                          <LineComponent className={s.svgLine} />
+                        </div>
+                      );
+                    })}
+
+                    {/* ПИН (Только у последнего) */}
+                    {isLast && (
+                      <div className={s.pinWrapper}>
+                        <PinIcon className={s.pinIcon} />
                       </div>
-                    );
-                  })}
-
-                  {/* ПИН (Только у последнего) */}
-                  {isLast && (
-                    <div className={s.pinWrapper}>
-                      <PinIcon className={s.pinIcon} />
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

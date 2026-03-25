@@ -1,7 +1,7 @@
 .processSection {
   margin-bottom: 120px;
   position: relative;
-  overflow-x: clip; /* Обрезает линии, если они улетают за экран */
+  overflow-x: clip;
   color: #fff;
 }
 
@@ -15,23 +15,26 @@
   margin-bottom: 52px;
 }
 
-/* СЕТКА */
+/* Десктопный контейнер барабана прозрачный */
+.drumContainer {
+  width: 100%;
+}
+
+/* СЕТКА (Оставлена без изменений для десктопа) */
 .stepsContainer {
   position: relative;
   display: grid;
-  grid-template-columns: 45% 55%; /* Две колонки */
+  grid-template-columns: 45% 55%;
   row-gap: 0;
   width: 100%;
 }
 
-/* КАРТОЧКА ШАГА */
 .stepItem {
   position: relative;
   width: 100%;
   max-width: 560px;
 }
 
-/* Левая колонка */
 .leftCol {
   grid-column: 1 / 2;
   text-align: left;
@@ -46,7 +49,6 @@
   position: relative;
 }
 
-/* Правая колонка */
 .rightCol {
   grid-column: 2 / 3;
   text-align: left;
@@ -59,17 +61,22 @@
 .rightContent {
   width: 100%;
   text-align: left;
-  position: relative; /* Чтобы линии позиционировались от текста */
+  position: relative;
 }
 
+/* === АДАПТИВНАЯ ТИПОГРАФИКА === */
 .stepTitle {
   font-family: var(--font-serif);
   font-size: clamp(20px, 3vw, 36px);
   font-weight: 400;
   color: #fff;
-  line-height: 100%;
+  line-height: 1.2;
   letter-spacing: 0%;
   margin-bottom: 12px;
+}
+
+.stepNum {
+  color: inherit;
 }
 
 .stepDesc {
@@ -77,6 +84,7 @@
   font-weight: 300;
   letter-spacing: 3%;
   color: #fff;
+  line-height: 1.5;
   white-space: pre-line;
 }
 
@@ -103,33 +111,18 @@
   z-index: 1000;
 }
 
-.step_2 {
-  left: 86px;
-}
-.step_3 {
-  left: 35px;
-}
-.step_4 {
-  left: 86px;
-}
-.step_6 {
-  margin-top: 172px;
-  left: 51px;
-}
-.step_7 {
-  max-width: 540px;
-  left: 105px;
-}
-.step_8 {
-  max-width: 576px;
-  left: 70px;
-}
-.step_10 {
-  max-width: 704px;
-  left: -58px;
-}
+/* ИНДИВИДУАЛЬНЫЕ СДВИГИ ДЕСКТОПА */
+.step_2 { left: 86px; }
+.step_3 { left: 35px; }
+.step_4 { left: 86px; }
+.step_6 { margin-top: 172px; left: 51px; }
+.step_7 { max-width: 540px; left: 105px; }
+.step_8 { max-width: 576px; left: 70px; }
+.step_10 { max-width: 704px; left: -58px; }
 
-/* АДАПТИВ */
+/* ==========================================
+   АДАПТИВ (ЭФФЕКТ БАРАБАНА iOS)
+   ========================================== */
 @media (max-width: 1300px) {
   .stepsContainer {
     column-gap: 80px;
@@ -139,50 +132,118 @@
 
 @media (max-width: 900px) {
   .roadMapContainer {
-    /* Убираем огромный левый отступ (108px) на мобилках */
-    padding: 36px 20px 0 20px; 
+    padding: 36px 20px 0 20px;
+  }
+
+  /* 1. Настройка барабана-обертки */
+  .drumContainer {
+    height: 480px; /* Фиксированная высота: ровно 3 карточки */
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory; /* Жесткий магнетизм к центру */
+    perspective: 1000px; /* Включаем глубину для 3D наклона */
+    position: relative;
+    
+    /* Убираем скроллбары */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    
+    /* Эффект затухания краев сверху и снизу в темноту! */
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
+  }
+  
+  .drumContainer::-webkit-scrollbar {
+    display: none;
   }
 
   .stepsContainer {
     grid-template-columns: 1fr;
-    gap: 40px; /* Отступ между карточками */
-    padding-left: 20px; /* Место слева под вертикальную линию */
+    gap: 0; 
+    padding-left: 30px; /* Место слева под линию */
+    
+    /* Отступы сверху и снизу, чтобы первый (01) и последний элементы могли докрутиться ровно до центра экрана */
+    padding-top: 160px; 
+    padding-bottom: 160px; 
   }
 
   /* ВЕРТИКАЛЬНАЯ ЛИНИЯ */
   .stepsContainer::before {
     content: '';
     position: absolute;
-    top: 10px;
+    top: 0;
     bottom: 0;
-    left: 4px;
+    left: 10px;
     width: 1px;
-    background-color: rgba(255, 255, 255, 0.15); /* Тусклая линия */
+    background-color: rgba(255, 255, 255, 0.15);
+    z-index: 1;
   }
 
+  /* Сбрасываем колонки */
   .leftCol, .rightCol {
     grid-column: 1 / 2;
     align-items: flex-start;
     margin-top: 0;
   }
 
+  /* 2. Настройка карточки внутри барабана */
   .stepItem {
+    height: 160px; /* Фиксируем высоту карточки для идеального скролла */
     max-width: 100%;
+    scroll-snap-align: center; /* Центрируем при остановке скролла */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    /* Плавность трансформации */
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    opacity: 0.2; /* Изначально все элементы тусклые */
   }
 
-  /* ЗОЛОТЫЕ КВАДРАТИКИ */
+  /* Золотые точки на линии */
   .stepItem::before {
     content: '';
     position: absolute;
-    top: 8px; /* Выравнивание по высоте заголовка */
-    left: -20px; /* Сдвиг на вертикальную линию */
+    top: 50%; /* Центрируем точку */
+    transform: translateY(-50%);
+    left: -24px;
     width: 8px;
     height: 8px;
     background-color: var(--accent-gold, #d4af37);
     z-index: 2;
+    transition: 0.4s ease;
   }
 
-  /* ВАЖНО: Сбрасываем десктопные кривые отступы! */
+  /* Ограничиваем текст, чтобы он не сломал высоту 160px */
+  .stepDesc {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* === КЛАССЫ ЭФФЕКТОВ БАРАБАНА (Присваиваются через JS) === */
+  
+  /* Элемент в фокусе (посередине) */
+  .activeStep {
+    opacity: 1;
+    transform: rotateX(0deg) scale(1);
+  }
+
+  /* Элементы выше центра (отклоняются назад и вверх) */
+  .prevStep {
+    opacity: 0.3;
+    transform: rotateX(25deg) scale(0.85);
+    transform-origin: bottom center;
+  }
+
+  /* Элементы ниже центра (отклоняются назад и вниз) */
+  .nextStep {
+    opacity: 0.3;
+    transform: rotateX(-25deg) scale(0.85);
+    transform-origin: top center;
+  }
+
+  /* Сброс кривых десктопных отступов */
   .step_2, .step_3, .step_4, .step_6, .step_7, .step_8, .step_10 {
     left: 0;
     margin-top: 0;
@@ -193,26 +254,21 @@
     max-width: 100%;
   }
 
-  /* Прячем десктопные линии и пин на телефонах */
+  /* Прячем десктопные линии на телефонах */
   .svgContainer, .pinWrapper {
     display: none;
   }
 
-  /* === АДАПТАЦИЯ ТЕКСТА ПОД МОБИЛЬНЫЙ СКРИНШОТ === */
+  /* Форматирование заголовков под мобилку */
   .stepTitle {
     display: flex;
     align-items: flex-start;
     gap: 12px;
+    margin-bottom: 8px;
   }
   
-  /* Золотая цифра */
   .stepNum {
     color: var(--accent-gold, #d4af37);
     font-weight: 800;
-  }
-  
-  /* Приглушаем цвет описания */
-  .stepDesc {
-    color: var(--text-muted, #b3b3b3); 
   }
 }
