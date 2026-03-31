@@ -18,7 +18,7 @@
 }
 
 .label {
-  font-size: 20px;
+  font-size: clamp(1rem, 0.9167rem + 0.3704vw, 1.25rem);
   letter-spacing: 3.6px;
   font-weight: 800;
   line-height: 16px;
@@ -50,16 +50,13 @@
 }
 
 .leftCol {
-  flex: 1.4; /* Левая колонка чуть шире */
+  flex: 1.4;
   display: flex;
   flex-direction: column;
   gap: 30px;
 }
 
-/* --- Карточки (Общее) --- */
 .card {
-  /* position: relative; */
-  /* ВАЖНО: visible, чтобы плашки могли вылезать за границы */
   overflow: visible; 
   width: 100%;
 }
@@ -71,40 +68,31 @@
   object-fit: cover;
   transition: transform 0.6s ease;
   border-radius: 8px;
-  /* overflow: hidden; */
 }
 
-/* Эффект увеличения картинки при наведении (через маску или контейнер)
-   Т.к. overflow: visible, scale будет увеличивать картинку поверх всего.
-   Если нужен crop при зуме, придется усложнять обертку. 
-   Для простоты оставляем hover эффект или убираем scale, если он мешает плашкам.
-*/
 .card:hover img {
   transform: scale(1.02);
 }
 
-/* --- Стили Плашек (Label) --- */
 .cardLabel {
   position: absolute;
-  background-color: #1F1F1F; /* Почти черный фон */
+  background-color: #1F1F1F; 
   color: #fff;
-  font-family: var(--font-serif); /* Ваш шрифт с засечками */
+  font-family: var(--font-serif); 
   font-weight: 400;
-  font-size: 36px;
+  font-size: clamp(1.25rem, 0.9167rem + 1.4815vw, 2.25rem);
   line-height: 40px;
-  z-index: 2; /* Поверх картинок */
+  z-index: 2;
   white-space: nowrap;
 }
-
-/* --- Стилизация конкретных блоков --- */
 
 /* 1. Квартиры */
 .apartments {
   position: relative;
   width: 596px;
-  height: 448px; /* Высота верхнего блока */
+  height: 448px; 
 }
-/* Плашка "Квартиры": Свисает справа, ближе к верху */
+
 .apartments .cardLabel {
   top: 68px;
   right: -135px;
@@ -120,14 +108,13 @@
 
 /* 3. Частные дома */
 .homes {
-  /* Специфичных стилей нет, кроме плашки */
   width: 472px;
   height: 472px;
   position: relative;
   top: 92px;
   left: 0;
 }
-/* Плашка "Частные дома": Свисает справа сверху */
+
 .homes .cardLabel {
   top: 86px;
   right: -123px;
@@ -142,7 +129,7 @@
   margin-top: 356px;
   right: 0;
 }
-/* Плашка "Реставрация": Свисает слева снизу */
+
 .restoration .cardLabel {
   bottom: 68px;
   left: -157px;
@@ -151,35 +138,29 @@
 
 /* 5. Правая колонка (HoReCa) */
 .horeca {
-  /* flex: 1; */
   width: 420px;
-  height: 488px; /* Высота правой картинки */
-  /* Смещаем колонку вниз, чтобы создать асимметрию как на макете */
-  /* margin-top: 150px;  */
+  height: 488px; 
   position: relative;
   top: 152px;
   right: 0;
 }
 
-/* Плашка "HoReCa": Свисает слева посередине */
 .horeca .cardLabel {
   bottom: 68px;
   left: -175px;
   padding: 18px 36px;
 }
 
-/* Адаптив (на мобильных убираем свисание и выстраиваем в колонку) */
 @media (max-width: 1300px) {
   .container {
-    padding: 0 40px; /* Уменьшаем боковые отступы */
+    padding: 0 40px; 
   }
 
   .grid {
     min-height: auto;
-    gap: 30px; /* Расстояние между верхним и нижним рядом */
+    gap: 30px;
   }
 
-  /* Оставляем блоки в строку, добавляем равный отступ между двумя карточками */
   .upBlock,
   .bottomBlock {
     display: flex;
@@ -187,14 +168,13 @@
     gap: 30px;
   }
 
-  /* Сбрасываем жесткие размеры и "лесенку" */
   .apartments,
   .horeca,
   .homes,
   .restoration {
-    flex: 1; /* Карточки делят ширину поровну (по 50% минус gap) */
+    flex: 1;
     width: auto;
-    height: 350px; /* Единая высота для всех карточек в сетке */
+    height: 350px;
     position: relative;
     top: auto;
     right: auto;
@@ -203,10 +183,9 @@
   }
 
   .card {
-    overflow: hidden; /* Обрезаем картинки и прячем вылетающие за края плашки */
+    overflow: hidden;
   }
 
-  /* Ставим плашки аккуратно вниз по центру каждой карточки */
   .apartments .cardLabel,
   .horeca .cardLabel,
   .homes .cardLabel,
@@ -219,14 +198,12 @@
     width: 100%;
     padding: 15px;
     text-align: center;
-    font-size: 24px;
     line-height: normal;
     background-color: rgba(31, 31, 31, 0.9);
-    box-sizing: border-box; /* Чтобы padding не ломал ширину 100% */
+    box-sizing: border-box;
   }
 }
 
-/* --- Адаптив для телефонов (до 768px): В один столбик --- */
 @media (max-width: 768px) {
   .section {
     padding: 60px 0 30px;
@@ -240,23 +217,17 @@
     margin-bottom: 24px;
   }
 
-  .label {
-    font-size: 16px;
-  }
-
   .arrow {
     width: 30px;
     height: 28px;
   }
 
-  /* Вот здесь перестраиваем ряды в колонки (1 карточка в ряд) */
   .upBlock,
   .bottomBlock {
     flex-direction: column;
     gap: 20px;
   }
 
-  /* Уменьшаем высоту карточек для мобильных экранов */
   .apartments,
   .horeca,
   .homes,
@@ -264,12 +235,10 @@
     height: 250px;
   }
 
-  /* Немного уменьшаем шрифт на плашках */
   .apartments .cardLabel,
   .horeca .cardLabel,
   .homes .cardLabel,
   .restoration .cardLabel {
-    font-size: 20px;
     padding: 12px;
   }
 }

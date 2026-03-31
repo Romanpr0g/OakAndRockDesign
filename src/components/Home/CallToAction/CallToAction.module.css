@@ -2,15 +2,12 @@
   height: 874px;
   position: relative;
   background: url("../../../assets/createProject.jpg") center/cover fixed;
-  
-  /* --- ДОБАВЛЕНО --- */
-  display: flex;            /* Включаем флексбокс */
-  flex-direction: column;   /* Элементы друг под другом */
-  justify-content: flex-start; /* Прижимаем контент к верху */
-  align-items: center;      /* Центрируем по горизонтали */
-  
-  padding-top: 97px;        /* Тот самый отступ */
-  box-sizing: border-box;   /* Чтобы padding не увеличивал общую высоту блока (874px) */
+  display: flex;          
+  flex-direction: column; 
+  justify-content: flex-start; 
+  align-items: center;    
+  padding-top: 97px;       
+  box-sizing: border-box;   
 }
 .cta::before {
   content: "";
@@ -23,7 +20,7 @@
   text-align: center;
 }
 .content h2 {
-  font-size: 60px;
+  font-size: clamp(1.875rem, 1.25rem + 2.7778vw, 3.75rem);
   font-weight: 400;
   line-height: 80px;
   letter-spacing: 0;
@@ -33,8 +30,8 @@
   position: relative;
   background: var(--accent-gold);
   color: #fff;
-  padding: 20px 50px;
-  font-size: 16px;
+  padding: clamp(16px, 2vw, 20px) clamp(32px, 5vw, 50px);
+  font-size: clamp(0.875rem, 0.8333rem + 0.1852vw, 1rem);
   border: 0;
   letter-spacing: 0;
   font-weight: 800;
@@ -63,4 +60,16 @@
   bottom: -3px;
   left: -2px;
   border-color: #b08d4b;
+}
+
+@media (max-width: 1024px) {
+  .cta {
+    height: 1034px;
+  }
+}
+
+@media (max-width: 768px) {
+  .cta {
+    height: 500px;
+  }
 }
