@@ -37,7 +37,6 @@ const RoadMap = () => {
     };
 
     drum.addEventListener("scroll", updateActive, { passive: true });
-    // Вызываем сразу, чтобы инициализировать состояние
     updateActive();
 
     return () => drum.removeEventListener("scroll", updateActive);

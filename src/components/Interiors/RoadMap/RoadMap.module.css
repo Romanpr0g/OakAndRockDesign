@@ -153,6 +153,14 @@
     padding: 36px 20px 0 20px;
   }
 
+  .processSection {
+    margin-bottom: 0;
+  }
+
+  .sectionLabel {
+    margin-bottom: 5px;
+  }
+
   /* 1. Настройка барабана-обертки */
   .drumContainer {
     height: 480px; /* Фиксированная высота: ровно 3 карточки */
@@ -192,8 +200,8 @@
     padding-left: 30px; /* Место слева под линию */
 
     /* Отступы сверху и снизу, чтобы первый (01) и последний элементы могли докрутиться ровно до центра экрана */
-    padding-top: 160px;
-    padding-bottom: 160px;
+    padding-top: 100px;
+    padding-bottom: 100px;
   }
 
   /* ВЕРТИКАЛЬНАЯ ЛИНИЯ */
@@ -253,8 +261,9 @@
     overflow: hidden;
     max-height: 0;
     opacity: 0;
-    transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
+    transition:
+      max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
   }
 
   .activeStep {
