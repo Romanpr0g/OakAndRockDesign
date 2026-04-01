@@ -112,13 +112,31 @@
 }
 
 /* ИНДИВИДУАЛЬНЫЕ СДВИГИ ДЕСКТОПА */
-.step_2 { left: 86px; }
-.step_3 { left: 35px; }
-.step_4 { left: 86px; }
-.step_6 { margin-top: 172px; left: 51px; }
-.step_7 { max-width: 540px; left: 105px; }
-.step_8 { max-width: 576px; left: 70px; }
-.step_10 { max-width: 704px; left: -58px; }
+.step_2 {
+  left: 86px;
+}
+.step_3 {
+  left: 35px;
+}
+.step_4 {
+  left: 86px;
+}
+.step_6 {
+  margin-top: 172px;
+  left: 51px;
+}
+.step_7 {
+  max-width: 540px;
+  left: 105px;
+}
+.step_8 {
+  max-width: 576px;
+  left: 70px;
+}
+.step_10 {
+  max-width: 704px;
+  left: -58px;
+}
 
 /* ==========================================
    АДАПТИВ (ЭФФЕКТ БАРАБАНА iOS)
@@ -142,33 +160,45 @@
     scroll-snap-type: y mandatory; /* Жесткий магнетизм к центру */
     perspective: 1000px; /* Включаем глубину для 3D наклона */
     position: relative;
-    
+
     /* Убираем скроллбары */
     -ms-overflow-style: none;
     scrollbar-width: none;
-    
+
     /* Эффект затухания краев сверху и снизу в темноту! */
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
-    mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 30%,
+      black 70%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 30%,
+      black 70%,
+      transparent 100%
+    );
   }
-  
+
   .drumContainer::-webkit-scrollbar {
     display: none;
   }
 
   .stepsContainer {
     grid-template-columns: 1fr;
-    gap: 0; 
+    gap: 0;
     padding-left: 30px; /* Место слева под линию */
-    
+
     /* Отступы сверху и снизу, чтобы первый (01) и последний элементы могли докрутиться ровно до центра экрана */
-    padding-top: 160px; 
-    padding-bottom: 160px; 
+    padding-top: 160px;
+    padding-bottom: 160px;
   }
 
   /* ВЕРТИКАЛЬНАЯ ЛИНИЯ */
   .stepsContainer::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     bottom: 0;
@@ -179,7 +209,8 @@
   }
 
   /* Сбрасываем колонки */
-  .leftCol, .rightCol {
+  .leftCol,
+  .rightCol {
     grid-column: 1 / 2;
     align-items: flex-start;
     margin-top: 0;
@@ -187,21 +218,24 @@
 
   /* 2. Настройка карточки внутри барабана */
   .stepItem {
-    height: 160px; /* Фиксируем высоту карточки для идеального скролла */
+    height: auto;
+    min-height: 160px; /* Фиксируем высоту карточки для идеального скролла */
     max-width: 100%;
     scroll-snap-align: center; /* Центрируем при остановке скролла */
     display: flex;
     flex-direction: column;
     justify-content: center;
-    
+
     /* Плавность трансформации */
-    transition: transform 0.4s ease, opacity 0.4s ease;
+    transition:
+      transform 0.4s ease,
+      opacity 0.4s ease;
     opacity: 0.2; /* Изначально все элементы тусклые */
   }
 
   /* Золотые точки на линии */
   .stepItem::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 50%; /* Центрируем точку */
     transform: translateY(-50%);
@@ -215,18 +249,21 @@
 
   /* Ограничиваем текст, чтобы он не сломал высоту 160px */
   .stepDesc {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
+    display: block;
     overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.4s ease;
   }
 
-  /* === КЛАССЫ ЭФФЕКТОВ БАРАБАНА (Присваиваются через JS) === */
-  
-  /* Элемент в фокусе (посередине) */
   .activeStep {
     opacity: 1;
     transform: rotateX(0deg) scale(1);
+  }
+
+  .activeStep .stepDesc {
+    max-height: 200px; /* достаточно для любого текста */
+    opacity: 1;
   }
 
   /* Элементы выше центра (отклоняются назад и вверх) */
@@ -244,18 +281,26 @@
   }
 
   /* Сброс кривых десктопных отступов */
-  .step_2, .step_3, .step_4, .step_6, .step_7, .step_8, .step_10 {
+  .step_2,
+  .step_3,
+  .step_4,
+  .step_6,
+  .step_7,
+  .step_8,
+  .step_10 {
     left: 0;
     margin-top: 0;
     max-width: 100%;
   }
-  
-  .leftContent, .rightContent {
+
+  .leftContent,
+  .rightContent {
     max-width: 100%;
   }
 
   /* Прячем десктопные линии на телефонах */
-  .svgContainer, .pinWrapper {
+  .svgContainer,
+  .pinWrapper {
     display: none;
   }
 
@@ -266,7 +311,7 @@
     gap: 12px;
     margin-bottom: 8px;
   }
-  
+
   .stepNum {
     color: var(--accent-gold, #d4af37);
     font-weight: 800;

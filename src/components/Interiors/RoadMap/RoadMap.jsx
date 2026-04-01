@@ -9,33 +9,40 @@ const RoadMap = () => {
   const stepRefs = useRef([]);
 
   useEffect(() => {
-    // Включаем слежку за скроллом только на мобильных устройствах
     if (window.innerWidth > 900) return;
 
-    // Настраиваем Observer (сработает, когда элемент попадет ровно в центр барабана)
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = Number(entry.target.getAttribute("data-index"));
-            setActiveIndex(index);
-          }
-        });
-      },
-      {
-        root: drumRef.current,
-        // Оставляем узкую "рамку" срабатывания ровно по центру высоты контейнера
-        rootMargin: "-40% 0px -40% 0px",
-        threshold: 0,
-      },
-    );
+    const drum = drumRef.current;
+    if (!drum) return;
 
-    stepRefs.current.forEach((el) => {
-      if (el) observer.observe(el);
-    });
+    const updateActive = () => {
+      const drumRect = drum.getBoundingClientRect();
+      const drumCenter = drumRect.top + drumRect.height / 2;
 
-    return () => observer.disconnect();
+      let closestIndex = 0;
+      let closestDistance = Infinity;
+
+      stepRefs.current.forEach((el, index) => {
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        const elCenter = rect.top + rect.height / 2;
+        const distance = Math.abs(elCenter - drumCenter);
+
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestIndex = index;
+        }
+      });
+
+      setActiveIndex(closestIndex);
+    };
+
+    drum.addEventListener("scroll", updateActive, { passive: true });
+    // Вызываем сразу, чтобы инициализировать состояние
+    updateActive();
+
+    return () => drum.removeEventListener("scroll", updateActive);
   }, []);
+
   return (
     <section className={s.processSection}>
       <div className={s.roadMapContainer}>
@@ -45,8 +52,6 @@ const RoadMap = () => {
             {STEPS.map((step, index) => {
               const isLeft = index % 2 === 0;
               const isLast = index === STEPS.length - 1;
-
-              // Получаем конфиг для текущего шага
               const currentConfig = linesConfig[index] || [];
 
               let mobilePositionClass = "";
@@ -64,31 +69,24 @@ const RoadMap = () => {
                   } ${s[`step_${step.id}`]} ${mobilePositionClass}`}
                 >
                   <div className={isLeft ? s.leftContent : s.rightContent}>
-                    {/* КОНТЕНТ */}
                     <h3 className={s.stepTitle}>
                       <span className={s.stepNum}>{step.id}. </span>
                       {step.title}
                     </h3>
                     <p className={s.stepDesc}>{step.desc}</p>
 
-                    {/* ОТРИСОВКА ЛИНИЙ */}
-                    {/* Линии привязаны к контенту (relative), поэтому они будут двигаться вместе с текстом */}
                     {currentConfig.map((cfg, i) => {
-                      // Берем нужную линию из массива LINES по индексу
                       const LineComponent = LINES[cfg.lineIndex];
-
                       if (!LineComponent) return null;
-
                       return (
                         <div
                           key={i}
                           className={s.svgContainer}
                           style={{
-                            // Применяем индивидуальные стили из конфига
                             top: cfg.top,
                             left: cfg.left,
                             right: cfg.right,
-                            width: cfg.width || "300px", // Дефолтная ширина
+                            width: cfg.width || "300px",
                             height: cfg.height || "auto",
                             opacity: cfg.opacity || 1,
                           }}
@@ -98,7 +96,6 @@ const RoadMap = () => {
                       );
                     })}
 
-                    {/* ПИН (Только у последнего) */}
                     {isLast && (
                       <div className={s.pinWrapper}>
                         <PinIcon className={s.pinIcon} />
@@ -117,16 +114,7 @@ const RoadMap = () => {
 
 export default RoadMap;
 
-// ==========================================
-// КОНФИГУРАЦИЯ ЛИНИЙ (САМОЕ ВАЖНОЕ)
-// ==========================================
-// Здесь ты настраиваешь положение каждой линии индивидуально.
-// lineIndex: 0 - это первая линия из массива LINES (начала 1 шага)
-// top/right/left: отступы относительно текстового блока
-// width: ширина svg
-
 const linesConfig = {
-  // ШАГ 1 (Левая колонка) -> Линии идут вправо
   0: [
     {
       lineIndex: 0,
