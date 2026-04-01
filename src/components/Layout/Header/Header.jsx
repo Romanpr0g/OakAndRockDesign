@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import logo from "../../../assets/svg/logo.svg";
+import Logo from "../../../assets/svg/logo.svg?react";
 import HeaderArrow from "../../../assets/svg/headerArrow.svg?react";
 import s from "./Header.module.css";
 
@@ -30,7 +30,7 @@ const Header = () => {
     <header className={s.header}>
       <div className={`container ${s.inner}`}>
         <Link to="/" className={s.logo} onClick={closeMobileMenu}>
-          <img src={logo} className={s.logoSvg} alt="logo" />
+          <Logo />
         </Link>
 
         {/* Кнопка Бургера (видна только на мобильных) */}
