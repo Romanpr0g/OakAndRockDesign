@@ -227,15 +227,24 @@
 
   /* Включаем мобильный дропдаун (аккордеон) */
   .mobileDropdown {
-    display: none; /* Скрыт пока не кликнули */
+    display: flex; /* Теперь всегда flex, но мы спрячем его через высоту */
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    margin-top: 20px;
     width: 100%;
-    background: rgba(255, 255, 255, 0.05); /* Легкая подложка */
-    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 8px;
+
+    /* МАГИЯ АНИМАЦИИ: Прячем блок, сворачивая его в 0 */
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    
+    /* Плавно анимируем все изменяющиеся свойства */
+    transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease, margin 0.4s ease;
   }
 
   .mobileDropdown a {
@@ -248,17 +257,22 @@
 
   /* Когда кликнули на Услуги - показываем список */
   .dropdownWrapper.mobileSubmenuOpen .mobileDropdown {
-    display: flex;
-    animation: fadeIn 0.3s ease;
+    max-height: 300px; /* С запасом для ссылок. Если ссылок будет больше, увеличьте это число */
+    opacity: 1;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-top: 20px;
   }
+  
   
   .dropdownWrapper.mobileSubmenuOpen .arrow {
     transform: rotate(180deg);
     color: var(--accent-gold);
+    transition: transform 0.3s ease; /* Добавим плавность стрелочке */
   }
 }
 
-@keyframes fadeIn {
+/* @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
-}
+} */
