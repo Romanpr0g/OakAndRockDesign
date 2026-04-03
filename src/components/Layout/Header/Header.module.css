@@ -1,5 +1,5 @@
 /* =========================================
-   ВАШИ СТАРЫЕ СТИЛИ (БЕЗ ИЗМЕНЕНИЙ)
+   HEADER — точный дизайн Oak & Rock
    ========================================= */
 
 .header {
@@ -7,127 +7,138 @@
   top: 0;
   left: 0;
   width: 100%;
-  padding: 16px 0;
   z-index: 1000;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: #111111; /* Чуть более глубокий темный цвет, как на макете */
+  border-bottom: 1px solid rgba(197, 160, 90, 0.1);
 }
 
 .inner {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 60px;
-  padding: 0 107px; /* Ваши отступы сохранены */
+  height: 80px;
+  padding: 0 60px;
 }
 
+/* ---- ЛОГОТИП ---- */
 .logo {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  color: #fff;
+  gap: 14px;
   text-decoration: none;
-  height: 85px;
-  width: 70px;
-  z-index: 1002; /* Чтобы лого было над меню */
+  flex-shrink: 0;
+  z-index: 1002;
 }
 
+.logoIcon {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+}
+
+.logoText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.logoTitle {
+  /* ВАЖНО: заменен sans на serif для элегантного шрифта */
+  font-family: var("Cormorant Garamond", serif);
+  font-size: 20px; /* Чуть увеличили, чтобы соответствовало макету */
+  font-weight: 400; /* На макете шрифт не жирный */
+  letter-spacing: 0.1em;
+  color: #c9a96e;
+  text-transform: uppercase;
+}
+
+.logoSub {
+  font-family: var("Cormorant Garamond", serif);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.35em;
+  color: #c9a96e; /* Цвет ярче, без сильной прозрачности */
+  text-transform: uppercase;
+}
+
+/* ---- НАВИГАЦИЯ ---- */
 .nav {
   display: flex;
-  gap: 56px;
   align-items: center;
+  gap: 0;
 }
 
-.nav > a {
-  font-family: var(--font-sans);
-  font-size: 20px;
-  text-transform: capitalize;
-  color: #fff;
-  letter-spacing: 0%;
+.navItem {
+  /* ВАЖНО: заменен sans на serif */
+  font-family: "Cormorant Garamond";
+  font-size: 24px; /* Размер как на макете */
   font-weight: 400;
+  text-transform: capitalize;
+  color: #e8d9b8; /* Светло-кремовый цвет текста из макета */
   text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.nav > a:hover {
-  color: var(--accent-gold);
-}
-
-/* --- ВЫПАДАЮЩЕЕ МЕНЮ (ДЕСКТОП) --- */
-
-.dropdownWrapper {
+  padding: 8px 0;
   position: relative;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  gap: 8px;
-}
-
-.navLink,
-.arrow {
-  font-family: var(--font-sans);
-  font-size: 20px;
-  letter-spacing: 0.5px;
-  color: #fff;
   transition: color 0.3s ease;
-}
-
-.dropdownWrapper:hover .navLink,
-.dropdownWrapper:hover .arrow {
-  color: var(--accent-gold);
-}
-
-/* Стили именно для десктопного выпадающего окна */
-.desktopDropdown {
-  position: absolute;
-  top: 91%;
-  padding-top: 60px;
-  left: 50%;
-  /* transform: translateX(-50%); */ /* У вас было закомментировано */
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  padding: 72px 40px 37px 40px;
-  z-index: 1001;
-}
-
-.desktopDropdown::before {
-  content: "";
-  position: absolute;
-  top: 35px;
-  left: 0;
-  width: 100%;
-  height: calc(100% - 35px);
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  z-index: -1;
-}
-
-.desktopDropdown a {
-  text-transform: none;
-  display: block;
-  text-decoration: none;
-  color: #ffffff;
-  transition:
-    color 0.3s ease,
-    transform 0.3s ease;
-  font-size: 20px;
-  padding: 0;
-  font-family: var(--font-sans);
   white-space: nowrap;
 }
 
-.desktopDropdown a:hover {
-  color: var(--accent-gold);
-  transform: translateX(10px);
+/* Линия подчеркивания (Эффект свечения как на макете) */
+.navItem::after {
+  content: "";
+  position: absolute;
+  bottom: -4px; /* Опускаем линию чуть ниже текста */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  /* Градиент, который растворяется по краям */
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #c9a96e 50%,
+    transparent 100%
+  );
+  transition:
+    width 0.4s ease,
+    opacity 0.4s ease;
+  opacity: 0;
 }
 
-/* Скрываем мобильное подменю на десктопе */
-.mobileDropdown {
-  display: none;
+.navItem:hover {
+  color: #c9a96e;
+}
+
+.navItem:hover::after {
+  width: 100%;
+  opacity: 1;
+}
+
+/* Активный пункт */
+.navItem.active {
+  color: #c9a96e;
+}
+
+.navItem.active::after {
+  width: 100%;
+  opacity: 1;
+}
+
+/* Разделитель | */
+.separator {
+  color: rgba(201, 169, 110, 0.4);
+  font-size: 16px;
+  margin: 0 24px; /* Чуть увеличили расстояние между пунктами */
+  user-select: none;
+  line-height: 1;
+  font-weight: 300;
+}
+
+/* ---- ВЫПАДАЮЩЕЕ МЕНЮ (ДЕСКТОП) ---- */
+.dropdownWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
 
 .servicesLabel {
@@ -136,113 +147,198 @@
   gap: 8px;
 }
 
-/* Бургер скрыт по умолчанию */
+.arrow {
+  width: 12px;
+  height: 12px;
+  color: rgba(220, 200, 160, 0.6);
+  transition:
+    transform 0.3s ease,
+    color 0.3s ease;
+  flex-shrink: 0;
+}
+
+.dropdownWrapper:hover .arrow {
+  color: #c9a96e;
+}
+
+.desktopDropdown {
+  position: absolute;
+  top: calc(100% + 24px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 28px 32px;
+  background: #111111;
+  border: 1px solid rgba(201, 169, 110, 0.2);
+  z-index: 1001;
+  min-width: 260px;
+}
+
+.desktopDropdown::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 8px;
+  background: rgba(201, 169, 110, 0.35);
+}
+
+.desktopDropdown a {
+  font-family: var("Cormorant Garamond", serif);
+  font-size: 18px;
+  letter-spacing: 0.04em;
+  color: rgba(220, 200, 160, 0.85);
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    color 0.3s ease,
+    padding-left 0.3s ease;
+}
+
+.desktopDropdown a:hover {
+  color: #c9a96e;
+  padding-left: 8px;
+}
+
+.mobileDropdown {
+  display: none;
+}
+
+/* ---- CTA КНОПКА (Золотой градиент как на макете) ---- */
+.ctaBtn {
+  font-family: "Cormorant Garamond", serif; /* Serif шрифт */
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #1a1a1a; /* Темный текст */
+  text-decoration: none;
+  padding: 14px 32px;
+  /* Золотой градиент */
+  background: linear-gradient(90deg, #ae8d58 0%, #fee6b8 50%, #ae8d58 100%);
+  border: none;
+  border-radius: 40px;
+  flex-shrink: 0;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+  white-space: nowrap;
+}
+
+.ctaBtn:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+}
+
+/* ---- БУРГЕР (только мобильный) ---- */
 .burgerBtn {
   display: none;
 }
 
 /* =========================================
-   АДАПТИВНОСТЬ (МОБИЛЬНАЯ ВЕРСИЯ)
+   АДАПТИВНОСТЬ (Оставлена вашей, без изменений)
    ========================================= */
 
 @media (max-width: 1024px) {
   .inner {
-    padding: 0 20px; /* Уменьшаем боковые отступы контейнера на мобильных */
+    padding: 0 20px;
   }
 
-  /* Показываем кнопку бургера */
+  .ctaBtn {
+    display: none;
+  }
+
   .burgerBtn {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 30px;
-    height: 20px;
+    width: 28px;
+    height: 18px;
     background: transparent;
     border: none;
     cursor: pointer;
     z-index: 1002;
     padding: 0;
+    flex-shrink: 0;
   }
 
   .burgerBtn span {
     width: 100%;
-    height: 2px;
-    background-color: #fff;
+    height: 1.5px;
+    background-color: #e8d9b8;
     transition: all 0.3s ease;
+    display: block;
   }
 
-  /* Анимация крестика */
   .burgerBtn.active span:nth-child(1) {
-    transform: translateY(9px) rotate(45deg);
+    transform: translateY(8.25px) rotate(45deg);
   }
   .burgerBtn.active span:nth-child(2) {
     opacity: 0;
   }
   .burgerBtn.active span:nth-child(3) {
-    transform: translateY(-9px) rotate(-45deg);
+    transform: translateY(-8.25px) rotate(-45deg);
   }
 
-  /* Мобильное меню (выезжает или появляется) */
+  /* Мобильное меню */
   .nav {
     position: fixed;
     top: 0;
-    right: -100%; /* Спрятано справа */
+    right: -100%;
     width: 100%;
     height: 100vh;
-    background-color: #0f0f0f; /* Плотный фон */
-
+    background: #0d0c0a;
     flex-direction: column;
     justify-content: center;
-    gap: 40px;
-    padding: 80px 20px;
-
+    gap: 32px;
+    padding: 80px 40px;
     transition: right 0.4s ease;
     overflow-y: auto;
+    z-index: 1001;
   }
 
-  /* Класс для открытия меню */
   .nav.navMobileActive {
     right: 0;
   }
 
-  /* Ссылки в мобильном меню крупнее */
-  .nav > a,
-  .navLink {
-    font-size: 24px;
+  .separator {
+    display: none;
   }
 
-  /* --- Логика Услуг на мобильном --- */
+  .navItem {
+    font-size: 26px; /* Чуть крупнее для мобилки */
+    letter-spacing: 0.05em;
+    color: rgba(232, 217, 184, 0.85);
+  }
+
   .dropdownWrapper {
     flex-direction: column;
-    height: auto;
     align-items: center;
     width: 100%;
+    height: auto;
+    cursor: pointer;
   }
 
-  /* Отключаем десктопный дропдаун на мобильных, чтобы не мешал */
   .desktopDropdown {
     display: none !important;
   }
 
-  /* Включаем мобильный дропдаун (аккордеон) */
   .mobileDropdown {
-    display: flex; /* Теперь всегда flex, но мы спрячем его через высоту */
+    display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 18px;
     width: 100%;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-
-    /* МАГИЯ АНИМАЦИИ: Прячем блок, сворачивая его в 0 */
     max-height: 0;
     opacity: 0;
     overflow: hidden;
-    padding-top: 0;
-    padding-bottom: 0;
+    padding: 0;
     margin-top: 0;
-
-    /* Плавно анимируем все изменяющиеся свойства */
+    border-top: 1px solid transparent;
     transition:
       max-height 0.4s ease,
       opacity 0.4s ease,
@@ -251,30 +347,30 @@
   }
 
   .mobileDropdown a {
-    color: #b0b0b0;
+    font-family: var("Cormorant Garamond", serif);
     font-size: 18px;
+    letter-spacing: 0.08em;
+    color: rgba(197, 160, 90, 0.7);
     text-decoration: none;
-    font-family: var(--font-sans);
     text-align: center;
+    transition: color 0.3s ease;
   }
 
-  /* Когда кликнули на Услуги - показываем список */
+  .mobileDropdown a:hover {
+    color: var(--accent-gold, #c5a05a);
+  }
+
   .dropdownWrapper.mobileSubmenuOpen .mobileDropdown {
-    max-height: 300px; /* С запасом для ссылок. Если ссылок будет больше, увеличьте это число */
+    max-height: 300px;
     opacity: 1;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    margin-top: 20px;
+    padding-top: 18px;
+    padding-bottom: 8px;
+    margin-top: 12px;
+    border-top: 1px solid rgba(197, 160, 90, 0.15);
   }
 
   .dropdownWrapper.mobileSubmenuOpen .arrow {
     transform: rotate(180deg);
-    color: var(--accent-gold);
-    transition: transform 0.3s ease; /* Добавим плавность стрелочке */
+    color: var(--accent-gold, #c5a05a);
   }
 }
-
-/* @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-} */

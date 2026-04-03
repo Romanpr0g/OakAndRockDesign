@@ -5,22 +5,16 @@ import HeaderArrow from "../../../assets/svg/headerArrow.svg?react";
 import s from "./Header.module.css";
 
 const Header = () => {
-  const [isMenuOpen, setMenuOpen] = useState(false); // Для десктопа (hover)
-  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false); // Для мобильного (бургер)
-  const [isMobileSubmenuOpen, setMobileSubmenuOpen] = useState(false); // Для аккордеона услуг на мобильном
+  const [isMenuOpen, setMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isMobileSubmenuOpen, setMobileSubmenuOpen] = useState(false);
 
   const location = useLocation();
 
-  // Блокируем скролл фона при открытом мобильном меню
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
+    document.body.style.overflow = isMobileMenuOpen ? "hidden" : "auto";
   }, [isMobileMenuOpen]);
 
-  // Закрываем меню при переходе на другую страницу
   const closeMobileMenu = () => {
     setMobileMenuOpen(false);
     setMobileSubmenuOpen(false);
@@ -29,14 +23,20 @@ const Header = () => {
   return (
     <header className={s.header}>
       <div className={`container ${s.inner}`}>
+        {/* Логотип */}
         <Link to="/" className={s.logo} onClick={closeMobileMenu}>
-          <Logo />
+          <Logo className={s.logoIcon} />
+          <div className={s.logoText}>
+            <span className={s.logoTitle}>OAK &amp; ROCK</span>
+            <span className={s.logoSub}>DESIGN</span>
+          </div>
         </Link>
 
-        {/* Кнопка Бургера (видна только на мобильных) */}
+        {/* Бургер */}
         <button
           className={`${s.burgerBtn} ${isMobileMenuOpen ? s.active : ""}`}
           onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label="Меню"
         >
           <span />
           <span />
@@ -45,52 +45,92 @@ const Header = () => {
 
         {/* Навигация */}
         <nav className={`${s.nav} ${isMobileMenuOpen ? s.navMobileActive : ""}`}>
-          <Link to="/catalog" onClick={closeMobileMenu}>
-            Каталог
+          <Link
+            to="/"
+            className={`${s.navItem} ${location.pathname === "/" ? s.active : ""}`}
+            onClick={closeMobileMenu}
+          >
+            Главная
           </Link>
 
-          {/* Блок Услуги */}
+          <span className={s.separator}>|</span>
+
+          {/* Услуги */}
           <div
             className={`${s.dropdownWrapper} ${isMobileSubmenuOpen ? s.mobileSubmenuOpen : ""}`}
-            // Логика для ДЕСКТОПА (Hover)
             onMouseEnter={() => setMenuOpen(true)}
             onMouseLeave={() => setMenuOpen(false)}
-            // Логика для МОБИЛЬНОГО (Click)
             onClick={() => setMobileSubmenuOpen(!isMobileSubmenuOpen)}
           >
             <div className={s.servicesLabel}>
-              <span className={s.navLink}>Услуги</span>
+              <span
+                className={`${s.navItem} ${
+                  location.pathname.startsWith("/services") ? s.active : ""
+                }`}
+              >
+                Услуги
+              </span>
               <HeaderArrow className={s.arrow} />
             </div>
 
-            {/* Выпадающее меню. 
-                На десктопе управляется isMenuOpen.
-                На мобильном управляется CSS классом mobileSubmenuOpen 
-            */}
+            {/* Десктопный дропдаун */}
             {isMenuOpen && (
-              <div className={`${s.dropdown} ${s.desktopDropdown}`}>
-                <Link to="/services/interiors">Интерьеры под ключ</Link>
-                <Link to="/services/designers">Для дизайнеров и архитекторов</Link>
+              <div className={s.desktopDropdown}>
+                <Link to="/services/interiors" onClick={closeMobileMenu}>
+                  Интерьеры под ключ
+                </Link>
+                <Link to="/services/designers" onClick={closeMobileMenu}>
+                  Для дизайнеров и архитекторов
+                </Link>
               </div>
             )}
 
-            {/* Дубликат меню специально для мобильной верстки (чтобы не ломать стили десктопа) */}
+            {/* Мобильный аккордеон */}
             <div className={s.mobileDropdown}>
-               <Link to="/services/interiors" onClick={closeMobileMenu}>Интерьеры под ключ</Link>
-               <Link to="/services/designers" onClick={closeMobileMenu}>Для дизайнеров и архитекторов</Link>
+              <Link to="/services/interiors" onClick={closeMobileMenu}>
+                Интерьеры под ключ
+              </Link>
+              <Link to="/services/designers" onClick={closeMobileMenu}>
+                Для дизайнеров и архитекторов
+              </Link>
             </div>
           </div>
 
-          <Link to="/portfolio" onClick={closeMobileMenu}>
+          <span className={s.separator}>|</span>
+
+          <Link
+            to="/portfolio"
+            className={`${s.navItem} ${location.pathname === "/portfolio" ? s.active : ""}`}
+            onClick={closeMobileMenu}
+          >
             Портфолио
           </Link>
-          <Link to="/about" onClick={closeMobileMenu}>
-            О нас
-          </Link>
-          <Link to="/contacts" onClick={closeMobileMenu}>
+
+          <span className={s.separator}>|</span>
+
+          <Link
+            to="/contacts"
+            className={`${s.navItem} ${location.pathname === "/contacts" ? s.active : ""}`}
+            onClick={closeMobileMenu}
+          >
             Контакты
           </Link>
+
+          <span className={s.separator}>|</span>
+
+          <Link
+            to="/blog"
+            className={`${s.navItem} ${location.pathname === "/blog" ? s.active : ""}`}
+            onClick={closeMobileMenu}
+          >
+            Блог
+          </Link>
         </nav>
+
+        {/* CTA кнопка */}
+        <Link to="/contacts" className={s.ctaBtn} onClick={closeMobileMenu}>
+          Заказать звонок
+        </Link>
       </div>
     </header>
   );
