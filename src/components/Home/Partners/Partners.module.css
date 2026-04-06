@@ -14,16 +14,8 @@
   margin-bottom: 24px;
 }
 
-.partners__label__item {
-  display: inline-block;
-  font-size: clamp(1rem, 0.9167rem + 0.3704vw, 1.25rem);
-  text-transform: uppercase;
-  color: var(--accent-gold);
-  font-weight: 800;
-  letter-spacing: 3.6px;
-  border-bottom: 1px solid #ffffff;
-  padding-bottom: 8px;
-  line-height: 1.25;
+.partners__label :global(.section-label) {
+  --section-label-line-height: 1.25;
 }
 
 .partners__title {

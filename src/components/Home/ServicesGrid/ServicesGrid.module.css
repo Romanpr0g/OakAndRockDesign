@@ -17,16 +17,6 @@
   color: var(--accent-gold);
 }
 
-.label {
-  font-size: clamp(1rem, 0.9167rem + 0.3704vw, 1.25rem);
-  letter-spacing: 3.6px;
-  font-weight: 800;
-  line-height: 16px;
-  text-transform: uppercase;
-  padding-bottom: 8px;
-  border-bottom: 1px solid #FFFFFF
-}
-
 .arrow {
   width: 40px;
   height: 37px;

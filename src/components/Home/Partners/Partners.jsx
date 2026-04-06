@@ -5,7 +5,7 @@ const Partners = () => (
   <section className={s.partners}>
     <div className={s.partners_wrapper}>
       <div className={s.partners__label}>
-        <span className={s.partners__label__item} >ДЛЯ АРХИТЕКТОРОВ И ДИЗАЙНЕРОВ</span>
+        <span className="section-label">ДЛЯ АРХИТЕКТОРОВ И ДИЗАЙНЕРОВ</span>
       </div>
       <h2 className={`${s.partners__title} serif`}>
         Партнёрство, которое усиливает ваш проект

@@ -8,7 +8,7 @@ const PortfolioPreview = () => (
   <section className={s.portfolio}>
     <div className={s.portfolioWrapper}>
       <div className={s.portfolio__header}>
-        <span className={s.portfolio__label}>ПОРТФОЛИО</span>
+        <span className="section-label">ПОРТФОЛИО</span>
         <span className={s.portfolio__link}>СМОТРЕТЬ ВСЕ</span>
       </div>
       <div className={s.portfolio__grid}>

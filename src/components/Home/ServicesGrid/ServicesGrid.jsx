@@ -10,7 +10,7 @@ const ServicesGrid = () => {
     <section className={s.section}>
       <div className={s.container}>
         <div className={s.header}>
-          <span className={s.label}>ИНТЕРЬЕРЫ ПОД КЛЮЧ</span>
+          <span className="section-label">ИНТЕРЬЕРЫ ПОД КЛЮЧ</span>
           <Arrow className={s.arrow}/>
         </div>
 

@@ -17,22 +17,28 @@
   justify-content: space-between;
   align-items: center;
   height: 80px;
-  padding: 0 60px;
+  padding: 0 107px 0 61px;
 }
 
 /* ---- ЛОГОТИП ---- */
 .logo {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
   text-decoration: none;
   flex-shrink: 0;
   z-index: 1002;
 }
 
 .logoIcon {
-  width: 56px;
-  height: 56px;
+  width: 44px;
+  height: 54px;
+  flex-shrink: 0;
+}
+
+.logoName {
+  width: 148px;
+  height: auto;
   flex-shrink: 0;
 }
 
@@ -44,7 +50,7 @@
 
 .logoTitle {
   /* ВАЖНО: заменен sans на serif для элегантного шрифта */
-  font-family: var("Cormorant Garamond", serif);
+  font-family: "Cormorant Garamond", serif;
   font-size: 20px; /* Чуть увеличили, чтобы соответствовало макету */
   font-weight: 400; /* На макете шрифт не жирный */
   letter-spacing: 0.1em;
@@ -53,7 +59,7 @@
 }
 
 .logoSub {
-  font-family: var("Cormorant Garamond", serif);
+  font-family: "Cormorant Garamond", serif;
   font-size: 10px;
   font-weight: 400;
   letter-spacing: 0.35em;
@@ -74,7 +80,7 @@
   font-size: 24px; /* Размер как на макете */
   font-weight: 400;
   text-transform: capitalize;
-  color: #e8d9b8; /* Светло-кремовый цвет текста из макета */
+  color: #ffffff; /* Светло-кремовый цвет текста из макета */
   text-decoration: none;
   padding: 8px 0;
   position: relative;
@@ -82,38 +88,75 @@
   white-space: nowrap;
 }
 
-/* Линия подчеркивания (Эффект свечения как на макете) */
-.navItem::after {
+/* =========================================
+   1. ДЛИННАЯ ЛИНИЯ (Line 11 из Фигмы)
+   ========================================= */
+.navItem::before {
   content: "";
   position: absolute;
-  bottom: -4px; /* Опускаем линию чуть ниже текста */
+  bottom: -4px;
   left: 50%;
   transform: translateX(-50%);
   width: 0;
-  height: 2px;
-  /* Градиент, который растворяется по краям */
+  height: 1px;
   background: linear-gradient(
     90deg,
-    transparent 0%,
-    #c9a96e 50%,
-    transparent 100%
+    rgba(224, 196, 143, 0) 0%,
+    #e0c48f 50%,
+    rgba(224, 196, 143, 0) 100%
   );
-  transition:
-    width 0.4s ease,
-    opacity 0.4s ease;
+  transition: width 0.4s ease, opacity 0.4s ease;
   opacity: 0;
+  pointer-events: none;
 }
 
-.navItem:hover {
+/* =========================================
+   2. КОРОТКАЯ ЛИНИЯ (Line 17 - свечение)
+   ========================================= */
+.navItem::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(224, 196, 143, 0) 0%,
+    #e0c48f 50%,
+    rgba(224, 196, 143, 0) 100%
+  );
+  box-shadow: 0px 0px 4px rgba(224, 196, 143, 0.5); /* Тот самый glow-эффект */
+  transition: width 0.4s ease, opacity 0.4s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* =========================================
+   АНИМАЦИЯ: НАВЕДЕНИЕ И ВЫБРАННЫЙ ПУНКТ
+   ========================================= */
+
+/* Делаем текст золотым и при наведении, И на текущей странице */
+.navItem:hover,
+.navItem.active {
   color: #c9a96e;
 }
 
-.navItem:hover::after {
+/* Показываем длинную линию на 100% */
+.navItem:hover::before,
+.navItem.active::before {
   width: 100%;
   opacity: 1;
 }
 
-/* Активный пункт */
+/* Показываем светящуюся точку по центру на 45% */
+.navItem:hover::after,
+.navItem.active::after {
+  width: 45%;
+  opacity: 1;
+}
+/* 
 .navItem.active {
   color: #c9a96e;
 }
@@ -121,11 +164,11 @@
 .navItem.active::after {
   width: 100%;
   opacity: 1;
-}
+} */
 
 /* Разделитель | */
 .separator {
-  color: rgba(201, 169, 110, 0.4);
+  color: #E0C48F;
   font-size: 16px;
   margin: 0 24px; /* Чуть увеличили расстояние между пунктами */
   user-select: none;
@@ -210,14 +253,15 @@
 
 /* ---- CTA КНОПКА (Золотой градиент как на макете) ---- */
 .ctaBtn {
-  font-family: "Cormorant Garamond", serif; /* Serif шрифт */
+  font-family: "Cormorant Garamond", serif;
   font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.7px;
   text-transform: uppercase;
   color: #1a1a1a; /* Темный текст */
   text-decoration: none;
-  padding: 14px 32px;
+  padding: 6px 20px;
   /* Золотой градиент */
   background: linear-gradient(90deg, #ae8d58 0%, #fee6b8 50%, #ae8d58 100%);
   border: none;

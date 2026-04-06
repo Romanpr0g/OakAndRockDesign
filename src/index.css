@@ -56,14 +56,14 @@ img {
 .text-gold {
   color: var(--accent-gold);
 }
-.header {
+.section-label {
   display: inline-block;
   color: var(--accent-gold);
-  font-size: 20px;
-  letter-spacing: 3.6px;
-  line-height: 16px;
+  font-size: var(--section-label-font-size, clamp(1rem, 0.9167rem + 0.3704vw, 1.25rem));
+  letter-spacing: var(--section-label-letter-spacing, 3.6px);
+  line-height: var(--section-label-line-height, 16px);
   font-weight: 800;
   text-transform: uppercase;
-  padding-bottom: 8px;
+  padding-bottom: var(--section-label-padding-bottom, 8px);
   border-bottom: 1px solid #ffffff;
 }

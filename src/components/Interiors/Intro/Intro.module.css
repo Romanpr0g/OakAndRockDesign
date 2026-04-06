@@ -22,18 +22,6 @@
   transform: rotate(180deg);
 }
 
-.sectionLabel {
-  display: inline-block;
-  color: var(--accent-gold);
-  font-size: clamp(1rem, 0.9167rem + 0.3704vw, 1.25rem);
-  letter-spacing: 3.6px;
-  line-height: 16px;
-  font-weight: 800;
-  text-transform: uppercase;
-  padding-bottom: 8px;
-  border-bottom: 1px solid #ffffff;
-}
-
 .introGrid {
   display: flex;
   flex-direction: column;
@@ -83,9 +71,9 @@
     margin-bottom: 32px; /* Уменьшаем отступ под стрелкой */
   }
 
-  .sectionLabel {
-    letter-spacing: 2.6px;
-    line-height: 1.2;
+  .introBlock :global(.section-label) {
+    --section-label-letter-spacing: 2.6px;
+    --section-label-line-height: 1.2;
   }
 
   .introGrid {

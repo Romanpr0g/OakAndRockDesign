@@ -33,16 +33,8 @@
 }
 /* Текстовые стили */
 .label {
-  color: var(--accent-gold);
-  font-size: clamp(1rem, 0.9167rem + 0.3704vw, 1.25rem);
-  letter-spacing: 3.6px;
-  font-weight: 800;
-  text-transform: uppercase;
-  display: inline-block;
   margin-bottom: 40px;
-  border-bottom: 1px solid #ffffff;
-  padding-bottom: 7px;
-  line-height: 1.25;
+  --section-label-line-height: 1.25;
 }
 
 .title {

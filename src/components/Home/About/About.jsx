@@ -12,7 +12,7 @@ const About = () => {
         <div className="container">
           {/* Блок, который наезжает на Hero */}
           <div className={s.overlapBox}>
-            <span className={s.label}>КТО МЫ ТАКИЕ</span>
+            <span className={`section-label ${s.label}`}>КТО МЫ ТАКИЕ</span>
             <h2 className={`serif ${s.title}`}>
               Уникальная вертикально интегрированная компания, специализирующаяся
               на эксклюзивной мебели и интерьерах под ключ, с полным контролем цепочки 

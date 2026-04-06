@@ -15,17 +15,6 @@
   margin-bottom: 40px;
 }
 
-.portfolio__label {
-  font-size: clamp(1rem, 0.9167rem + 0.3704vw, 1.25rem);
-  font-weight: 800;
-  line-height: 16px;
-  letter-spacing: 3.6px;
-  text-transform: uppercase;
-  color: var(--accent-gold);
-  padding-bottom: 8px;
-  border-bottom: 1px solid #FFFFFF;
-}
-
 .portfolio__link {
   font-size: clamp(0.75rem, 0.7083rem + 0.1852vw, 0.875rem);
   font-weight: 400;
@@ -87,8 +76,8 @@
     align-items: flex-end; /* Защита от кривого выравнивания */
   }
 
-  .portfolio__label {
-    line-height: 1.2; /* Убираем жесткие 16px, чтобы текст переносился красиво */
+  .portfolio__header :global(.section-label) {
+    --section-label-line-height: 1.2; /* Убираем жесткие 16px, чтобы текст переносился красиво */
   }
 
   .portfolio__link {

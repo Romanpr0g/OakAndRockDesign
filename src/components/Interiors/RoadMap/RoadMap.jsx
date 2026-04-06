@@ -45,7 +45,7 @@ const RoadMap = () => {
   return (
     <section className={s.processSection}>
       <div className={s.roadMapContainer}>
-        <span className={`header ${s.sectionLabel}`}>НАШ ПРОЦЕСС</span>
+        <span className={`section-label ${s.sectionLabel}`}>НАШ ПРОЦЕСС</span>
         <div className={s.drumContainer} ref={drumRef}>
           <div className={s.stepsContainer}>
             {STEPS.map((step, index) => {

@@ -11,7 +11,7 @@ const Intro = () => {
           <Link to="/" className={s.backLink}>
             <Arrow />
           </Link>
-          <span className={s.sectionLabel}>ИНТЕРЬЕРЫ ПОД КЛЮЧ</span>
+          <span className="section-label">ИНТЕРЬЕРЫ ПОД КЛЮЧ</span>
         </div>
 
         <div className={s.introGrid}>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Logo from "../../../assets/svg/logo.svg?react";
+import LogoName from "../../../assets/svg/logoName.svg?react";
 import HeaderArrow from "../../../assets/svg/headerArrow.svg?react";
 import s from "./Header.module.css";
 
@@ -26,10 +27,11 @@ const Header = () => {
         {/* Логотип */}
         <Link to="/" className={s.logo} onClick={closeMobileMenu}>
           <Logo className={s.logoIcon} />
-          <div className={s.logoText}>
+          <LogoName className={s.logoName} />
+          {/* <div className={s.logoText}>
             <span className={s.logoTitle}>OAK &amp; ROCK</span>
             <span className={s.logoSub}>DESIGN</span>
-          </div>
+          </div> */}
         </Link>
 
         {/* Бургер */}
@@ -44,13 +46,25 @@ const Header = () => {
         </button>
 
         {/* Навигация */}
-        <nav className={`${s.nav} ${isMobileMenuOpen ? s.navMobileActive : ""}`}>
+        <nav
+          className={`${s.nav} ${isMobileMenuOpen ? s.navMobileActive : ""}`}
+        >
           <Link
             to="/"
             className={`${s.navItem} ${location.pathname === "/" ? s.active : ""}`}
             onClick={closeMobileMenu}
           >
             Главная
+          </Link>
+
+          <span className={s.separator}>|</span>
+
+          <Link
+            to="/portfolio"
+            className={`${s.navItem} ${location.pathname === "/portfolio" ? s.active : ""}`}
+            onClick={closeMobileMenu}
+          >
+            Портфолио
           </Link>
 
           <span className={s.separator}>|</span>
@@ -99,21 +113,11 @@ const Header = () => {
           <span className={s.separator}>|</span>
 
           <Link
-            to="/portfolio"
-            className={`${s.navItem} ${location.pathname === "/portfolio" ? s.active : ""}`}
-            onClick={closeMobileMenu}
-          >
-            Портфолио
-          </Link>
-
-          <span className={s.separator}>|</span>
-
-          <Link
             to="/contacts"
             className={`${s.navItem} ${location.pathname === "/contacts" ? s.active : ""}`}
             onClick={closeMobileMenu}
           >
-            Контакты
+            О нас
           </Link>
 
           <span className={s.separator}>|</span>
