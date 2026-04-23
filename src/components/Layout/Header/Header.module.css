@@ -1,15 +1,44 @@
 /* =========================================
-   HEADER — точный дизайн Oak & Rock
+   HEADER — Oak & Rock
    ========================================= */
 
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
 .header {
+  position: relative;
+  top: 0;
+  width: 100%;
+  z-index: 3000;
+  background: #111111;
+  border-bottom: 1px solid transparent;
+  transition:
+    transform 0.4s ease,
+    border-color 1s ease;
+}
+
+/* Зафиксирован вверху */
+.headerFixed {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  z-index: 1000;
-  background: #111111; /* Чуть более глубокий темный цвет, как на макете */
-  border-bottom: 1px solid rgba(197, 160, 90, 0.1);
+  border-color: #c9a96e;
+}
+
+/* Скрыт (уехал вверх) */
+.headerHidden {
+  transform: translateY(-100%);
+}
+
+/* Slide-in анимация при появлении (когда fixed и НЕ hidden) */
+.headerFixed:not(.headerHidden) {
+  animation: slideDown 1s ease forwards;
 }
 
 .inner {
@@ -42,31 +71,6 @@
   flex-shrink: 0;
 }
 
-.logoText {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.1;
-}
-
-.logoTitle {
-  /* ВАЖНО: заменен sans на serif для элегантного шрифта */
-  font-family: "Cormorant Garamond", serif;
-  font-size: 20px; /* Чуть увеличили, чтобы соответствовало макету */
-  font-weight: 400; /* На макете шрифт не жирный */
-  letter-spacing: 0.1em;
-  color: #c9a96e;
-  text-transform: uppercase;
-}
-
-.logoSub {
-  font-family: "Cormorant Garamond", serif;
-  font-size: 10px;
-  font-weight: 400;
-  letter-spacing: 0.35em;
-  color: #c9a96e; /* Цвет ярче, без сильной прозрачности */
-  text-transform: uppercase;
-}
-
 /* ---- НАВИГАЦИЯ ---- */
 .nav {
   display: flex;
@@ -75,12 +79,11 @@
 }
 
 .navItem {
-  /* ВАЖНО: заменен sans на serif */
   font-family: "Cormorant Garamond";
-  font-size: 24px; /* Размер как на макете */
+  font-size: 24px;
   font-weight: 400;
   text-transform: capitalize;
-  color: #ffffff; /* Светло-кремовый цвет текста из макета */
+  color: #ffffff;
   text-decoration: none;
   padding: 8px 0;
   position: relative;
@@ -88,9 +91,6 @@
   white-space: nowrap;
 }
 
-/* =========================================
-   1. ДЛИННАЯ ЛИНИЯ (Line 11 из Фигмы)
-   ========================================= */
 .navItem::before {
   content: "";
   position: absolute;
@@ -105,14 +105,13 @@
     #e0c48f 50%,
     rgba(224, 196, 143, 0) 100%
   );
-  transition: width 0.4s ease, opacity 0.4s ease;
+  transition:
+    width 0.4s ease,
+    opacity 0.4s ease;
   opacity: 0;
   pointer-events: none;
 }
 
-/* =========================================
-   2. КОРОТКАЯ ЛИНИЯ (Line 17 - свечение)
-   ========================================= */
 .navItem::after {
   content: "";
   position: absolute;
@@ -127,50 +126,35 @@
     #e0c48f 50%,
     rgba(224, 196, 143, 0) 100%
   );
-  box-shadow: 0px 0px 4px rgba(224, 196, 143, 0.5); /* Тот самый glow-эффект */
-  transition: width 0.4s ease, opacity 0.4s ease;
+  box-shadow: 0px 0px 4px rgba(224, 196, 143, 0.5);
+  transition:
+    width 0.4s ease,
+    opacity 0.4s ease;
   opacity: 0;
   pointer-events: none;
 }
 
-/* =========================================
-   АНИМАЦИЯ: НАВЕДЕНИЕ И ВЫБРАННЫЙ ПУНКТ
-   ========================================= */
-
-/* Делаем текст золотым и при наведении, И на текущей странице */
 .navItem:hover,
 .navItem.active {
   color: #c9a96e;
 }
 
-/* Показываем длинную линию на 100% */
 .navItem:hover::before,
 .navItem.active::before {
   width: 100%;
   opacity: 1;
 }
 
-/* Показываем светящуюся точку по центру на 45% */
 .navItem:hover::after,
 .navItem.active::after {
   width: 45%;
   opacity: 1;
 }
-/* 
-.navItem.active {
-  color: #c9a96e;
-}
 
-.navItem.active::after {
-  width: 100%;
-  opacity: 1;
-} */
-
-/* Разделитель | */
 .separator {
-  color: #E0C48F;
+  color: #e0c48f;
   font-size: 16px;
-  margin: 0 24px; /* Чуть увеличили расстояние между пунктами */
+  margin: 0 24px;
   user-select: none;
   line-height: 1;
   font-weight: 300;
@@ -231,7 +215,7 @@
 }
 
 .desktopDropdown a {
-  font-family: var("Cormorant Garamond", serif);
+  font-family: "Cormorant Garamond", serif;
   font-size: 18px;
   letter-spacing: 0.04em;
   color: rgba(220, 200, 160, 0.85);
@@ -251,7 +235,7 @@
   display: none;
 }
 
-/* ---- CTA КНОПКА (Золотой градиент как на макете) ---- */
+/* ---- CTA КНОПКА ---- */
 .ctaBtn {
   font-family: "Cormorant Garamond", serif;
   font-size: 14px;
@@ -259,10 +243,9 @@
   line-height: 20px;
   letter-spacing: 0.7px;
   text-transform: uppercase;
-  color: #1a1a1a; /* Темный текст */
+  color: #1a1a1a;
   text-decoration: none;
   padding: 6px 20px;
-  /* Золотой градиент */
   background: linear-gradient(90deg, #ae8d58 0%, #fee6b8 50%, #ae8d58 100%);
   border: none;
   border-radius: 40px;
@@ -278,13 +261,62 @@
   opacity: 0.95;
 }
 
-/* ---- БУРГЕР (только мобильный) ---- */
+/* ---- SVG БУРГЕР ---- */
 .burgerBtn {
   display: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1002;
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+.ham {
+  cursor: pointer;
+  transition: transform 400ms;
+  user-select: none;
+  display: block;
+}
+
+.hamActive {
+  transform: rotate(45deg);
+}
+
+.line {
+  fill: none;
+  transition:
+    stroke-dasharray 400ms,
+    stroke-dashoffset 400ms;
+  stroke: #e8d9b8;
+  stroke-width: 5.5;
+  stroke-linecap: round;
+}
+
+.hamActive .line {
+  stroke: #c9a96e;
+}
+
+.lineTop {
+  stroke-dasharray: 40 139;
+}
+
+.lineBottom {
+  stroke-dasharray: 40 180;
+}
+
+.hamActive .lineTop {
+  stroke-dashoffset: -98px;
+}
+
+.hamActive .lineBottom {
+  stroke-dashoffset: -138px;
 }
 
 /* =========================================
-   АДАПТИВНОСТЬ (Оставлена вашей, без изменений)
+   АДАПТИВНОСТЬ
    ========================================= */
 
 @media (max-width: 1024px) {
@@ -298,37 +330,10 @@
 
   .burgerBtn {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 28px;
-    height: 18px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    z-index: 1002;
-    padding: 0;
-    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
   }
 
-  .burgerBtn span {
-    width: 100%;
-    height: 1.5px;
-    background-color: #e8d9b8;
-    transition: all 0.3s ease;
-    display: block;
-  }
-
-  .burgerBtn.active span:nth-child(1) {
-    transform: translateY(8.25px) rotate(45deg);
-  }
-  .burgerBtn.active span:nth-child(2) {
-    opacity: 0;
-  }
-  .burgerBtn.active span:nth-child(3) {
-    transform: translateY(-8.25px) rotate(-45deg);
-  }
-
-  /* Мобильное меню */
   .nav {
     position: fixed;
     top: 0;
@@ -354,7 +359,7 @@
   }
 
   .navItem {
-    font-size: 26px; /* Чуть крупнее для мобилки */
+    font-size: 26px;
     letter-spacing: 0.05em;
     color: rgba(232, 217, 184, 0.85);
   }
@@ -391,7 +396,7 @@
   }
 
   .mobileDropdown a {
-    font-family: var("Cormorant Garamond", serif);
+    font-family: "Cormorant Garamond", serif;
     font-size: 18px;
     letter-spacing: 0.08em;
     color: rgba(197, 160, 90, 0.7);
@@ -401,7 +406,7 @@
   }
 
   .mobileDropdown a:hover {
-    color: var(--accent-gold, #c5a05a);
+    color: #c5a05a;
   }
 
   .dropdownWrapper.mobileSubmenuOpen .mobileDropdown {
@@ -415,6 +420,6 @@
 
   .dropdownWrapper.mobileSubmenuOpen .arrow {
     transform: rotate(180deg);
-    color: var(--accent-gold, #c5a05a);
+    color: #c5a05a;
   }
 }

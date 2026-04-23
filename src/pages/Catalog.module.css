@@ -1,0 +1,91 @@
+.catalog {
+  /* padding-top: 120px; */
+  /* min-height: 100vh; */
+  background: #121212;
+}
+
+.catalogContainer {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 108px;
+}
+
+.catalogTitle {
+  font-size: 40px;
+  margin-bottom: 40px;
+}
+
+.catalogGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 121px;
+  row-gap: 80px;
+}
+
+.skeletonCard {
+  background: #0a0a0a;
+  border: 1px solid #222;
+  height: 250px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.error {
+  color: #c0392b;
+}
+
+/* Карточка */
+.card {
+  background: #0a0a0a;
+  border: 1px solid #222;
+  padding: 40px;
+  height: 250px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+
+.card:hover {
+  border-color: #444;
+}
+
+.card:hover .cardImage {
+  opacity: 0.5;
+}
+
+.cardImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.35;
+  transition: opacity 0.3s ease;
+}
+
+.cardOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 40%, transparent 100%);
+  pointer-events: none;
+}
+
+.cardTitle {
+  font-size: 28px;
+  position: relative;
+  z-index: 1;
+}
+
+.cardArrow {
+  font-size: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.7; }
+}

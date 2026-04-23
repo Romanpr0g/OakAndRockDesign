@@ -1,34 +1,80 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+// import Arrow from "../assets/svg/arrow.svg?react";
+import s from "./Catalog.module.css";
+import { getCategories } from "../utils/api";
 
-const Catalog = () => {
+// Для мока: раскомментируй строки ниже и замени getCategories на getMockedCategories
+import { mockCategories } from "../utils/mocks";
+const getMockedCategories = () => Promise.resolve(mockCategories);
+
+const Catalog = ({ onCategorySelect }) => {
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        // const data = await getCategories();
+        const data = await getMockedCategories();
+        setCategories(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={s.catalog}>
+        <div className={s.catalogContainer}>
+          <h2 className={`serif ${s.catalogTitle}`}>Каталог</h2>
+          <div className={s.catalogGrid}>
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className={s.skeletonCard} />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className={s.catalog}>
+        <div className={s.catalogContainer}>
+          <h2 className={`serif ${s.catalogTitle}`}>Каталог</h2>
+          <p className={s.error}>Не удалось загрузить категории: {error}</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div style={{ paddingTop: 120, minHeight: "100vh", background: "#121212" }}>
-      <div className="container">
-        <h2 className="serif" style={{ fontSize: 40, marginBottom: 40 }}>
-          Каталог
-        </h2>
-        <div
-          style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 30 }}
-        >
-          {["Корпусная мебель", "Столы", "Кухни", "Декор"].map((item) => (
+    <div className={s.catalog}>
+      <div className={s.catalogContainer}>
+        <h2 className={`serif ${s.catalogTitle}`}>Каталог</h2>
+        <div className={s.catalogGrid}>
+          {categories.map((category) => (
             <div
-              key={item}
-              style={{
-                background: "#0a0a0a",
-                border: "1px solid #222",
-                padding: 40,
-                height: 250,
-                display: "flex",
-                alignItems: "flex-end",
-                justifyContent: "space-between",
-              }}
+              key={category.uuid}
+              className={s.card}
+              onClick={() => onCategorySelect?.(category.uuid)}
             >
-              <h3 className="serif" style={{ fontSize: 28 }}>
-                {item}
-              </h3>
-              <span className="text-gold" style={{ fontSize: 24 }}>
-                ⟶
-              </span>
+              {category.main_media_url && (
+                <img
+                  className={s.cardImage}
+                  src={category.main_media_url}
+                  alt={category.title}
+                />
+              )}
+              <div className={s.cardOverlay} />
+              <h3 className={`serif ${s.cardTitle}`}>{category.title}</h3>
+              {/* <Arrow className={s.cardArrow} /> */}
             </div>
           ))}
         </div>
@@ -36,4 +82,5 @@ const Catalog = () => {
     </div>
   );
 };
+
 export default Catalog;
