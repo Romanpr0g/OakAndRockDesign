@@ -8,16 +8,16 @@ import PortfolioPreview from "../components/Home/PortfolioPreview/PortfolioPrevi
 
 const Home = () => {
   return (
-    <>
+    <div className="main-background">
       <Hero />
       <About />
       <ServicesGrid />
-      <Partners />
-      <div id="portfolio">
-        <PortfolioPreview />
+      <div id="designers" style={{ scrollMarginTop: "100px" }}>
+        <Partners />
       </div>
+      <PortfolioPreview />
       <CallToAction />
-    </>
+    </div>
   );
 };
 

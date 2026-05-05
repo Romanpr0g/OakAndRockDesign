@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Logo from "../../../assets/svg/logo.svg?react";
 import LogoName from "../../../assets/svg/logoName.svg?react";
 import HeaderArrow from "../../../assets/svg/headerArrow.svg?react";
@@ -11,8 +11,24 @@ const Header = () => {
   const [isMobileSubmenuOpen, setMobileSubmenuOpen] = useState(false);
 
   const headerRef = useRef(null);
+  const leaveTimer = useRef(null);
+  const navigate = useNavigate();
 
   const location = useLocation();
+
+  const handleDesignersClick = (e) => {
+    e.preventDefault();
+    closeMobileMenu();
+
+    if (location.pathname === "/") {
+      // уже на главной — плавно скроллим
+      const el = document.getElementById("designers");
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      // с другой страницы — переходим на главную с параметром
+      navigate("/?scrollTo=designers");
+    }
+  };
 
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? "hidden" : "auto";
@@ -51,6 +67,15 @@ const Header = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  const handleMouseEnter = () => {
+    clearTimeout(leaveTimer.current);
+    setMenuOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    leaveTimer.current = setTimeout(() => setMenuOpen(false), 150);
+  };
 
   const closeMobileMenu = () => {
     setMobileMenuOpen(false);
@@ -112,8 +137,8 @@ const Header = () => {
 
           <div
             className={`${s.dropdownWrapper} ${isMobileSubmenuOpen ? s.mobileSubmenuOpen : ""}`}
-            onMouseEnter={() => setMenuOpen(true)}
-            onMouseLeave={() => setMenuOpen(false)}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
             onClick={() => setMobileSubmenuOpen(!isMobileSubmenuOpen)}
           >
             <div className={s.servicesLabel}>
@@ -127,24 +152,24 @@ const Header = () => {
               <HeaderArrow className={s.arrow} />
             </div>
 
-            {isMenuOpen && (
-              <div className={s.desktopDropdown}>
-                <Link to="/services/interiors" onClick={closeMobileMenu}>
-                  Интерьеры под ключ
-                </Link>
-                <Link to="/services/designers" onClick={closeMobileMenu}>
-                  Для дизайнеров и архитекторов
-                </Link>
-              </div>
-            )}
+            <div
+              className={`${s.desktopDropdown} ${isMenuOpen ? s.desktopDropdownVisible : ""}`}
+            >
+              <Link to="/services/interiors" onClick={closeMobileMenu}>
+                Интерьеры под ключ
+              </Link>
+              <a href="#designers" onClick={handleDesignersClick}>
+                Для дизайнеров и архитекторов
+              </a>
+            </div>
 
             <div className={s.mobileDropdown}>
               <Link to="/services/interiors" onClick={closeMobileMenu}>
                 Интерьеры под ключ
               </Link>
-              <Link to="/services/designers" onClick={closeMobileMenu}>
+              <a href="#designers" onClick={handleDesignersClick}>
                 Для дизайнеров и архитекторов
-              </Link>
+              </a>
             </div>
           </div>
 

@@ -6,14 +6,8 @@ import Home from "./pages/Home";
 import Catalog from "./pages/Catalog";
 import Interiors from "./pages/Interiors";
 import ScrollToTop from "./utils/ScrollToTop";
-
-// Заглушка для страницы интерьеров
-// const InteriorProcess = () => (
-//   <div className="container" style={{ paddingTop: 150, minHeight: "60vh" }}>
-//     <h1 className="serif">Страница: Интерьеры под ключ</h1>
-//     <p>Здесь будет описание процесса и слайдер...</p>
-//   </div>
-// );
+import CategoryPage from "./components/Catalog/CategoryPage/CategoryPage";
+import ProductDetails from "./components/Catalog/ProductDetails/ProductDetails";
 
 function App() {
   return (
@@ -25,6 +19,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/catalog" element={<Catalog />} />
+            <Route path="/catalog/:categoryId" element={<CategoryPage />} />
+            <Route path="/catalog/:categoryId/:itemId" element={<ProductDetails />} />
             <Route path="/services/interiors" element={<Interiors />} />
             <Route
               path="*"

@@ -1,0 +1,176 @@
+/* Обертка страницы (отступ сверху для фиксированного хедера) */
+.pageWrapper {
+  padding-bottom: 32px;
+  background-color: #111111; /* Общий фон страницы */
+  color: #fff;
+  min-height: 100vh;
+}
+
+/* --- ВЕРХНЯЯ НАВИГАЦИЯ --- */
+.topBar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+
+.backBtn {
+  margin-bottom: 30px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.backBtn:hover {
+  opacity: 0.7;
+}
+
+.arrowIcon {
+  width: 40px;
+  height: 40px;
+}
+
+.sectionLabel {
+  font-family: var(--font-sans, sans-serif);
+  font-size: clamp(14px, 1.5vw, 18px);
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  color: var(--accent-gold, #c9a96e);
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  padding-bottom: 8px;
+  display: inline-block;
+  margin-bottom: 32px;
+}
+
+/* --- БЛОК ИНТРО (ГЕРОЙ) --- */
+.heroSection {
+  background-color: #1a1a1a; /* Чуть светлее основного фона */
+  padding: clamp(40px, 5vw, 64px);
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  gap: clamp(40px, 5vw, 80px);
+  margin-bottom: 80px;
+}
+
+.heroLeft {
+  flex: 1;
+  max-width: 600px;
+}
+
+.heroTitle {
+  font-family: var(--font-serif, "Cormorant Garamond", serif);
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 400;
+  margin-bottom: 24px;
+  line-height: 1.2;
+}
+
+.heroDesc {
+  font-size: clamp(14px, 1.5vw, 16px);
+  line-height: 1.6;
+  color: #a0a0a0;
+  margin-bottom: 40px;
+}
+
+/* Сетка преимуществ */
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px 24px;
+}
+
+.featureItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.featureIcon {
+  font-size: 24px;
+  line-height: 1;
+  color: #ffffff;
+}
+
+.featureItem h4 {
+  font-family: var(--font-serif, "Cormorant Garamond", serif);
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 4px;
+}
+
+.featureItem p {
+  font-size: 13px;
+  color: #707070;
+}
+
+/* Картинки справа */
+.heroRight {
+  flex: 1;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.heroImg1, .heroImg2 {
+  width: 50%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.heroImg1 {
+  aspect-ratio: 1 / 1;
+  margin-top: 40px; /* Сдвигаем первую картинку чуть вниз для асимметрии */
+}
+
+.heroImg2 {
+  aspect-ratio: 4 / 5;
+}
+
+/* --- СЕТКА КАТАЛОГА --- */
+.catalogSection {
+  margin-top: 60px;
+}
+
+/* CSS Grid магия: автоматически перестраивает колонки */
+.catalogGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 колонки на десктопе */
+  gap: clamp(20px, 3vw, 40px); /* Резиновые отступы между карточками */
+}
+
+/* =========================================
+   АДАПТИВНОСТЬ (Media Queries)
+   ========================================= */
+
+/* Планшеты (до 1024px) */
+@media (max-width: 1024px) {
+  .heroSection {
+    flex-direction: column; /* Текст и картинки выстраиваются друг под другом */
+  }
+
+  .heroRight {
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .heroImg1 {
+    margin-top: 0; /* Убираем асимметрию на планшетах */
+  }
+
+  .catalogGrid {
+    grid-template-columns: repeat(2, 1fr); /* 2 колонки для каталога */
+  }
+}
+
+/* Телефоны (до 600px) */
+@media (max-width: 600px) {
+  .featuresGrid {
+    grid-template-columns: 1fr; /* Иконки преимуществ в один столбик */
+    gap: 20px;
+  }
+
+  .catalogGrid {
+    grid-template-columns: 1fr; /* Карточки каталога в один столбик */
+  }
+}

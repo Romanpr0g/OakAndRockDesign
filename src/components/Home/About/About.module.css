@@ -20,7 +20,10 @@
   /* max-width: 1390px; */
   
   /* ФОН: Делаем его плотным, почти черным */
-  background-color: #0F0F0F;
+  background-color: var(--bg-dark);
+  background: 
+    linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
+    url("../../../assets/background.png") center / cover no-repeat;
   
   /* Блюр для эффекта стекла */
   backdrop-filter: blur(20px);

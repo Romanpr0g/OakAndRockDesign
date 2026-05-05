@@ -1,6 +1,9 @@
 .portfolio {
   padding: 0 25px 34px;
   background: var(--bg-dark);
+  background: 
+    linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
+    url("../../../assets/background.png") center / cover no-repeat;
 }
 
 .portfolioWrapper {

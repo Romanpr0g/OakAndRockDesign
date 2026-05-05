@@ -1,6 +1,9 @@
 .section {
   padding: 96px 0 46px;
   background-color: var(--bg-dark);
+  background: 
+    linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
+    url("../../../assets/background.png") center / cover no-repeat;
 }
 
 .container {

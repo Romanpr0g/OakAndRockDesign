@@ -190,28 +190,37 @@
 
 .desktopDropdown {
   position: absolute;
-  top: calc(100% + 24px);
+  top: 100%;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 28px 32px;
+  padding: 36px 32px 28px;
   background: #111111;
   border: 1px solid rgba(201, 169, 110, 0.2);
   z-index: 1001;
   min-width: 260px;
+  /* скрыт по умолчанию */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
 }
 
+/* невидимый мост — мышь не «проваливается» между хедером и дропдауном */
 .desktopDropdown::before {
   content: "";
   position: absolute;
-  top: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 1px;
-  height: 8px;
-  background: rgba(201, 169, 110, 0.35);
+  top: -20px;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: transparent;
+}
+
+.desktopDropdownVisible {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .desktopDropdown a {
