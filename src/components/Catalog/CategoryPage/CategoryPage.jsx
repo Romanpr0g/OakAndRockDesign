@@ -55,7 +55,7 @@ const CategoryPage = () => {
 
   return (
     <div className={s.pageWrapper}>
-      <div className="container">
+      <div className={`container ${s.pageContainer}`}>
         <div className={s.topBar}>
           <Link to="/catalog" className={s.backBtn}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className={s.arrowIcon}>

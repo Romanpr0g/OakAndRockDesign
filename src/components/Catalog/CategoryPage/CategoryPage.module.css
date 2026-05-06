@@ -6,17 +6,28 @@
   min-height: 100vh;
 }
 
+.pageContainer {
+  max-width: 1440px;
+  padding-left: 108px;
+  padding-right: 108px;
+}
+
 /* --- ВЕРХНЯЯ НАВИГАЦИЯ --- */
 .topBar {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .backBtn {
-  margin-bottom: 30px;
+  width: 36px;
+  height: 40px;
+  margin-bottom: 16px;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition: opacity 0.3s ease;
 }
 
@@ -25,7 +36,7 @@
 }
 
 .arrowIcon {
-  width: 40px;
+  width: 36px;
   height: 40px;
 }
 
@@ -44,87 +55,113 @@
 
 /* --- БЛОК ИНТРО (ГЕРОЙ) --- */
 .heroSection {
-  background-color: #1a1a1a; /* Чуть светлее основного фона */
-  padding: clamp(40px, 5vw, 64px);
-  border-radius: 4px;
+  background-color: #1a1a1a;
+  padding: 32px 56px;
+  min-height: 444px;
+  border-top: 0.67px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 0.67px solid rgba(255, 255, 255, 0.05);
   display: flex;
   justify-content: space-between;
-  gap: clamp(40px, 5vw, 80px);
+  align-items: flex-start;
+  gap: 24px;
   margin-bottom: 80px;
+  overflow: hidden;
 }
 
 .heroLeft {
-  flex: 1;
-  max-width: 600px;
+  flex: 1 1 52%;
+  max-width: 588px;
+  min-width: 0;
 }
 
 .heroTitle {
-  font-family: var(--font-serif, "Cormorant Garamond", serif);
-  font-size: clamp(32px, 4vw, 48px);
+  font-family: "Playfair Display", var(--font-serif, serif);
+  width: 404px;
+  max-width: 100%;
+  font-size: 36px;
   font-weight: 400;
-  margin-bottom: 24px;
-  line-height: 1.2;
+  line-height: 1;
+  margin-bottom: 20px;
 }
 
 .heroDesc {
-  font-size: clamp(14px, 1.5vw, 16px);
-  line-height: 1.6;
-  color: #a0a0a0;
-  margin-bottom: 40px;
+  font-family: "Montserrat", var(--font-sans, sans-serif);
+  width: 100%;
+  max-width: 100%;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 28px;
+  letter-spacing: 0;
+  color: #ffffff;
+  margin-bottom: 24px;
 }
 
 /* Сетка преимуществ */
 .featuresGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 32px 24px;
+  column-gap: 39px;
+  row-gap: 16px;
+  max-width: 510px;
 }
 
 .featureItem {
   display: flex;
   align-items: flex-start;
-  gap: 16px;
+  gap: 12px;
 }
 
 .featureIcon {
-  font-size: 24px;
-  line-height: 1;
-  color: #ffffff;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  object-fit: contain;
 }
 
 .featureItem h4 {
-  font-family: var(--font-serif, "Cormorant Garamond", serif);
-  font-size: 18px;
+  font-family: "Playfair Display", var(--font-serif, serif);
+  font-size: 20px;
   font-weight: 400;
+  line-height: 28px;
   margin-bottom: 4px;
 }
 
 .featureItem p {
-  font-size: 13px;
-  color: #707070;
+  font-family: "Montserrat", var(--font-sans, sans-serif);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  color: #9ca3af;
 }
 
 /* Картинки справа */
 .heroRight {
-  flex: 1;
+  flex: 1 1 48%;
+  max-width: 592px;
   display: flex;
-  gap: 20px;
-  align-items: flex-start;
+  gap: 24px;
+  align-items: center;
+  align-self: center;
+  justify-content: flex-start;
+  min-width: 0;
+  margin-top: 0;
 }
 
 .heroImg1, .heroImg2 {
-  width: 50%;
+  width: calc((100% - 24px) / 2);
+  max-width: 284px;
+  aspect-ratio: 284 / 256;
+  height: auto;
   object-fit: cover;
-  border-radius: 4px;
+  border-radius: 8px;
 }
 
 .heroImg1 {
-  aspect-ratio: 1 / 1;
-  margin-top: 40px; /* Сдвигаем первую картинку чуть вниз для асимметрии */
+  margin-top: 12px;
 }
 
 .heroImg2 {
-  aspect-ratio: 4 / 5;
+  margin-top: 0;
 }
 
 /* --- СЕТКА КАТАЛОГА --- */
@@ -135,8 +172,8 @@
 /* CSS Grid магия: автоматически перестраивает колонки */
 .catalogGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 колонки на десктопе */
-  gap: clamp(20px, 3vw, 40px); /* Резиновые отступы между карточками */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 52px 36px;
 }
 
 /* =========================================
@@ -145,32 +182,127 @@
 
 /* Планшеты (до 1024px) */
 @media (max-width: 1024px) {
+  .pageContainer {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
   .heroSection {
-    flex-direction: column; /* Текст и картинки выстраиваются друг под другом */
+    min-height: auto;
+    padding: 28px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+  }
+
+  .heroLeft,
+  .heroRight {
+    width: 100%;
   }
 
   .heroRight {
-    width: 100%;
-    margin-top: 20px;
+    margin-top: 0;
   }
-  
-  .heroImg1 {
-    margin-top: 0; /* Убираем асимметрию на планшетах */
+
+  .heroTitle {
+    font-size: clamp(30px, 4.2vw, 36px);
+  }
+
+  .heroDesc {
+    font-size: clamp(16px, 2.2vw, 19px);
+    line-height: 1.45;
+  }
+
+  .heroRight {
+    gap: 16px;
+    justify-content: flex-start;
+  }
+
+  .heroImg1,
+  .heroImg2 {
+    width: calc(50% - 8px);
+    height: auto;
+    aspect-ratio: 284 / 256;
+  }
+
+  .heroImg1,
+  .heroImg2 {
+    margin-top: 0;
   }
 
   .catalogGrid {
-    grid-template-columns: repeat(2, 1fr); /* 2 колонки для каталога */
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 колонки для каталога */
+    gap: 24px 20px;
   }
 }
 
 /* Телефоны (до 600px) */
 @media (max-width: 600px) {
+  .pageContainer {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .topBar {
+    margin-bottom: 14px;
+  }
+
+  .backBtn {
+    width: 28px;
+    height: 28px;
+    margin-bottom: 10px;
+  }
+
+  .arrowIcon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .heroSection {
+    padding: 20px 16px;
+    gap: 20px;
+    margin-bottom: 44px;
+  }
+
+  .heroTitle {
+    font-size: clamp(32px, 9vw, 38px);
+    line-height: 1.02;
+    margin-bottom: 14px;
+  }
+
+  .heroDesc {
+    font-size: 16px;
+    line-height: 1.45;
+    margin-bottom: 18px;
+  }
+
   .featuresGrid {
     grid-template-columns: 1fr; /* Иконки преимуществ в один столбик */
-    gap: 20px;
+    row-gap: 12px;
+    max-width: 100%;
+  }
+
+  .featureItem h4 {
+    font-size: 19px;
+  }
+
+  .featureItem p {
+    font-size: 15px;
+    line-height: 1.4;
+  }
+
+  .heroRight {
+    gap: 10px;
+  }
+
+  .heroImg1,
+  .heroImg2 {
+    width: calc(50% - 5px);
+    border-radius: 6px;
   }
 
   .catalogGrid {
     grid-template-columns: 1fr; /* Карточки каталога в один столбик */
+    gap: 14px;
   }
 }

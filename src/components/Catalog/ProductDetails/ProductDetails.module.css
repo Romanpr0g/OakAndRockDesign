@@ -422,9 +422,10 @@
   }
 
   .imageCol {
-    /* Ограничиваем высоту картинки на планшете/телефоне, чтобы не была гигантской */
-    height: 50vh; 
-    min-height: 400px;
+    /* Высота через ratio, чтобы не появлялась пустая зона под фото */
+    height: auto;
+    aspect-ratio: 4 / 3;
+    min-height: 0;
   }
 
   .featuresRow {
@@ -436,6 +437,11 @@
 @media (max-width: 768px) {
   .pageWrapper {
     padding-top: 100px;
+  }
+
+  .imageCol {
+    aspect-ratio: 1 / 1;
+    max-height: 420px;
   }
 
   .specsGrid {
