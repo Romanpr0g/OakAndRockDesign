@@ -1,14 +1,15 @@
 .catalog {
   background: #121212;
   padding-top: 32px;
-  padding-bottom: 96px;
+  padding-bottom: clamp(64px, 10vw, 96px);
   min-height: 100vh;
 }
 
 .catalogContainer {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 0 108px;
+  padding-left: var(--page-pad-x);
+  padding-right: var(--page-pad-x);
 }
 
 /* --- ВЕРХНЯЯ НАВИГАЦИЯ --- */
@@ -16,25 +17,31 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-bottom: 40px;
+  margin-bottom: clamp(18px, 3vw, 28px);
 }
 
 .backBtn {
-  margin-bottom: 30px;
+  width: 36px;
+  height: 40px;
+  margin-bottom: 20px;
   cursor: pointer;
-  transform: rotate(180deg);
-  transition: opacity 0.3s ease;
-  color: #fff;
+  transition: opacity 0.3s ease, transform 0.2s ease;
+  color: rgba(255, 255, 255, 0.8);
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .backBtn:hover {
   opacity: 0.7;
+  transform: translateX(-2px);
 }
 
 .arrowIcon {
-  width: 40px;
+  width: 36px;
   height: 40px;
+  display: block;
+  transform: rotate(180deg);
 }
 
 /* Лейбл с градиентным подчёркиванием */
@@ -47,7 +54,7 @@
   text-transform: uppercase;
   padding-bottom: 8px;
   display: inline-block;
-  margin-bottom: 32px;
+  margin-bottom: clamp(24px, 4vw, 32px);
   position: relative;
 }
 
@@ -83,18 +90,23 @@
   box-shadow: 0px 0px 4px rgba(224, 196, 143, 0.5);
 }
 
-/* --- СЕТКА --- */
+/* Сетка: макет 552×320 на десктопе, резина при сужении */
 .catalogGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 121px;
-  row-gap: 80px;
+  grid-template-columns: repeat(2, minmax(0, 552px));
+  justify-content: start;
+  column-gap: clamp(28px, 6.25vw, 121px);
+  row-gap: clamp(40px, 5.5vw, 80px);
 }
 
 .skeletonCard {
-  background: #0a0a0a;
-  border: 1px solid #222;
-  height: 250px;
+  background: rgba(10, 10, 10, 0.9);
+  border: 0.67px solid #27272a;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 552px;
+  height: clamp(220px, 42vw, 320px);
+  min-height: 200px;
   animation: pulse 1.5s ease-in-out infinite;
 }
 
@@ -102,27 +114,44 @@
   color: #c0392b;
 }
 
-/* Карточка */
+/* Карточка категории — целевые размеры: 552×320 (desktop) */
 .card {
+  --card-h: clamp(220px, 42vw, 320px);
   background: #0a0a0a;
-  border: 1px solid #222;
-  padding: 40px;
-  height: 250px;
+  border: 0.67px solid #27272a;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 552px;
+  min-width: 0;
+  height: var(--card-h);
+  min-height: 200px;
+  padding: clamp(24px, 3.2vw, 40px);
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: flex-end;
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease, transform 0.25s ease;
 }
 
 .card:hover {
-  border-color: #444;
+  border-color: #3f3f46;
+}
+
+.card:focus-visible {
+  outline: 2px solid rgba(197, 160, 89, 0.85);
+  outline-offset: 3px;
 }
 
 .card:hover .cardImage {
   opacity: 0.5;
+  transform: scale(1.03);
+}
+
+.card:hover .cardArrowIcon {
+  opacity: 1;
+  transform: translateX(4px);
 }
 
 .cardImage {
@@ -132,23 +161,122 @@
   height: 100%;
   object-fit: cover;
   opacity: 0.35;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.35s ease, transform 0.45s ease;
 }
 
 .cardOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 40%, transparent 100%);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.88) 35%, transparent 72%);
   pointer-events: none;
 }
 
-.cardTitle {
-  font-size: 28px;
+.cardFooter {
   position: relative;
   z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+}
+
+.cardTitle {
+  font-family: var(--font-serif, "Playfair Display", serif);
+  font-size: clamp(22px, 2.4vw, 28px);
+  font-weight: 400;
+  line-height: 1.15;
+  color: #fff;
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+}
+
+.cardArrowIcon {
+  width: clamp(22px, 2.5vw, 28px);
+  height: auto;
+  flex-shrink: 0;
+  color: rgba(255, 255, 255, 0.92);
+  opacity: 0.88;
+  transform: none;
+  transition: opacity 0.2s ease, transform 0.25s ease;
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 0.7; }
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@media (max-width: 1024px) {
+  .topBar {
+    margin-bottom: 18px;
+  }
+
+  .backBtn {
+    margin-bottom: 14px;
+  }
+
+  .catalogGrid {
+    column-gap: clamp(20px, 3.5vw, 48px);
+    row-gap: clamp(28px, 4vw, 48px);
+  }
+}
+
+@media (max-width: 768px) {
+  .catalog {
+    padding-top: 20px;
+  }
+
+  .catalogGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(12px, 3vw, 24px);
+    row-gap: clamp(20px, 4vw, 32px);
+  }
+
+  .card {
+    max-width: none;
+    padding: clamp(20px, 3vw, 28px);
+  }
+
+  .skeletonCard {
+    max-width: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .catalogGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    max-width: none;
+    --card-h: clamp(240px, 52vw, 300px);
+  }
+
+  .skeletonCard {
+    max-width: none;
+    height: clamp(240px, 52vw, 300px);
+  }
+}
+
+@media (max-width: 600px) {
+  .topBar {
+    margin-bottom: 12px;
+  }
+
+  .backBtn {
+    width: 28px;
+    height: 28px;
+    margin-bottom: 8px;
+  }
+
+  .arrowIcon {
+    width: 28px;
+    height: 28px;
+  }
 }

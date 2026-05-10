@@ -1,341 +1,322 @@
-/* ==========================================
-   ОБЩИЙ ЛЕЙАУТ СТРАНИЦЫ
-   ========================================== */
+/* Страница товара — только данные с сервера, без «дыр» от вырезанных блоков */
+
 .pageWrapper {
-  padding-top: 32px; /* Отступ от хедера */
-  padding-bottom: 80px;
-  background-color: #0F0F0F; /* Самый темный фон страницы */
+  padding-top: 32px;
+  padding-bottom: clamp(48px, 8vw, 96px);
+  background-color: #0f0f0f;
   color: #fff;
   min-height: 100vh;
 }
 
-/* Навигация сверху */
+.pageInner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-left: var(--page-pad-x);
+  padding-right: var(--page-pad-x);
+}
+
+/* Верх: стрелка + категория */
 .topBar {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-bottom: 40px;
+  margin-bottom: clamp(18px, 3vw, 28px);
 }
 
 .backBtn {
-  margin-bottom: 30px;
-  color: #fff;
-  transition: opacity 0.3s ease;
+  width: 36px;
+  height: 40px;
+  margin-bottom: 20px;
+  color: rgba(255, 255, 255, 0.8);
+  transition: opacity 0.3s ease, transform 0.2s ease;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .backBtn:hover {
   opacity: 0.7;
+  transform: translateX(-2px);
 }
 
 .arrowIcon {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 40px;
+  display: block;
+  transform: rotate(180deg);
 }
 
 .sectionLabel {
-  font-family: var(--font-sans, sans-serif);
+  font-family: var(--font-sans, "Montserrat", sans-serif);
   font-size: clamp(14px, 1.5vw, 18px);
   font-weight: 800;
   letter-spacing: 0.15em;
-  color: var(--accent-gold, #c9a96e);
+  color: var(--accent-gold, #c5a059);
   text-transform: uppercase;
   border-bottom: 1px solid rgba(255, 255, 255, 0.5);
   padding-bottom: 8px;
   display: inline-block;
 }
 
-/* ==========================================
-   ГЛАВНЫЙ БЛОК ТОВАРА (ТЕМНО-СЕРАЯ КАРТОЧКА)
-   ========================================== */
+/* Главный блок: сетка как в макете (~45px зазор) */
 .productShowcase {
-  display: flex;
-  background-color: #161616; /* Чуть светлее основного фона */
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: clamp(24px, 4.2vw, 45px);
+  align-items: stretch;
+  justify-items: stretch;
+  background-color: rgba(22, 22, 22, 0.92);
   border-radius: 12px;
-  overflow: hidden; /* Чтобы картинка не вылезала за скругления */
-  margin-bottom: 24px;
+  border: 0.67px solid #27272a;
+  overflow: hidden;
+  margin-bottom: clamp(28px, 4vw, 40px);
 }
 
-/* --- ЛЕВАЯ КОЛОНКА (Картинка) --- */
+/* Слева: высота строки = max(колонки); тянемся под правый блок с текстом */
 .imageCol {
-  flex: 1;
   position: relative;
   background-color: #222;
-  height: 520px; /* фиксированная высота — блок не прыгает */
-  flex-shrink: 0;
+  width: 100%;
+  min-width: 0;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
 }
 
-.badge {
-  position: absolute;
-  top: 24px;
-  left: 24px;
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  color: #111;
-  font-family: var(--font-sans, sans-serif);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  padding: 6px 16px;
-  border-radius: 20px;
-  z-index: 2;
+.imageZoomTrigger {
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: zoom-in;
+  background: transparent;
+  display: block;
+  position: relative;
+  text-align: left;
+}
+
+.imageZoomTrigger:focus {
+  outline: none;
+}
+
+.imageZoomTrigger:focus-visible {
+  outline: 2px solid rgba(197, 160, 89, 0.85);
+  outline-offset: 2px;
 }
 
 .productImage {
   width: 100%;
   height: 100%;
+  min-height: 0;
   object-fit: cover;
   display: block;
 }
 
-/* --- ПРАВАЯ КОЛОНКА (Информация) --- */
-.infoCol {
-  flex: 1; /* Занимает 50% */
-  padding: clamp(32px, 5vw, 64px);
-  display: flex;
-  flex-direction: column;
-}
-
-.ratingRow {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 24px;
-}
-
-.starIcon {
-  width: 16px;
-  height: 16px;
-}
-
-.ratingScore {
-  font-family: var(--font-serif, serif);
-  font-size: 20px;
-  color: #fff;
-}
-
-.ratingCount {
-  font-family: var(--font-sans, sans-serif);
-  font-size: 14px;
-  color: #8c8c8c;
-  margin-top: 2px;
-}
-
-.title {
-  font-family: var(--font-serif, "Cormorant Garamond", serif);
-  font-size: clamp(36px, 4vw, 48px);
-  font-weight: 400;
-  line-height: 1.2;
-  margin-bottom: 16px;
-}
-
-.description {
-  font-family: var(--font-sans, sans-serif);
-  font-size: clamp(14px, 1.5vw, 16px);
-  color: #999999;
-  line-height: 1.6;
-  margin-bottom: 40px;
-  max-width: 90%;
-}
-
-/* Цены */
-.priceRow {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  margin-bottom: 40px;
-}
-
-.currency {
-  font-family: var(--font-serif, serif);
-  font-size: 18px;
-  color: #fff;
-}
-
-.price {
-  font-family: var(--font-serif, serif);
-  font-size: clamp(36px, 4vw, 42px);
-  color: var(--accent-gold, #c9a96e);
-}
-
-/* Выбор цвета */
-.colorSection {
-  margin-bottom: 40px;
-}
-
-.colorLabel {
-  display: block;
-  font-family: var(--font-sans, sans-serif);
-  font-size: 13px;
-  letter-spacing: 0.1em;
-  color: #fff;
-  margin-bottom: 16px;
-}
-
-.colorOptions {
-  display: flex;
-  gap: 12px;
-}
-
-.colorBtn {
-  background: transparent;
-  border: 1px solid transparent; /* Подготовка под рамку */
-  padding: 4px;
-  border-radius: 50%;
-  cursor: pointer;
+.imageModalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: border-color 0.3s ease;
+  padding: 28px;
+  animation: fadeIn 0.2s ease-out;
 }
 
-/* Активный цвет с белой рамкой */
-.colorBtn.activeColor {
-  border-color: #ffffff;
+.imageModalContent {
+  width: auto;
+  height: auto;
+  max-width: min(86vw, 980px);
+  max-height: 82vh;
+  border-radius: 12px;
+  object-fit: contain;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.55);
+  animation: zoomIn 0.2s ease-out;
 }
 
-.colorDot {
-  display: block;
-  width: 24px;
-  height: 24px;
+.imageModalClose {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
   border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
-/* Характеристики (Сетка) */
-.specsGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin-bottom: 48px;
+.imageModalClose:hover {
+  background: rgba(0, 0, 0, 0.78);
+  transform: scale(1.05);
+}
+
+.imageModalClose:focus {
+  outline: none;
+}
+
+.imageModalClose:focus-visible {
+  outline: 2px solid rgba(197, 160, 89, 0.85);
+  outline-offset: 2px;
+}
+
+.infoCol {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: clamp(28px, 4.5vw, 56px) clamp(24px, 4vw, 48px) clamp(28px, 4.5vw, 56px)
+    clamp(8px, 2vw, 16px);
+  min-width: 0;
+  align-self: stretch;
+}
+
+.title {
+  font-family: var(--font-serif, "Playfair Display", serif);
+  font-size: clamp(28px, 3.6vw, 48px);
+  font-weight: 400;
+  line-height: 1.12;
+  color: #fff;
+  margin: 0 0 12px;
+  max-width: 36ch;
+}
+
+/* Если нет описания — не слипать заголовок с ценой */
+.title + .priceRow {
+  margin-top: clamp(16px, 3vw, 28px);
+}
+
+.description {
+  font-family: var(--font-sans, "Montserrat", sans-serif);
+  font-size: clamp(15px, 1.35vw, 16px);
+  font-weight: 400;
+  line-height: 1.65;
+  color: #d1d5db;
+  margin: 0 0 36px;
+  max-width: min(100%, 42rem);
+}
+
+.priceRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px 14px;
+  margin: 0 0 clamp(28px, 4vw, 40px);
+}
+
+.currency {
+  font-family: var(--font-serif, "Playfair Display", serif);
+  font-size: clamp(17px, 1.6vw, 20px);
+  font-weight: 400;
+  color: #c5a059;
+  line-height: 1;
+}
+
+.price {
+  font-family: var(--font-serif, "Playfair Display", serif);
+  font-size: clamp(30px, 3.2vw, 36px);
+  font-weight: 400;
+  line-height: 1.15;
+  color: #c5a059;
+  letter-spacing: 0;
+}
+
+/* Характеристики: ряд с переносом, зазор как в Figma */
+.specsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(20px, 5vw, 48px);
 }
 
 .specItem {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  flex: 0 1 auto;
+  min-width: min(100%, 5.5rem);
+  max-width: 12rem;
 }
 
 .specTitle {
-  font-family: var(--font-serif, serif);
-  font-size: 18px;
-  color: #8c8c8c;
+  font-family: var(--font-serif, "Playfair Display", serif);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 28px;
+  color: #9ca3af;
 }
 
 .specValue {
-  font-family: var(--font-sans, sans-serif);
-  font-size: 14px;
-  color: #fff;
-}
-
-/* --- КНОПКИ ДЕЙСТВИЙ --- */
-.actions {
-  margin-top: auto; /* Прибиваем кнопки к низу */
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.buyBtn {
-  width: 100%;
-  padding: 18px;
-  font-family: var(--font-sans, sans-serif);
+  font-family: var(--font-sans, "Montserrat", sans-serif);
   font-size: 16px;
-  font-weight: 600;
-  color: #111;
-  background: linear-gradient(90deg, #d8bc80 0%, #b88d40 100%);
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: opacity 0.3s ease, transform 0.2s ease;
-}
-
-.buyBtn:hover {
-  opacity: 0.9;
-  transform: scale(1.02);
-}
-
-.secondaryActions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-
-.ghostBtn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  padding: 16px;
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
+  font-weight: 400;
+  line-height: 22px;
   color: #fff;
-  font-family: var(--font-sans, sans-serif);
-  font-size: 14px;
-  cursor: pointer;
-  transition: background 0.3s ease, border-color 0.3s ease;
 }
 
-.ghostBtn:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.3);
-}
-
-.heartIcon {
-  width: 18px;
-  height: 18px;
-}
-
-/* ==========================================
-   БЛОК ПРЕИМУЩЕСТВ (3 карточки внизу)
-   ========================================== */
+/* Преимущества */
 .featuresRow {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17.5rem), 1fr));
+  gap: clamp(16px, 2.2vw, 28px);
+  align-items: stretch;
 }
 
 .featureCard {
-  background-color: #161616; /* Такой же цвет как у главной карточки */
-  border: 1px solid rgba(255, 255, 255, 0.03);
-  padding: clamp(24px, 3vw, 32px);
-  border-radius: 8px;
+  background: rgba(24, 24, 27, 0.5);
+  border: 0.67px solid #27272a;
+  border-radius: 12px;
+  padding: clamp(20px, 2.5vw, 24px);
   display: flex;
   flex-direction: column;
+  min-height: 0;
 }
 
 .featureIconWrapper {
   width: 48px;
   height: 48px;
-  background: rgba(255, 255, 255, 0.03);
+  flex-shrink: 0;
+  background: rgba(39, 39, 42, 0.85);
   border-radius: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #fff;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .featureIconWrapper svg {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
 }
 
 .featureTitle {
-  font-family: var(--font-serif, "Cormorant Garamond", serif);
+  font-family: var(--font-serif, "Playfair Display", serif);
   font-size: 20px;
   font-weight: 400;
+  line-height: 28px;
   color: #fff;
-  margin-bottom: 8px;
+  margin: 0 0 8px;
 }
 
 .featureDesc {
-  font-family: var(--font-sans, sans-serif);
-  font-size: 14px;
-  color: #8c8c8c;
-  line-height: 1.6;
+  font-family: var(--font-sans, "Montserrat", sans-serif);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  color: #9ca3af;
+  margin: 0;
 }
 
 /* Слайдер */
@@ -343,22 +324,23 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   color: #fff;
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   z-index: 3;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
 .sliderArrow:hover {
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.72);
+  border-color: rgba(255, 255, 255, 0.22);
 }
 
 .sliderArrow svg {
@@ -367,16 +349,16 @@
 }
 
 .sliderArrowLeft {
-  left: 16px;
+  left: 14px;
 }
 
 .sliderArrowRight {
-  right: 16px;
+  right: 14px;
 }
 
 .sliderDots {
   position: absolute;
-  bottom: 16px;
+  bottom: 14px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -388,11 +370,15 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.35);
   border: none;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, transform 0.2s ease;
   padding: 0;
+}
+
+.dot:hover {
+  transform: scale(1.1);
 }
 
 .dotActive {
@@ -400,65 +386,132 @@
 }
 
 .skeletonShowcase {
-  background: #161616;
-  height: 500px;
+  background: rgba(22, 22, 22, 0.92);
+  min-height: min(70vh, 560px);
   border-radius: 12px;
+  border: 0.67px solid #27272a;
   animation: pulse 1.5s ease-in-out infinite;
 }
 
 .error {
   color: #c0392b;
-  padding-top: 120px;
+  padding-top: clamp(80px, 15vh, 120px);
 }
 
-/* ==========================================
-   АДАПТИВНОСТЬ (Media Queries)
-   ========================================== */
-
-/* Планшеты и ноутбуки (до 1024px) */
 @media (max-width: 1024px) {
+  .topBar {
+    margin-bottom: 18px;
+  }
+
+  .backBtn {
+    margin-bottom: 14px;
+  }
+
   .productShowcase {
-    flex-direction: column; /* Картинка сверху, инфо снизу */
+    /* minmax(0,1fr) — иначе при aspect-ratio колонка может «схлопнуться» по ширине */
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
   }
 
   .imageCol {
-    /* Высота через ratio, чтобы не появлялась пустая зона под фото */
-    height: auto;
+    /* Одна колонка: фиксируем пропорции по ширине экрана */
     aspect-ratio: 4 / 3;
-    min-height: 0;
+    flex: none;
+    max-height: none;
+    min-height: 240px;
+    justify-self: stretch;
   }
 
-  .featuresRow {
-    grid-template-columns: repeat(2, 1fr); /* 2 колонки преимуществ */
+  .infoCol {
+    padding: clamp(24px, 4vw, 36px) clamp(20px, 4vw, 32px);
+  }
+
+  .title {
+    max-width: none;
   }
 }
 
-/* Мобильные телефоны (до 768px) */
 @media (max-width: 768px) {
   .pageWrapper {
-    padding-top: 100px;
+    padding-top: 20px;
+  }
+
+  .topBar {
+    margin-bottom: 12px;
+  }
+
+  .backBtn {
+    width: 28px;
+    height: 28px;
+    margin-bottom: 8px;
+  }
+
+  .arrowIcon {
+    width: 28px;
+    height: 28px;
   }
 
   .imageCol {
-    aspect-ratio: 1 / 1;
-    max-height: 420px;
+    aspect-ratio: 1;
+    flex: none;
+    min-height: min(88vw, 320px);
+    max-height: none;
+    justify-self: stretch;
   }
 
-  .specsGrid {
-    grid-template-columns: 1fr; /* Характеристики в столбик на телефоне */
-    gap: 16px;
+  .description {
+    margin-bottom: 28px;
   }
 
-  .secondaryActions {
-    grid-template-columns: 1fr; /* Кнопки "Specs" и "Save" друг под другом */
+  .priceRow {
+    margin-bottom: 24px;
   }
 
-  .featuresRow {
-    grid-template-columns: 1fr; /* Преимущества в один столбик */
+  .specsRow {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .specItem {
+    max-width: none;
+  }
+
+  .imageModalOverlay {
+    padding: 12px;
+  }
+
+  .imageModalClose {
+    top: 10px;
+    right: 10px;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 0.7; }
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.72;
+  }
 }

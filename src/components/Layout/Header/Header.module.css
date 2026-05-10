@@ -45,42 +45,65 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 80px;
-  padding: 0 107px 0 61px;
+  gap: clamp(8px, 1.5vw, 20px);
+  min-height: clamp(4rem, 2.25rem + 5vw, 5rem);
+  padding-block: 0.35rem;
+  padding-inline: var(--page-pad-x, clamp(16px, 7.5vw, 108px));
+}
+
+/* Десктоп: навигация и «Услуги» тянутся на всю высоту полосы — top:100% у выпадашки = низ хедера, не середина строки */
+@media (min-width: 1024px) {
+  .inner {
+    align-items: stretch;
+  }
+
+  .logo,
+  .ctaBtn {
+    align-self: center;
+  }
+
+  .nav {
+    align-self: stretch;
+  }
 }
 
 /* ---- ЛОГОТИП ---- */
 .logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: clamp(6px, 1.2vw, 10px);
   text-decoration: none;
-  flex-shrink: 0;
+  flex: 0 1 auto;
+  min-width: 0;
   z-index: 1002;
 }
 
 .logoIcon {
-  width: 44px;
-  height: 54px;
+  width: clamp(28px, calc(3.2vw + 0.75rem), 44px);
+  height: auto;
   flex-shrink: 0;
 }
 
 .logoName {
-  width: 148px;
+  width: clamp(4.5rem, calc(12vw + 2rem), 9.25rem);
   height: auto;
-  flex-shrink: 0;
+  flex-shrink: 1;
+  min-width: 0;
 }
 
 /* ---- НАВИГАЦИЯ ---- */
 .nav {
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+  min-width: 0;
   gap: 0;
 }
 
 .navItem {
   font-family: "Cormorant Garamond";
-  font-size: 24px;
+  font-size: clamp(1rem, 0.76rem + 0.68vw, 1.5625rem);
   font-weight: 400;
   text-transform: capitalize;
   color: #ffffff;
@@ -153,11 +176,12 @@
 
 .separator {
   color: #e0c48f;
-  font-size: 16px;
-  margin: 0 24px;
+  font-size: clamp(0.8125rem, 0.68rem + 0.38vw, 1.0625rem);
+  margin: 0 clamp(0.35rem, 0.2rem + 0.85vw, 1.5rem);
   user-select: none;
   line-height: 1;
   font-weight: 300;
+  flex-shrink: 0;
 }
 
 /* ---- ВЫПАДАЮЩЕЕ МЕНЮ (ДЕСКТОП) ---- */
@@ -165,18 +189,19 @@
   position: relative;
   display: flex;
   align-items: center;
+  align-self: stretch;
   cursor: pointer;
 }
 
 .servicesLabel {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: clamp(4px, 0.8vw, 8px);
 }
 
 .arrow {
-  width: 12px;
-  height: 12px;
+  width: clamp(10px, 0.6vw + 0.5rem, 12px);
+  height: clamp(10px, 0.6vw + 0.5rem, 12px);
   color: rgba(220, 200, 160, 0.6);
   transition:
     transform 0.3s ease,
@@ -189,33 +214,46 @@
 }
 
 .desktopDropdown {
+  --dropdown-below-header: 2px;
   position: absolute;
   top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: auto;
+  transform: none;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 36px 32px 28px;
+  gap: clamp(0.5rem, 1.5vw, 0.85rem);
+  /* Впритык под полосой хедера: компенсация субпикселей и 1px линии хедера / верхней границы панели */
+  margin-top: var(--dropdown-below-header);
+  padding: clamp(1rem, 2.5vw, 1.35rem) clamp(1.25rem, 2.5vw, 2rem)
+    clamp(1.1rem, 2.2vw, 1.25rem);
   background: #111111;
   border: 1px solid rgba(201, 169, 110, 0.2);
+  border-top: 1px solid rgba(201, 169, 110, 0.28);
   z-index: 1001;
   min-width: 260px;
+  width: max-content;
+  max-width: min(100vw - 2rem, 36rem);
+  box-sizing: border-box;
   /* скрыт по умолчанию */
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease;
 }
 
-/* невидимый мост — мышь не «проваливается» между хедером и дропдауном */
+/* невидимый мост — мышь не «проваливается» между хедером и дропдауном (учитываем margin-top) */
 .desktopDropdown::before {
   content: "";
   position: absolute;
-  top: -20px;
+  top: calc(-10px - var(--dropdown-below-header));
   left: 0;
   right: 0;
-  height: 20px;
+  height: calc(10px + var(--dropdown-below-header));
   background: transparent;
+}
+
+.headerFixed .desktopDropdown {
+  --dropdown-below-header: 3px;
 }
 
 .desktopDropdownVisible {
@@ -224,20 +262,21 @@
 }
 
 .desktopDropdown a {
+  display: block;
   font-family: "Cormorant Garamond", serif;
-  font-size: 18px;
-  letter-spacing: 0.04em;
-  color: rgba(220, 200, 160, 0.85);
+  font-size: clamp(1rem, 0.76rem + 0.68vw, 1.5625rem);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+  color: #ffffff;
   text-decoration: none;
   white-space: nowrap;
-  transition:
-    color 0.3s ease,
-    padding-left 0.3s ease;
+  padding: 0.35rem 0;
+  transition: color 0.3s ease;
 }
 
 .desktopDropdown a:hover {
   color: #c9a96e;
-  padding-left: 8px;
 }
 
 .mobileDropdown {
@@ -247,18 +286,20 @@
 /* ---- CTA КНОПКА ---- */
 .ctaBtn {
   font-family: "Cormorant Garamond", serif;
-  font-size: 14px;
+  font-size: clamp(0.75rem, 0.62rem + 0.38vw, 0.9375rem);
   font-weight: 500;
-  line-height: 20px;
-  letter-spacing: 0.7px;
+  line-height: 1.35;
+  letter-spacing: clamp(0.04em, 0.03em + 0.04vw, 0.07em);
   text-transform: uppercase;
   color: #1a1a1a;
   text-decoration: none;
-  padding: 6px 20px;
+  padding: clamp(0.375rem, 0.28rem + 0.35vw, 0.5rem)
+    clamp(0.65rem, 0.45rem + 0.9vw, 1.25rem);
   background: linear-gradient(90deg, #ae8d58 0%, #fee6b8 50%, #ae8d58 100%);
   border: none;
   border-radius: 40px;
-  flex-shrink: 0;
+  flex: 0 1 auto;
+  min-width: 0;
   transition:
     opacity 0.3s ease,
     transform 0.3s ease;
@@ -279,6 +320,7 @@
   padding: 0;
   z-index: 1002;
   flex-shrink: 0;
+  align-self: center;
   -webkit-tap-highlight-color: transparent;
   outline: none;
 }
@@ -328,9 +370,11 @@
    АДАПТИВНОСТЬ
    ========================================= */
 
-@media (max-width: 1024px) {
+/* Бургер и оверлей-меню: до 1023px; горизонтальная навигация от 1024px */
+@media (max-width: 1023px) {
   .inner {
-    padding: 0 20px;
+    padding-inline: clamp(12px, 4vw, 20px);
+    min-height: 4.25rem;
   }
 
   .ctaBtn {
@@ -389,7 +433,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 18px;
+    gap: clamp(1.25rem, 4vw, 2rem);
     width: 100%;
     max-height: 0;
     opacity: 0;
@@ -406,25 +450,26 @@
 
   .mobileDropdown a {
     font-family: "Cormorant Garamond", serif;
-    font-size: 18px;
-    letter-spacing: 0.08em;
-    color: rgba(197, 160, 90, 0.7);
+    font-size: 26px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: rgba(232, 217, 184, 0.85);
     text-decoration: none;
     text-align: center;
     transition: color 0.3s ease;
   }
 
   .mobileDropdown a:hover {
-    color: #c5a05a;
+    color: #c9a96e;
   }
 
   .dropdownWrapper.mobileSubmenuOpen .mobileDropdown {
-    max-height: 300px;
+    max-height: 320px;
     opacity: 1;
-    padding-top: 18px;
-    padding-bottom: 8px;
+    padding-top: clamp(1rem, 3vw, 1.25rem);
+    padding-bottom: 0.5rem;
     margin-top: 12px;
-    border-top: 1px solid rgba(197, 160, 90, 0.15);
+    border-top: 1px solid rgba(232, 217, 184, 0.12);
   }
 
   .dropdownWrapper.mobileSubmenuOpen .arrow {

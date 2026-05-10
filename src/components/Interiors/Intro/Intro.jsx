@@ -9,7 +9,7 @@ const Intro = () => {
       <div className={s.introSection__wrapper}>
         <div className={s.introBlock}>
           <Link to="/" className={s.backLink}>
-            <Arrow />
+            <Arrow className={s.arrowIcon} />
           </Link>
           <span className="section-label">ИНТЕРЬЕРЫ ПОД КЛЮЧ</span>
         </div>

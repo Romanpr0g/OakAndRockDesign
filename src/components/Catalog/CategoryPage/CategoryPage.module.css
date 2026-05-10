@@ -1,6 +1,6 @@
 /* Обертка страницы (отступ сверху для фиксированного хедера) */
 .pageWrapper {
-  padding-bottom: 32px;
+  padding: 32px 0;
   background-color: #111111; /* Общий фон страницы */
   color: #fff;
   min-height: 100vh;
@@ -8,8 +8,9 @@
 
 .pageContainer {
   max-width: 1440px;
-  padding-left: 108px;
-  padding-right: 108px;
+  margin: 0 auto;
+  padding-left: var(--page-pad-x);
+  padding-right: var(--page-pad-x);
 }
 
 /* --- ВЕРХНЯЯ НАВИГАЦИЯ --- */
@@ -17,27 +18,31 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .backBtn {
   width: 36px;
   height: 40px;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.3s ease;
+  color: rgba(255, 255, 255, 0.8);
+  transition: opacity 0.3s ease, transform 0.2s ease;
 }
 
 .backBtn:hover {
   opacity: 0.7;
+  transform: translateX(-2px);
 }
 
 .arrowIcon {
   width: 36px;
   height: 40px;
+  display: block;
+  transform: rotate(180deg);
 }
 
 .sectionLabel {
@@ -164,6 +169,80 @@
   margin-top: 0;
 }
 
+.imageButton {
+  width: calc((100% - 24px) / 2);
+  max-width: 284px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: zoom-in;
+  border-radius: 8px;
+}
+
+.imageButton:focus-visible {
+  outline: 2px solid rgba(201, 169, 110, 0.9);
+  outline-offset: 3px;
+}
+
+.imageButton .heroImg1,
+.imageButton .heroImg2 {
+  width: 100%;
+  max-width: none;
+}
+
+.imageModalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.imageModalContent {
+  width: auto;
+  height: auto;
+  max-width: min(86vw, 980px);
+  max-height: 82vh;
+  border-radius: 12px;
+  object-fit: contain;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.55);
+  animation: zoomIn 0.2s ease-out;
+}
+
+.imageModalClose {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.imageModalClose:hover {
+  background: rgba(0, 0, 0, 0.78);
+  transform: scale(1.05);
+}
+
+.imageModalClose:focus,
+.imageButton:focus {
+  outline: none;
+}
+
 /* --- СЕТКА КАТАЛОГА --- */
 .catalogSection {
   margin-top: 60px;
@@ -182,11 +261,6 @@
 
 /* Планшеты (до 1024px) */
 @media (max-width: 1024px) {
-  .pageContainer {
-    padding-left: 24px;
-    padding-right: 24px;
-  }
-
   .heroSection {
     min-height: auto;
     padding: 28px;
@@ -206,6 +280,14 @@
 
   .heroTitle {
     font-size: clamp(30px, 4.2vw, 36px);
+  }
+
+  .topBar {
+    margin-bottom: 18px;
+  }
+
+  .backBtn {
+    margin-bottom: 14px;
   }
 
   .heroDesc {
@@ -230,27 +312,34 @@
     margin-top: 0;
   }
 
+  .imageButton {
+    width: calc(50% - 8px);
+    max-width: none;
+  }
+
   .catalogGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 колонки для каталога */
     gap: 24px 20px;
   }
 }
 
+/* Как у карточки товара: меньше отступ под фиксированный хедер */
+@media (max-width: 768px) {
+  .pageWrapper {
+    padding-top: 20px;
+  }
+}
+
 /* Телефоны (до 600px) */
 @media (max-width: 600px) {
-  .pageContainer {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-
   .topBar {
-    margin-bottom: 14px;
+    margin-bottom: 12px;
   }
 
   .backBtn {
     width: 28px;
     height: 28px;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
 
   .arrowIcon {
@@ -301,8 +390,41 @@
     border-radius: 6px;
   }
 
+  .imageButton {
+    width: calc(50% - 5px);
+  }
+
+  .imageModalOverlay {
+    padding: 12px;
+  }
+
+  .imageModalClose {
+    top: 10px;
+    right: 10px;
+  }
+
   .catalogGrid {
     grid-template-columns: 1fr; /* Карточки каталога в один столбик */
     gap: 14px;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }

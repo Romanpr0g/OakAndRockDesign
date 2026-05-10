@@ -36,7 +36,7 @@ const Categories = () => {
             <Link to="/" className={s.backBtn}>
               <ArrowBack className={s.arrowIcon} />
             </Link>
-            <span className="section-label">КАТАЛОГ</span>
+            <span className="section-label">КАТЕГОРИИ</span>
           </div>
           <div className={s.catalogGrid}>
             {[1, 2, 3, 4].map((i) => (
@@ -56,7 +56,7 @@ const Categories = () => {
             <Link to="/" className={s.backBtn}>
               <ArrowBack className={s.arrowIcon} />
             </Link>
-            <span className={s.sectionLabel}>КАТАЛОГ</span>
+            <span className={s.sectionLabel}>КАТЕГОРИИ</span>
           </div>
           <p className={s.error}>Не удалось загрузить категории: {error}</p>
         </div>
@@ -73,7 +73,7 @@ const Categories = () => {
           <Link to="/" className={s.backBtn}>
             <ArrowBack className={s.arrowIcon} />
           </Link>
-          <span className={s.sectionLabel}>КАТАЛОГ</span>
+          <span className={s.sectionLabel}>КАТЕГОРИИ</span>
         </div>
 
         <div className={s.catalogGrid}>
@@ -81,17 +81,28 @@ const Categories = () => {
             <div
               key={category.uuid}
               className={s.card}
+              role="button"
+              tabIndex={0}
               onClick={() => navigate(`/catalog/${category.uuid}`)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  navigate(`/catalog/${category.uuid}`);
+                }
+              }}
             >
               {category.main_media_url && (
                 <img
                   className={s.cardImage}
                   src={category.main_media_url}
-                  alt={category.title}
+                  alt=""
                 />
               )}
               <div className={s.cardOverlay} />
-              <h3 className={`serif ${s.cardTitle}`}>{category.title}</h3>
+              <div className={s.cardFooter}>
+                <h3 className={`serif ${s.cardTitle}`}>{category.title}</h3>
+                <ArrowBack className={s.cardArrowIcon} aria-hidden />
+              </div>
             </div>
           ))}
         </div>

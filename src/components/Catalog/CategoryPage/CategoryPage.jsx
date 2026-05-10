@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import s from "./CategoryPage.module.css";
+import ArrowIcon from "../../../assets/svg/arrow.svg?react";
 
 // import { getCategoryDetail } from "../../../utils/api";
 import { mockCategoryDetails } from "../../../utils/mocks";
@@ -14,6 +15,14 @@ const CategoryPage = () => {
   const [category, setCategory] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const closeImageModal = () => {
+    setSelectedImage(null);
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+  };
 
   useEffect(() => {
     const fetchCategory = async () => {
@@ -33,10 +42,28 @@ const CategoryPage = () => {
     fetchCategory();
   }, [categoryId]);
 
+  useEffect(() => {
+    if (!selectedImage) return undefined;
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        closeImageModal();
+      }
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selectedImage]);
+
   if (loading) {
     return (
       <div className={s.pageWrapper}>
-        <div className="container">
+        <div className={s.pageContainer}>
           <div className={s.skeleton} />
         </div>
       </div>
@@ -46,7 +73,7 @@ const CategoryPage = () => {
   if (error) {
     return (
       <div className={s.pageWrapper}>
-        <div className="container">
+        <div className={s.pageContainer}>
           <p className={s.error}>{error}</p>
         </div>
       </div>
@@ -55,12 +82,10 @@ const CategoryPage = () => {
 
   return (
     <div className={s.pageWrapper}>
-      <div className={`container ${s.pageContainer}`}>
+      <div className={s.pageContainer}>
         <div className={s.topBar}>
           <Link to="/catalog" className={s.backBtn}>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className={s.arrowIcon}>
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 12H5M5 12L12 19M5 12L12 5" />
-            </svg>
+            <ArrowIcon className={s.arrowIcon} />
           </Link>
           <span className="section-label">{category.paragraph}</span>
         </div>
@@ -87,10 +112,24 @@ const CategoryPage = () => {
           </div>
           <div className={s.heroRight}>
             {category.first_media_url && (
-              <img src={category.first_media_url} alt={category.title} className={s.heroImg1} />
+              <button
+                type="button"
+                className={s.imageButton}
+                onClick={() => setSelectedImage(category.first_media_url)}
+                aria-label={`Открыть фото категории ${category.title}`}
+              >
+                <img src={category.first_media_url} alt={category.title} className={s.heroImg1} />
+              </button>
             )}
             {category.second_media_url && (
-              <img src={category.second_media_url} alt={category.title} className={s.heroImg2} />
+              <button
+                type="button"
+                className={s.imageButton}
+                onClick={() => setSelectedImage(category.second_media_url)}
+                aria-label={`Открыть фото категории ${category.title}`}
+              >
+                <img src={category.second_media_url} alt={category.title} className={s.heroImg2} />
+              </button>
             )}
           </div>
         </section>
@@ -114,6 +153,32 @@ const CategoryPage = () => {
           </section>
         )}
       </div>
+
+      {selectedImage && (
+        <div
+          className={s.imageModalOverlay}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Просмотр изображения"
+          onClick={closeImageModal}
+        >
+          <button
+            type="button"
+            className={s.imageModalClose}
+            onClick={closeImageModal}
+            aria-label="Закрыть изображение"
+          >
+            ×
+          </button>
+
+          <img
+            src={selectedImage}
+            alt={category.title}
+            className={s.imageModalContent}
+            onClick={(event) => event.stopPropagation()}
+          />
+        </div>
+      )}
     </div>
   );
 };

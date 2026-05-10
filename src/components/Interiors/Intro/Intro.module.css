@@ -5,7 +5,8 @@
 }
 
 .introSection__wrapper {
-  padding: 0 108px;
+  padding-left: var(--page-pad-x);
+  padding-right: var(--page-pad-x);
 }
 
 .introBlock {
@@ -15,10 +16,26 @@
 }
 
 .backLink {
-  display: inline-block;
-  margin-bottom: 52px;
+  width: 36px;
+  height: 40px;
+  margin-bottom: 20px;
   cursor: pointer;
-  transition: transform 0.3s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.8);
+  transition: opacity 0.3s ease, transform 0.2s ease;
+}
+
+.backLink:hover {
+  opacity: 0.7;
+  transform: translateX(-2px);
+}
+
+.arrowIcon {
+  width: 36px;
+  height: 40px;
+  display: block;
   transform: rotate(180deg);
 }
 
@@ -59,16 +76,23 @@
   .introSection__wrapper {
     padding: 0 40px; /* Уменьшаем огромные боковые отступы */
   }
+
+  .backLink {
+    margin-bottom: 14px;
+  }
 }
 
 /* Для мобильных телефонов (до 768px) */
 @media (max-width: 768px) {
-  .introSection__wrapper {
-    padding: 0 20px; /* Делаем отступы еще меньше для телефонов */
+  .backLink {
+    width: 28px;
+    height: 28px;
+    margin-bottom: 8px;
   }
 
-  .backLink {
-    margin-bottom: 32px; /* Уменьшаем отступ под стрелкой */
+  .arrowIcon {
+    width: 28px;
+    height: 28px;
   }
 
   .introBlock :global(.section-label) {

@@ -1,6 +1,13 @@
 .page {
-  padding-top: 120px; /* Отступ от хедера */
+  padding-top: 32px;
   background-color: var(--bg-dark);
   color: #fff;
   overflow-x: hidden;
+}
+
+/* Как у карточки товара: единый отступ сверху со стрелкой */
+@media (max-width: 768px) {
+  .page {
+    padding-top: 20px;
+  }
 }

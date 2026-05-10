@@ -9,6 +9,8 @@
   --font-serif: "Playfair Display", serif;
   --font-sans: "Montserrat", sans-serif;
   --container-width: 1440px;
+  /* Единые боковые отступы контента (стрелка «назад», сетки) на всех страницах */
+  --page-pad-x: clamp(16px, 7.5vw, 108px);
 }
 
 * {

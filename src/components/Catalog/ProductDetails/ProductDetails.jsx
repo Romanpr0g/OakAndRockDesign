@@ -1,7 +1,8 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import s from "./ProductDetails.module.css";
 import placeholderImage from "../../../assets/home.jpg";
+import ArrowIcon from "../../../assets/svg/arrow.svg?react";
 
 // import { getItemDetail } from "../../../utils/api";
 import { mockItemDetails } from "../../../utils/mocks";
@@ -15,6 +16,14 @@ const ProductDetails = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeSlide, setActiveSlide] = useState(0);
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const closeImageModal = () => {
+    setSelectedImage(null);
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+  };
 
   useEffect(() => {
     const fetchItem = async () => {
@@ -35,10 +44,28 @@ const ProductDetails = () => {
     fetchItem();
   }, [itemId]);
 
+  useEffect(() => {
+    if (!selectedImage) return undefined;
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        closeImageModal();
+      }
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selectedImage]);
+
   if (loading) {
     return (
       <div className={s.pageWrapper}>
-        <div className="container">
+        <div className={s.pageInner}>
           <div className={s.skeletonShowcase} />
         </div>
       </div>
@@ -48,26 +75,27 @@ const ProductDetails = () => {
   if (error) {
     return (
       <div className={s.pageWrapper}>
-        <div className="container">
+        <div className={s.pageInner}>
           <p className={s.error}>{error}</p>
         </div>
       </div>
     );
   }
 
-  const hasMultipleImages = item.media_urls.length > 1;
-  const currentImage = item.media_urls[activeSlide] || placeholderImage;
+  const mediaUrls = item.media_urls?.length ? item.media_urls : [placeholderImage];
+  const hasMultipleImages = mediaUrls.length > 1;
+  const currentImage = mediaUrls[activeSlide] || placeholderImage;
+  const descriptionMarks = item.description_marks ?? [];
+  const featureMarks = item.marks ?? [];
 
   return (
     <div className={s.pageWrapper}>
-      <div className="container">
+      <div className={s.pageInner}>
 
         {/* Навигация */}
         <div className={s.topBar}>
           <Link to={`/catalog/${categoryId}`} className={s.backBtn}>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className={s.arrowIcon}>
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 12H5M5 12L12 19M5 12L12 5" />
-            </svg>
+            <ArrowIcon className={s.arrowIcon} />
           </Link>
           <span className={s.sectionLabel}>{item.paragraph}</span>
         </div>
@@ -77,19 +105,27 @@ const ProductDetails = () => {
 
           {/* Левая колонка — изображение / слайдер */}
           <div className={s.imageCol}>
-            <img
-              src={currentImage}
-              alt={item.title}
-              className={s.productImage}
-            />
+            <button
+              type="button"
+              className={s.imageZoomTrigger}
+              onClick={() => setSelectedImage(currentImage)}
+              aria-label={`Открыть фото: ${item.title}`}
+            >
+              <img
+                src={currentImage}
+                alt={item.title}
+                className={s.productImage}
+              />
+            </button>
 
             {hasMultipleImages && (
               <>
                 <button
+                  type="button"
                   className={`${s.sliderArrow} ${s.sliderArrowLeft}`}
                   onClick={() =>
                     setActiveSlide((prev) =>
-                      prev === 0 ? item.media_urls.length - 1 : prev - 1
+                      prev === 0 ? mediaUrls.length - 1 : prev - 1
                     )
                   }
                 >
@@ -98,10 +134,11 @@ const ProductDetails = () => {
                   </svg>
                 </button>
                 <button
+                  type="button"
                   className={`${s.sliderArrow} ${s.sliderArrowRight}`}
                   onClick={() =>
                     setActiveSlide((prev) =>
-                      prev === item.media_urls.length - 1 ? 0 : prev + 1
+                      prev === mediaUrls.length - 1 ? 0 : prev + 1
                     )
                   }
                 >
@@ -111,8 +148,9 @@ const ProductDetails = () => {
                 </button>
 
                 <div className={s.sliderDots}>
-                  {item.media_urls.map((_, i) => (
+                  {mediaUrls.map((_, i) => (
                     <button
+                      type="button"
                       key={i}
                       className={`${s.dot} ${i === activeSlide ? s.dotActive : ""}`}
                       onClick={() => setActiveSlide(i)}
@@ -127,17 +165,18 @@ const ProductDetails = () => {
           <div className={s.infoCol}>
             <h1 className={s.title}>{item.title}</h1>
 
-            <p className={s.description}>{item.description}</p>
+            {item.description ? (
+              <p className={s.description}>{item.description}</p>
+            ) : null}
 
             <div className={s.priceRow}>
               <span className={s.currency}>BYN</span>
               <span className={s.price}>{item.price}</span>
             </div>
 
-            {/* description_marks — характеристики */}
-            {item.description_marks.length > 0 && (
-              <div className={s.specsGrid}>
-                {item.description_marks.map((mark, i) => (
+            {descriptionMarks.length > 0 && (
+              <div className={s.specsRow}>
+                {descriptionMarks.map((mark, i) => (
                   <div key={i} className={s.specItem}>
                     <span className={s.specTitle}>{mark.title}</span>
                     <span className={s.specValue}>{mark.subtitle}</span>
@@ -145,14 +184,12 @@ const ProductDetails = () => {
                 ))}
               </div>
             )}
-
           </div>
         </div>
 
-        {/* marks — карточки преимуществ внизу */}
-        {item.marks.length > 0 && (
+        {featureMarks.length > 0 && (
           <div className={s.featuresRow}>
-            {item.marks.map((mark, i) => (
+            {featureMarks.map((mark, i) => (
               <div key={i} className={s.featureCard}>
                 <div
                   className={s.featureIconWrapper}
@@ -166,6 +203,31 @@ const ProductDetails = () => {
         )}
 
       </div>
+
+      {selectedImage && (
+        <div
+          className={s.imageModalOverlay}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Просмотр изображения"
+          onClick={closeImageModal}
+        >
+          <button
+            type="button"
+            className={s.imageModalClose}
+            onClick={closeImageModal}
+            aria-label="Закрыть изображение"
+          >
+            ×
+          </button>
+          <img
+            src={selectedImage}
+            alt={item.title}
+            className={s.imageModalContent}
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </div>
   );
 };
